@@ -12,6 +12,7 @@
   "dependencies": {
     "@mantine/core": "^7.0.0-beta.1",
     "@mantine/hooks": "^7.0.0-beta.1",
+    "@tanstack/react-router": "0.0.1-beta.171",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
