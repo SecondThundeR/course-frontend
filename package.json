@@ -10,10 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mantine/core": "^7.0.0-beta.2",
-    "@mantine/hooks": "^7.0.0-beta.2",
-    "@tabler/icons-react": "^2.32.0",
-    "@tanstack/react-router": "^0.0.1-beta.171",
+    "@mantine/core": "^7.0.0",
+    "@mantine/hooks": "^7.0.0",
+    "@tabler/icons-react": "^2.34.0",
+    "@tanstack/react-router": "^0.0.1-beta.191",
     "clsx": "^2.0.0",
     "katex": "^0.16.8",
     "react": "^18.2.0",
@@ -21,13 +21,13 @@
     "react-katex": "^3.0.1"
   },
   "devDependencies": {
-    "@types/react": "^18.2.21",
+    "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
     "@types/react-katex": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.6.0",
-    "@typescript-eslint/parser": "^6.6.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
     "@vitejs/plugin-react-swc": "^3.3.2",
-    "eslint": "^8.48.0",
+    "eslint": "^8.49.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.4.29",
