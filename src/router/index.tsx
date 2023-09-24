@@ -1,51 +1,22 @@
-import { Router, RootRoute, Route } from "@tanstack/react-router";
+import { memo } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import {
-  CHAT_ROUTE,
-  LOGIN_ROUTE,
-  REGISTER_ROUTE,
-  ROOT_ROUTE,
-} from "../constants/routes.ts";
+import { ROOT_ROUTE } from '../constants/routes';
 
-import Chat from "../pages/Chat/index.tsx";
-import Index from "../pages/Index/index.tsx";
-import Root from "../pages/Root/index.tsx";
-import Register from "../pages/Register/index.tsx";
-import Login from "../pages/Login/index.tsx";
+import HomePage from '../pages/Home.page';
+import Root from '../pages/Root.page';
 
-const rootRoute = new RootRoute({
-  component: Root,
-});
-
-const indexRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: ROOT_ROUTE,
-  component: Index,
-});
-
-const chatRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: CHAT_ROUTE,
-  component: Chat,
-});
-
-const registerRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: REGISTER_ROUTE,
-  component: Register,
-});
-
-const loginRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: LOGIN_ROUTE,
-  component: Login,
-});
-
-const routeTree = rootRoute.addChildren([
-  indexRoute,
-  chatRoute,
-  registerRoute,
-  loginRoute,
+const router = createBrowserRouter([
+  {
+    path: ROOT_ROUTE,
+    element: <Root />,
+    children: [
+      {
+        path: ROOT_ROUTE,
+        element: <HomePage />,
+      },
+    ],
+  },
 ]);
 
-export const router = new Router({ routeTree });
+export const Router = memo(() => <RouterProvider router={router} />);

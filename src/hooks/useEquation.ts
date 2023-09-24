@@ -1,12 +1,14 @@
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, useCallback, useState } from 'react';
 
-const DEFAULT_EQUATION = "\\int_0^\\infty x^2 dx";
+const DEFAULT_EQUATION = '\\int_0^\\infty x^2 dx';
 
 function useEquation(initialEquation?: string) {
   const [equation, setEquation] = useState(initialEquation ?? DEFAULT_EQUATION);
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = (event) =>
-    setEquation(event.currentTarget.value);
+  const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (event) => setEquation(event.currentTarget.value),
+    []
+  );
 
   return { equation, onChange };
 }

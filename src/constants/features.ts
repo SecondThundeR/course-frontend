@@ -1,27 +1,27 @@
-import { IconSpyOff, IconTable, IconVariable } from "@tabler/icons-react";
+import { IconSpyOff, IconTable, IconVariable } from '@tabler/icons-react';
 
 export const FEATURES = [
   {
-    id: "variable-feature",
+    id: 'variable-feature',
     icon: IconVariable,
-    title: "Удобная вставка формул",
+    title: 'Удобная вставка формул',
     description:
-      "Благодаря библиотеке KaTeX можно вставлять формулы прямо в текст, не используя никаких дополнительных инструментов",
+      'Благодаря библиотеке KaTeX можно вставлять формулы прямо в текст, не используя никаких дополнительных инструментов',
   },
   {
-    id: "privacy-feature",
+    id: 'privacy-feature',
     icon: IconSpyOff,
-    title: "Приватность и безопасность",
+    title: 'Приватность и безопасность',
     description:
-      "Мы не передаем Ваши данные третьим лицам, а также постоянно делаем всё возможное, чтобы они были в безопасности",
+      'Мы не передаем Ваши данные третьим лицам, а также постоянно делаем всё возможное, чтобы они были в безопасности',
   },
   {
-    id: "design-feature",
+    id: 'design-feature',
     icon: IconTable,
-    title: "Приятный дизайн",
+    title: 'Приятный дизайн',
     description:
-      "С помощью Mantine, мы создали дизайн, который не только приятен глазу, но и удобен в использовании",
+      'С помощью Mantine, мы создали дизайн, который не только приятен глазу, но и удобен в использовании',
   },
 ];
 
-export type FeatureType = Omit<(typeof FEATURES)[number], "id">;
+export type FeatureType = Omit<(typeof FEATURES)[number], 'id'>;
