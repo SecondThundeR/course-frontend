@@ -1,8 +1,8 @@
 import { PropsWithChildren } from 'react';
-import { AppShell, rem, Flex, Title, Button } from '@mantine/core';
+import { AppShell, Flex, Title, Button } from '@mantine/core';
 import { useHeadroom } from '@mantine/hooks';
 
-import ThemeToggle from '../ThemeToggle/ThemeToggle';
+import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 
 export function RootShell({ children }: PropsWithChildren) {
   const pinned = useHeadroom({ fixedAt: 120 });

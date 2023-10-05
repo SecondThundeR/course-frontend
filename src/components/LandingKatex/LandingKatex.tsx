@@ -4,7 +4,7 @@ import { memo } from 'react';
 import { Text, TextInput, Title } from '@mantine/core';
 import { BlockMath } from 'react-katex';
 
-import useEquation from '../../hooks/useEquation';
+import useEquation from '@/hooks/useEquation';
 
 import classes from './LandingKatex.module.css';
 

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Container, Title, Accordion } from '@mantine/core';
 
-import { FAQ_DATA } from '../../constants/faq';
+import { FAQ_DATA } from '@/constants/faq';
 
 import classes from './LandingFAQ.module.css';
 

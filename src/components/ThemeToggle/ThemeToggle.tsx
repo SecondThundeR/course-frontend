@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { ActionIcon } from '@mantine/core';
 import { IconSun, IconMoon } from '@tabler/icons-react';
 
-import useThemeSwitch from '../../hooks/useThemeSwitch';
+import useThemeSwitch from '@/hooks/useThemeSwitch';
 
 import classes from './ThemeToggle.module.css';
 

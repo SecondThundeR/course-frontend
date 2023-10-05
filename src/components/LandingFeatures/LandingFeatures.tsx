@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Title, Text, Card, SimpleGrid, Container, rem, useMantineTheme } from '@mantine/core';
 
-import { FEATURES } from '../../constants/features';
+import { FEATURES } from '@/constants/features';
 
 import classes from './LandingFeatures.module.css';
 
