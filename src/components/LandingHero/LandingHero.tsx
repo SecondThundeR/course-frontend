@@ -1,5 +1,8 @@
 import { memo } from 'react';
+import { Link } from 'react-router-dom';
 import { Container, Text, Button, Group } from '@mantine/core';
+
+import { LOGIN_ROUTE } from '@/constants/routes';
 
 import classes from './LandingHero.module.css';
 
@@ -21,6 +24,8 @@ export const LandingHero = memo(() => (
 
       <Group className={classes.controls}>
         <Button
+          component={Link}
+          to={LOGIN_ROUTE}
           size="xl"
           className={classes.control}
           variant="gradient"
