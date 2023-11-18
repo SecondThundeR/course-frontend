@@ -1,36 +1,56 @@
-import { memo } from 'react';
+import { memo, lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { CHAT_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, ROOT_ROUTE } from '@/constants/routes';
 
-import Chat from '@/pages/Chat.page';
-import Home from '@/pages/Home.page';
-import Login from '@/pages/Login.page';
-import Register from '@/pages/Register.page';
-import Root from '@/pages/Root.page';
+const Chat = lazy(() => import('../pages/Chat.page'));
+const Home = lazy(() => import('../pages/Home.page'));
+const Login = lazy(() => import('../pages/Login.page'));
+const Register = lazy(() => import('../pages/Register.page'));
+const Root = lazy(() => import('../pages/Root.page'));
 
 const router = createBrowserRouter([
   {
     path: ROOT_ROUTE,
-    element: <Root />,
+    element: (
+      <Suspense fallback={null}>
+        <Root />
+      </Suspense>
+    ),
     children: [
       {
         path: ROOT_ROUTE,
-        element: <Home />,
+        element: (
+          <Suspense fallback={null}>
+            <Home />
+          </Suspense>
+        ),
       },
     ],
   },
   {
     path: LOGIN_ROUTE,
-    element: <Login />,
+    element: (
+      <Suspense fallback={null}>
+        <Login />
+      </Suspense>
+    ),
   },
   {
     path: REGISTER_ROUTE,
-    element: <Register />,
+    element: (
+      <Suspense fallback={null}>
+        <Register />
+      </Suspense>
+    ),
   },
   {
     path: CHAT_ROUTE,
-    element: <Chat />,
+    element: (
+      <Suspense fallback={null}>
+        <Chat />
+      </Suspense>
+    ),
   },
 ]);
 
