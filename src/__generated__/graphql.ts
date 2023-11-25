@@ -195,8 +195,13 @@ export type QueryConversationArgs = {
 
 
 export type QueryConversationsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<ConversationOrder>;
   query?: InputMaybe<Scalars['String']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -206,8 +211,13 @@ export type QueryMessageArgs = {
 
 
 export type QueryMessagesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<MessageOrder>;
   query?: InputMaybe<Scalars['String']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -222,7 +232,7 @@ export type QueryUserMessagesArgs = {
 
 export type SignupInput = {
   email: Scalars['String']['input'];
-  firstname?: InputMaybe<Scalars['String']['input']>;
+  firstname: Scalars['String']['input'];
   lastname?: InputMaybe<Scalars['String']['input']>;
   password: Scalars['String']['input'];
 };
