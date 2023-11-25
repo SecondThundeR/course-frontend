@@ -1,5 +1,6 @@
 import '@mantine/core/styles.css';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { memo } from 'react';
 import { MantineProvider } from '@mantine/core';
 import { Router } from './router';
