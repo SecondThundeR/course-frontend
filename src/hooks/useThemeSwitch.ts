@@ -1,13 +1,12 @@
-import { useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
 import { useCallback } from 'react';
+import { useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
 
-type UseThemeSwitchReturn = [boolean, () => void];
-
-function useThemeSwitch(): UseThemeSwitchReturn {
+function useThemeSwitch() {
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme('light', {
     getInitialValueInEffect: true,
   });
+
   const isLight = computedColorScheme === 'light';
 
   const onThemeSwitch = useCallback(
@@ -15,7 +14,7 @@ function useThemeSwitch(): UseThemeSwitchReturn {
     [isLight, setColorScheme]
   );
 
-  return [isLight, onThemeSwitch];
+  return [isLight, onThemeSwitch] as const;
 }
 
 export default useThemeSwitch;

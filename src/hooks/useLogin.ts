@@ -1,36 +1,40 @@
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useLocalStorage } from '@mantine/hooks';
-
 import { LoginInput } from '@/__generated__/graphql';
-
 import { LOGIN_MUTATION } from '@/constants/mutation';
 import { CHAT_ROUTE } from '@/constants/routes';
 
 function useLogin() {
   const navigate = useNavigate();
   const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION);
-  const [_, setSessionValue] = useLocalStorage({
-    key: 'session',
+  const [, setAccessToken] = useLocalStorage({
+    key: 'accessToken',
+  });
+  const [, setRefreshToken] = useLocalStorage({
+    key: 'refreshToken',
   });
 
-  const onLogin = async (loginData: LoginInput) => {
-    const data = await loginUser({
+  const onLogin = useCallback(async (loginData: LoginInput) => {
+    const res = await loginUser({
       variables: {
         data: loginData,
       },
     });
-    if (!data.data) return;
+    if (!res.data) return;
 
     const {
       data: {
         login: { accessToken, refreshToken },
       },
-    } = data;
+    } = res;
 
-    setSessionValue(JSON.stringify({ accessToken, refreshToken }));
+    setAccessToken(accessToken);
+    setRefreshToken(refreshToken);
+
     return navigate(CHAT_ROUTE);
-  };
+  }, []);
 
   return [onLogin, { loading, error }] as const;
 }

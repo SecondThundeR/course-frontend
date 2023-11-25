@@ -1,11 +1,16 @@
 import { memo } from 'react';
-
-import useMe from '@/hooks/useMe';
+import useCurrentUser from '@/hooks/useCurrentUser';
+import { Button } from '@mantine/core';
 
 const Chat = memo(() => {
-  const data = useMe();
+  const [data, onSignout] = useCurrentUser();
 
-  return <h1>{JSON.stringify(data)}</h1>;
+  return (
+    <>
+      <h1>Data: {JSON.stringify(data)}</h1>
+      <Button onClick={onSignout}>Signout</Button>
+    </>
+  );
 });
 
 export default Chat;

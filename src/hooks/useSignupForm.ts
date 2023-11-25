@@ -1,19 +1,10 @@
 import { useForm } from '@mantine/form';
+import { SIGNUP_INITIAL_VALUES, SIGNUP_VALUES_VALIDATOR } from '@/constants/form';
 
 function useSignupForm() {
   const form = useForm({
-    initialValues: {
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-    },
-
-    validate: {
-      firstname: (value) => (value.length < 1 ? 'First name must have at least 1 letter' : null),
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-      password: (value) => (value.length < 8 ? 'Password must have at least 8 letters' : null),
-    },
+    initialValues: SIGNUP_INITIAL_VALUES,
+    validate: SIGNUP_VALUES_VALIDATOR,
   });
 
   return form;
