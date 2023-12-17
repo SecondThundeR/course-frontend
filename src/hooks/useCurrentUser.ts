@@ -2,13 +2,14 @@ import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '@mantine/hooks';
 import { useLazyQuery } from '@apollo/client';
-import { CURRENT_USER } from '@/constants/queries';
+
 import { ROOT_ROUTE } from '@/constants/routes';
+import { CURRENT_USER } from '@/constants/queries';
 
 function useCurrentUser() {
   const navigate = useNavigate();
   const [getUser, { data }] = useLazyQuery(CURRENT_USER);
-  const [accessToken, setAccessToken, removeAccessToken] = useLocalStorage({
+  const [accessToken, , removeAccessToken] = useLocalStorage({
     key: 'accessToken',
     getInitialValueInEffect: false,
     deserialize(value) {

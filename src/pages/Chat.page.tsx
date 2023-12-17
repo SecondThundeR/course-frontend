@@ -1,8 +1,9 @@
 import { memo } from 'react';
-import useCurrentUser from '@/hooks/useCurrentUser';
 import { Button } from '@mantine/core';
 
-const Chat = memo(() => {
+import { useCurrentUser } from '@/hooks';
+
+const Chat = memo(function Chat() {
   const [data, onSignout] = useCurrentUser();
 
   return (

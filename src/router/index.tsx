@@ -3,18 +3,18 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { CHAT_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, ROOT_ROUTE } from '@/constants/routes';
 
-const Chat = lazy(() => import('../pages/Chat.page'));
-const Home = lazy(() => import('../pages/Home.page'));
-const Login = lazy(() => import('../pages/Login.page'));
-const Register = lazy(() => import('../pages/Register.page'));
-const Root = lazy(() => import('../pages/Root.page'));
+const LazyChat = lazy(() => import('../pages/Chat.page'));
+const LazyHome = lazy(() => import('../pages/Home.page'));
+const LazyLogin = lazy(() => import('../pages/Login.page'));
+const LazyRegister = lazy(() => import('../pages/Register.page'));
+const LazyRoot = lazy(() => import('../pages/Root.page'));
 
 const router = createBrowserRouter([
   {
     path: ROOT_ROUTE,
     element: (
       <Suspense fallback={null}>
-        <Root />
+        <LazyRoot />
       </Suspense>
     ),
     children: [
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
         path: ROOT_ROUTE,
         element: (
           <Suspense fallback={null}>
-            <Home />
+            <LazyHome />
           </Suspense>
         ),
       },
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     path: LOGIN_ROUTE,
     element: (
       <Suspense fallback={null}>
-        <Login />
+        <LazyLogin />
       </Suspense>
     ),
   },
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
     path: REGISTER_ROUTE,
     element: (
       <Suspense fallback={null}>
-        <Register />
+        <LazyRegister />
       </Suspense>
     ),
   },
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
     path: CHAT_ROUTE,
     element: (
       <Suspense fallback={null}>
-        <Chat />
+        <LazyChat />
       </Suspense>
     ),
   },

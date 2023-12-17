@@ -6,7 +6,6 @@ function useThemeSwitch() {
   const computedColorScheme = useComputedColorScheme('light', {
     getInitialValueInEffect: true,
   });
-
   const isLight = computedColorScheme === 'light';
 
   const onThemeSwitch = useCallback(

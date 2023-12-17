@@ -1,4 +1,5 @@
 import { useForm } from '@mantine/form';
+
 import { SIGNUP_INITIAL_VALUES, SIGNUP_VALUES_VALIDATOR } from '@/constants/form';
 
 function useSignupForm() {

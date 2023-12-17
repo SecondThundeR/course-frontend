@@ -9,18 +9,19 @@ import {
   Button,
   Alert,
 } from '@mantine/core';
-import useChatRedirect from '@/hooks/useChatRedirect';
-import useLoginForm from '@/hooks/useLoginForm';
-import useLogin from '@/hooks/useLogin';
-
-import classes from './LoginPage.module.css';
 import { Link } from 'react-router-dom';
+
 import { REGISTER_ROUTE } from '@/constants/routes';
 
+import { useChatRedirect, useLogin, useLoginForm } from '@/hooks';
+
+import classes from './LoginPage.module.css';
+
 export function LoginPage() {
-  useChatRedirect();
   const form = useLoginForm();
   const [onLogin, { loading, error }] = useLogin();
+
+  useChatRedirect();
 
   return (
     <Container size={420} my={40}>

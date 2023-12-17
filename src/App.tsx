@@ -3,6 +3,7 @@ import '@mantine/core/styles.css';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { memo } from 'react';
 import { MantineProvider } from '@mantine/core';
+
 import { Router } from './router';
 import { theme } from './theme';
 
@@ -11,12 +12,14 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const App = memo(() => (
-  <ApolloProvider client={client}>
-    <MantineProvider theme={theme}>
-      <Router />
-    </MantineProvider>
-  </ApolloProvider>
-));
+const App = memo(function App() {
+  return (
+    <ApolloProvider client={client}>
+      <MantineProvider theme={theme}>
+        <Router />
+      </MantineProvider>
+    </ApolloProvider>
+  );
+});
 
 export default App;

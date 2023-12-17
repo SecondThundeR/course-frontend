@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '@mantine/hooks';
+
 import { CHAT_ROUTE } from '@/constants/routes';
 
 function useChatRedirect() {

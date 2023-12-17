@@ -1,6 +1,9 @@
 import { memo } from 'react';
-import { RegisterPage } from '@/components/RegisterPage/RegisterPage';
 
-const Register = memo(() => <RegisterPage />);
+import { RegisterPage } from '@/components';
+
+const Register = memo(function Register() {
+  return <RegisterPage />;
+});
 
 export default Register;

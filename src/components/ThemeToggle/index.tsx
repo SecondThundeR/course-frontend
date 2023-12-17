@@ -2,11 +2,11 @@ import { memo } from 'react';
 import { ActionIcon } from '@mantine/core';
 import { IconSun, IconMoon } from '@tabler/icons-react';
 
-import useThemeSwitch from '@/hooks/useThemeSwitch';
+import { useThemeSwitch } from '@/hooks';
 
 import classes from './ThemeToggle.module.css';
 
-const ThemeToggle = memo(() => {
+export const ThemeToggle = memo(function ThemeToggle() {
   const [isLight, onThemeSwitch] = useThemeSwitch();
 
   return (
@@ -19,5 +19,3 @@ const ThemeToggle = memo(() => {
     </ActionIcon>
   );
 });
-
-export default ThemeToggle;
