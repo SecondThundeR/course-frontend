@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 
 import { LOGIN_ROUTE } from '@/constants/routes';
 
-import { useChatRedirect, useSignup, useSignupForm } from '@/hooks';
+import { useUserStoreRedirect, useSignup, useSignupForm } from '@/hooks';
 
 import classes from './RegisterPage.module.css';
 
@@ -21,7 +21,7 @@ export function RegisterPage() {
   const form = useSignupForm();
   const [onSignup, { loading, error }] = useSignup();
 
-  useChatRedirect();
+  useUserStoreRedirect(false);
 
   return (
     <Container size={420} my={40}>

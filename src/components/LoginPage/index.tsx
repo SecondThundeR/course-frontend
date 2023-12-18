@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 
 import { REGISTER_ROUTE } from '@/constants/routes';
 
-import { useChatRedirect, useLogin, useLoginForm } from '@/hooks';
+import { useUserStoreRedirect, useLogin, useLoginForm } from '@/hooks';
 
 import classes from './LoginPage.module.css';
 
@@ -21,7 +21,7 @@ export function LoginPage() {
   const form = useLoginForm();
   const [onLogin, { loading, error }] = useLogin();
 
-  useChatRedirect();
+  useUserStoreRedirect(false);
 
   return (
     <Container size={420} my={40}>

@@ -2,10 +2,10 @@ import { memo } from 'react';
 
 import { Landing } from '@/components';
 
-import { useChatRedirect } from '@/hooks';
+import { useUserStoreRedirect } from '@/hooks';
 
 const Home = memo(function Home() {
-  useChatRedirect();
+  useUserStoreRedirect(false);
 
   return (
     <>
