@@ -9,7 +9,9 @@ import { theme } from './theme';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    addTypename: false,
+  }),
 });
 
 const App = memo(function App() {
