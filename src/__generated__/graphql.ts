@@ -262,7 +262,7 @@ export type User = {
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']['output'];
   email: Scalars['String']['output'];
-  firstname?: Maybe<Scalars['String']['output']>;
+  firstname: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   lastname?: Maybe<Scalars['String']['output']>;
   messages: Array<Message>;
@@ -287,7 +287,7 @@ export type SignupMutationMutation = { __typename?: 'Mutation', signup: { __type
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentUserQuery = { __typename?: 'Query', currentUser: { __typename?: 'User', id: string, firstname?: string | null, lastname?: string | null, email: string } };
+export type CurrentUserQuery = { __typename?: 'Query', currentUser: { __typename?: 'User', id: string, firstname: string, lastname?: string | null, email: string } };
 
 
 export const LoginMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LoginMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<LoginMutationMutation, LoginMutationMutationVariables>;
