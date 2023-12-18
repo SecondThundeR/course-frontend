@@ -1,3 +1,4 @@
+export { ChatBlocks } from './ChatBlocks';
 export { Landing } from './Landing';
 export { LoginPage } from './LoginPage';
 export { RegisterPage } from './RegisterPage';

@@ -1,17 +1,15 @@
 import { memo } from 'react';
-import { Button } from '@mantine/core';
 
-import { useCurrentUser } from '@/hooks';
+import { ChatBlocks } from '@/components';
+
+import { useCurrentUser, useUserStoreRedirect } from '@/hooks';
 
 const Chat = memo(function Chat() {
   const [data, onSignout] = useCurrentUser();
 
-  return (
-    <>
-      <h1>Data: {JSON.stringify(data)}</h1>
-      <Button onClick={onSignout}>Signout</Button>
-    </>
-  );
+  useUserStoreRedirect();
+
+  return <ChatBlocks.Shell user={data} onSignout={onSignout} />;
 });
 
 export default Chat;
