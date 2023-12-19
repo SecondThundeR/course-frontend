@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { TextInput } from '@mantine/core';
+
 import { useSearch } from '@/hooks';
 
 export const SearchInput = memo(function SearchInput() {
