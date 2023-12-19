@@ -19,6 +19,8 @@ import { Outlet } from 'react-router-dom';
 import { type User } from '@/store';
 
 import { ThemeToggle } from '../ThemeToggle';
+import { SearchInput } from '../SearchInput';
+
 import classes from './ChatBlocks.module.css';
 
 interface ChatShellProps {
@@ -26,7 +28,9 @@ interface ChatShellProps {
   onSignout: () => void;
 }
 
-const UserFooter = memo(function UserFooter({ user, onSignout }: ChatShellProps) {
+interface UserFooterProps extends Pick<ChatShellProps, 'user' | 'onSignout'> {}
+
+const UserFooter = memo(function UserFooter({ user, onSignout }: UserFooterProps) {
   if (!user) return null;
 
   const { firstname, lastname, email } = user;
@@ -69,7 +73,9 @@ const ChatShell = memo(function ChatShell({ ...currentUserData }: ChatShellProps
         </Flex>
       </AppShell.Header>
       <AppShell.Navbar p="md">
-        <AppShell.Section>Search placeholder</AppShell.Section>
+        <AppShell.Section>
+          <SearchInput />
+        </AppShell.Section>
         <AppShell.Section grow my="md" component={ScrollArea}>
           Chats placeholder
           {Array(30)
