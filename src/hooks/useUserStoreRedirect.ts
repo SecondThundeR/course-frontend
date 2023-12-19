@@ -5,7 +5,7 @@ import { CHAT_ROUTE, ROOT_ROUTE } from '@/constants/routes';
 
 import { useUserStore } from '@/store';
 
-function useUserStoreRedirect(isCheckForLoggedIn = true) {
+export default function useUserStoreRedirect(isCheckForLoggedIn = true) {
   const navigate = useNavigate();
   const { userData } = useUserStore();
 
@@ -21,5 +21,3 @@ function useUserStoreRedirect(isCheckForLoggedIn = true) {
     }
   }, [userData]);
 }
-
-export default useUserStoreRedirect;

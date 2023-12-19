@@ -7,7 +7,7 @@ import { CURRENT_USER } from '@/constants/queries';
 
 import { useTokensStore, useUserStore } from '@/store';
 
-function useCurrentUser() {
+export default function useCurrentUser() {
   const navigate = useNavigate();
   const [getUser] = useLazyQuery(CURRENT_USER);
   const { userData, setUserData, resetUserData } = useUserStore();
@@ -46,5 +46,3 @@ function useCurrentUser() {
 
   return [userData, onSignout] as const;
 }
-
-export default useCurrentUser;

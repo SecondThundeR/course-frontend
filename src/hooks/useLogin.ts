@@ -9,7 +9,7 @@ import { CHAT_ROUTE } from '@/constants/routes';
 
 import { useTokensStore } from '@/store';
 
-function useLogin() {
+export default function useLogin() {
   const navigate = useNavigate();
   const { setTokens } = useTokensStore();
   const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION);
@@ -34,5 +34,3 @@ function useLogin() {
 
   return [onLogin, { loading, error }] as const;
 }
-
-export default useLogin;
