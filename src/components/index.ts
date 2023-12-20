@@ -1,3 +1,4 @@
+export { Block404 } from './Block404';
 export { ChatBlocks } from './ChatBlocks';
 export { Landing } from './Landing';
 export { LoginPage } from './LoginPage';

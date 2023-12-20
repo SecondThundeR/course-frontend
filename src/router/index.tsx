@@ -2,6 +2,7 @@ import { memo, lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import {
+  ANY_ROUTE,
   CHAT_ID_ROUTE,
   CHAT_ROUTE,
   LOGIN_ROUTE,
@@ -13,6 +14,7 @@ const LazyChat = lazy(() => import('../pages/Chat.page'));
 const LazyChatIndex = lazy(() => import('../pages/ChatIndex.page'));
 const LazyHome = lazy(() => import('../pages/Home.page'));
 const LazyLogin = lazy(() => import('../pages/Login.page'));
+const LazyNotFound = lazy(() => import('../pages/NotFound.page'));
 const LazyRegister = lazy(() => import('../pages/Register.page'));
 const LazyRoot = lazy(() => import('../pages/Root.page'));
 
@@ -72,6 +74,14 @@ const router = createBrowserRouter([
         element: null,
       },
     ],
+  },
+  {
+    path: ANY_ROUTE,
+    element: (
+      <Suspense fallback={null}>
+        <LazyNotFound />
+      </Suspense>
+    ),
   },
 ]);
 
