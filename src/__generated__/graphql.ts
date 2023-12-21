@@ -21,7 +21,6 @@ export type Scalars = {
 };
 
 export type Auth = {
-  __typename?: 'Auth';
   /** JWT access token */
   accessToken: Scalars['JWT']['output'];
   /** JWT refresh token */
@@ -35,7 +34,6 @@ export type ChangePasswordInput = {
 };
 
 export type Conversation = {
-  __typename?: 'Conversation';
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']['output'];
   creatorId: Scalars['String']['output'];
@@ -48,14 +46,12 @@ export type Conversation = {
 };
 
 export type ConversationConnection = {
-  __typename?: 'ConversationConnection';
   edges?: Maybe<Array<ConversationEdge>>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
 };
 
 export type ConversationEdge = {
-  __typename?: 'ConversationEdge';
   cursor: Scalars['String']['output'];
   node: Conversation;
 };
@@ -81,7 +77,6 @@ export type LoginInput = {
 };
 
 export type Message = {
-  __typename?: 'Message';
   content: Scalars['String']['output'];
   contentHistory: Array<Scalars['String']['output']>;
   conversation?: Maybe<Conversation>;
@@ -95,14 +90,12 @@ export type Message = {
 };
 
 export type MessageConnection = {
-  __typename?: 'MessageConnection';
   edges?: Maybe<Array<MessageEdge>>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
 };
 
 export type MessageEdge = {
-  __typename?: 'MessageEdge';
   cursor: Scalars['String']['output'];
   node: Message;
 };
@@ -118,7 +111,6 @@ export enum MessageType {
 }
 
 export type Mutation = {
-  __typename?: 'Mutation';
   changePassword: User;
   createConversation: Conversation;
   createMessage: Message;
@@ -170,7 +162,6 @@ export enum OrderDirection {
 }
 
 export type PageInfo = {
-  __typename?: 'PageInfo';
   endCursor?: Maybe<Scalars['String']['output']>;
   hasNextPage: Scalars['Boolean']['output'];
   hasPreviousPage: Scalars['Boolean']['output'];
@@ -178,7 +169,6 @@ export type PageInfo = {
 };
 
 export type Query = {
-  __typename?: 'Query';
   conversation: Conversation;
   conversations: ConversationConnection;
   currentUser: User;
@@ -238,13 +228,11 @@ export type SignupInput = {
 };
 
 export type Subscription = {
-  __typename?: 'Subscription';
   conversationCreated: Conversation;
   messageCreated: Message;
 };
 
 export type Token = {
-  __typename?: 'Token';
   /** JWT access token */
   accessToken: Scalars['JWT']['output'];
   /** JWT refresh token */
@@ -257,7 +245,6 @@ export type UpdateUserInput = {
 };
 
 export type User = {
-  __typename?: 'User';
   conversations: Array<Conversation>;
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']['output'];
@@ -275,21 +262,29 @@ export type LoginMutationMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutationMutation = { __typename?: 'Mutation', login: { __typename?: 'Auth', accessToken: any, refreshToken: any } };
+export type LoginMutationMutation = { login: { accessToken: any, refreshToken: any } };
 
 export type SignupMutationMutationVariables = Exact<{
   data: SignupInput;
 }>;
 
 
-export type SignupMutationMutation = { __typename?: 'Mutation', signup: { __typename?: 'Auth', accessToken: any, refreshToken: any } };
+export type SignupMutationMutation = { signup: { accessToken: any, refreshToken: any } };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentUserQuery = { __typename?: 'Query', currentUser: { __typename?: 'User', id: string, firstname: string, lastname?: string | null, email: string } };
+export type CurrentUserQuery = { currentUser: { id: string, firstname: string, lastname?: string | null, email: string } };
+
+export type ConversationsDataQueryVariables = Exact<{
+  userId: Scalars['String']['input'];
+}>;
+
+
+export type ConversationsDataQuery = { userConversations: Array<{ id: string, createdAt: any, updatedAt: any, participants: Array<{ id: string, firstname: string, lastname?: string | null }>, messages: Array<{ id: string, content: string, type: MessageType, createdAt: any, updatedAt: any, contentHistory: Array<string>, from?: { id: string } | null }> }> };
 
 
 export const LoginMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LoginMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<LoginMutationMutation, LoginMutationMutationVariables>;
 export const SignupMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignupMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<SignupMutationMutation, SignupMutationMutationVariables>;
 export const CurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstname"}},{"kind":"Field","name":{"kind":"Name","value":"lastname"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<CurrentUserQuery, CurrentUserQueryVariables>;
+export const ConversationsDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ConversationsData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userConversations"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"participants"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstname"}},{"kind":"Field","name":{"kind":"Name","value":"lastname"}}]}},{"kind":"Field","name":{"kind":"Name","value":"messages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"contentHistory"}},{"kind":"Field","name":{"kind":"Name","value":"from"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ConversationsDataQuery, ConversationsDataQueryVariables>;

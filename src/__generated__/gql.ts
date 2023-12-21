@@ -16,6 +16,7 @@ const documents = {
     "\n  mutation LoginMutation($data: LoginInput!) {\n    login(data: $data) {\n      accessToken\n      refreshToken\n    }\n  }\n": types.LoginMutationDocument,
     "\n  mutation SignupMutation($data: SignupInput!) {\n    signup(data: $data) {\n      accessToken\n      refreshToken\n    }\n  }\n": types.SignupMutationDocument,
     "\n    query CurrentUser {\n        currentUser {\n            id\n            firstname\n            lastname\n            email\n        }\n    }": types.CurrentUserDocument,
+    "\n    query ConversationsData($userId: String!) {\n        userConversations(userId: $userId) {\n            id\n            createdAt\n            updatedAt\n            participants {\n                id\n                firstname\n                lastname\n            }\n            messages {\n                id\n                content\n                type\n                createdAt\n                updatedAt\n                contentHistory\n                from {\n                    id\n                }\n            }\n        }\n    }\n": types.ConversationsDataDocument,
 };
 
 /**
@@ -44,6 +45,10 @@ export function gql(source: "\n  mutation SignupMutation($data: SignupInput!) {\
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n    query CurrentUser {\n        currentUser {\n            id\n            firstname\n            lastname\n            email\n        }\n    }"): (typeof documents)["\n    query CurrentUser {\n        currentUser {\n            id\n            firstname\n            lastname\n            email\n        }\n    }"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    query ConversationsData($userId: String!) {\n        userConversations(userId: $userId) {\n            id\n            createdAt\n            updatedAt\n            participants {\n                id\n                firstname\n                lastname\n            }\n            messages {\n                id\n                content\n                type\n                createdAt\n                updatedAt\n                contentHistory\n                from {\n                    id\n                }\n            }\n        }\n    }\n"): (typeof documents)["\n    query ConversationsData($userId: String!) {\n        userConversations(userId: $userId) {\n            id\n            createdAt\n            updatedAt\n            participants {\n                id\n                firstname\n                lastname\n            }\n            messages {\n                id\n                content\n                type\n                createdAt\n                updatedAt\n                contentHistory\n                from {\n                    id\n                }\n            }\n        }\n    }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
