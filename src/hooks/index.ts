@@ -1,3 +1,4 @@
+export { default as useConversationsWatcher } from './useConversationsWatcher';
 export { default as useCurrentUser } from './useCurrentUser';
 export { default as useEquation } from './useEquation';
 export { default as useUserStoreRedirect } from './useUserStoreRedirect';

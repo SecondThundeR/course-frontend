@@ -2,12 +2,13 @@ import { memo } from 'react';
 
 import { ChatBlocks } from '@/components';
 
-import { useCurrentUser, useUserStoreRedirect } from '@/hooks';
+import { useConversationsWatcher, useCurrentUser, useUserStoreRedirect } from '@/hooks';
 
 const Chat = memo(function Chat() {
   const [data, onSignout] = useCurrentUser();
 
   useUserStoreRedirect();
+  useConversationsWatcher();
 
   return <ChatBlocks.Shell user={data} onSignout={onSignout} />;
 });
