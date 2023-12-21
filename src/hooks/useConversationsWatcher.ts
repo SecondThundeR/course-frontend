@@ -2,9 +2,10 @@ import { useCallback, useEffect } from 'react';
 import { useLazyQuery, useSubscription } from '@apollo/client';
 
 import { CONVERSATIONS_DATA } from '@/constants/queries';
+import { CONVERSATION_UPDATES, MESSAGE_UPDATES } from '@/constants/subscriptions';
 
 import { useConversationsStore, useTokensStore, useUserStore } from '@/store';
-import { CONVERSATION_UPDATES, MESSAGE_UPDATES } from '@/constants/subscriptions';
+
 import {
   UpdateType,
   type ConversationUpdatesSubscription,
@@ -56,10 +57,8 @@ export default function useConversationsWatcher() {
   );
 
   const processConversationUpdate = useCallback(
-    (update: ConversationUpdatesSubscription, userId: string) => {
+    (update: ConversationUpdatesSubscription) => {
       const { type, conversation } = update.conversationUpdates;
-
-      if (conversation.participants.findIndex((data) => data.id === userId) === -1) return;
 
       switch (type) {
         case UpdateType.Added:
@@ -74,10 +73,8 @@ export default function useConversationsWatcher() {
   );
 
   const processMessageUpdate = useCallback(
-    (update: MessageUpdatesSubscription, userId: string) => {
+    (update: MessageUpdatesSubscription) => {
       const { type, message } = update.messageUpdates;
-
-      if (message.from?.id === userId) return;
 
       switch (type) {
         case UpdateType.Added:
@@ -99,12 +96,12 @@ export default function useConversationsWatcher() {
   }, [fetchConversations, resetConversations, userId]);
 
   useEffect(() => {
-    if (conversationUpdate === undefined || !userId) return;
-    processConversationUpdate(conversationUpdate, userId);
-  }, [conversationUpdate, processConversationUpdate, userId]);
+    if (conversationUpdate === undefined) return;
+    processConversationUpdate(conversationUpdate);
+  }, [conversationUpdate, processConversationUpdate]);
 
   useEffect(() => {
-    if (messsageUpdate === undefined || !userId) return;
-    processMessageUpdate(messsageUpdate, userId);
-  }, [messsageUpdate, processMessageUpdate, userId]);
+    if (messsageUpdate === undefined) return;
+    processMessageUpdate(messsageUpdate);
+  }, [messsageUpdate, processMessageUpdate]);
 }
