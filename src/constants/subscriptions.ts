@@ -1,8 +1,8 @@
 import { gql } from '@/__generated__';
 
 export const CONVERSATION_UPDATES = gql(`
-    subscription ConversationUpdates {
-        conversationUpdates {
+    subscription ConversationUpdates($userId: String!) {
+        conversationUpdates(userId: $userId) {
             type
             conversation {
                 id
@@ -30,15 +30,15 @@ export const CONVERSATION_UPDATES = gql(`
 `);
 
 export const MESSAGE_UPDATES = gql(`
-    subscription MessageUpdates {
-        messageUpdates {
+    subscription MessageUpdates($userId: String!) {
+        messageUpdates(userId: $userId) {
             type
             message {
                 id
-                content
                 type
-                createdAt
+                content
                 updatedAt
+                createdAt
                 contentHistory
                 from {
                     id

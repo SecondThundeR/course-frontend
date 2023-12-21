@@ -13,6 +13,7 @@ import {
 
 export default function useConversationsWatcher() {
   const { userData } = useUserStore();
+  const userId = userData?.id ?? '';
   const { accessToken } = useTokensStore();
   const {
     setConversations,
@@ -23,10 +24,16 @@ export default function useConversationsWatcher() {
     resetConversations,
   } = useConversationsStore();
   const [getUser] = useLazyQuery(CONVERSATIONS_DATA);
-  const { data: conversationUpdate } = useSubscription(CONVERSATION_UPDATES);
-  const { data: messsageUpdate } = useSubscription(MESSAGE_UPDATES);
-
-  const userId = userData?.id;
+  const { data: conversationUpdate } = useSubscription(CONVERSATION_UPDATES, {
+    variables: {
+      userId,
+    },
+  });
+  const { data: messsageUpdate } = useSubscription(MESSAGE_UPDATES, {
+    variables: {
+      userId,
+    },
+  });
 
   const fetchConversations = useCallback(
     async (userId: string) => {
