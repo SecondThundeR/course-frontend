@@ -1,20 +1,20 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-import { Conversation } from '@/__generated__/graphql';
+import {
+  type MessageUpdatesSubscription,
+  type ConversationsDataQuery,
+} from '@/__generated__/graphql';
 
-type ConversationInfo = Omit<Conversation, 'creatorId' | 'title'> & {
-  participants: Pick<Conversation['participants'][number], 'id' | 'firstname' | 'lastname'>[];
-  messages: (Omit<Conversation['messages'][number], 'conversation' | 'from'> & {
-    from?: Pick<NonNullable<Conversation['messages'][number]['from']>, 'id'>;
-  })[];
-};
+type ConversationInfo = ConversationsDataQuery['userConversations'][number];
 
 type ConversationsStore = {
   conversations: ConversationInfo[];
   setConversations: (conversations: ConversationInfo[]) => void;
   addConversation: (conversation: ConversationInfo) => void;
-  removeConversation: (conversationId: ConversationInfo['id']) => void;
+  removeConversation: (conversationId: string) => void;
+  addMessage: (message: MessageUpdatesSubscription['messageUpdates']['message']) => void;
+  removeMessage: (message: MessageUpdatesSubscription['messageUpdates']['message']) => void;
   resetConversations: () => void;
 };
 
@@ -37,6 +37,44 @@ export const useConversationsStore = create<ConversationsStore>()(
             (conversation) => conversation.id !== conversationId
           ),
         })),
+      addMessage: (message) =>
+        set((state) => {
+          return {
+            conversations: state.conversations.map((conversation) => {
+              if (conversation.id !== message.conversation?.id) return conversation;
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              const { conversation: _conversation, ...restMessage } = message;
+              const { messages, ...restConversation } = conversation;
+              const newMessages = [
+                ...messages,
+                {
+                  ...restMessage,
+                },
+              ];
+
+              return {
+                ...restConversation,
+                messages: [...newMessages],
+              };
+            }),
+          };
+        }),
+      removeMessage: (message) =>
+        set((state) => {
+          return {
+            conversations: state.conversations.map((conversation) => {
+              if (conversation.id !== message.conversation?.id) return conversation;
+              const messageId = message.id;
+              const { messages, ...restConversation } = conversation;
+              const newMessages = messages.filter((message) => message.id !== messageId);
+
+              return {
+                ...restConversation,
+                messages: [...newMessages],
+              };
+            }),
+          };
+        }),
       resetConversations: () => set(() => ({ conversations: [] })),
     }),
     {
