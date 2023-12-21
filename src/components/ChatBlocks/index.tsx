@@ -28,7 +28,7 @@ interface ChatShellProps {
   onSignout: () => void;
 }
 
-interface UserFooterProps extends Pick<ChatShellProps, 'user' | 'onSignout'> {}
+type UserFooterProps = Pick<ChatShellProps, 'user' | 'onSignout'>;
 
 const UserFooter = memo(function UserFooter({ user, onSignout }: UserFooterProps) {
   if (!user) return null;

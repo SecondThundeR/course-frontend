@@ -13,11 +13,9 @@ export default function useUserStoreRedirect(isCheckForLoggedIn = true) {
     const isUserExists = userData !== null;
 
     if (!isUserExists && isCheckForLoggedIn) {
-      return void navigate(ROOT_ROUTE);
+      navigate(ROOT_ROUTE);
+    } else if (isUserExists && !isCheckForLoggedIn) {
+      navigate(CHAT_ROUTE);
     }
-
-    if (isUserExists && !isCheckForLoggedIn) {
-      return void navigate(CHAT_ROUTE);
-    }
-  }, [userData]);
+  }, [isCheckForLoggedIn, navigate, userData]);
 }

@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
-import { LoginInput } from '@/__generated__/graphql';
+import { type LoginInput } from '@/__generated__/graphql';
 
 import { LOGIN_MUTATION } from '@/constants/mutation';
 import { CHAT_ROUTE } from '@/constants/routes';
@@ -14,23 +14,26 @@ export default function useLogin() {
   const { setTokens } = useTokensStore();
   const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION);
 
-  const onLogin = useCallback(async (loginData: LoginInput) => {
-    const res = await loginUser({
-      variables: {
-        data: loginData,
-      },
-    });
-    if (!res.data) return;
+  const onLogin = useCallback(
+    async (loginData: LoginInput) => {
+      const res = await loginUser({
+        variables: {
+          data: loginData,
+        },
+      });
+      if (!res.data) return;
 
-    const {
-      data: {
-        login: { accessToken, refreshToken },
-      },
-    } = res;
+      const {
+        data: {
+          login: { accessToken, refreshToken },
+        },
+      } = res;
 
-    setTokens(accessToken, refreshToken);
-    return navigate(CHAT_ROUTE);
-  }, []);
+      setTokens(accessToken as string, refreshToken as string);
+      navigate(CHAT_ROUTE);
+    },
+    [loginUser, navigate, setTokens]
+  );
 
   return [onLogin, { loading, error }] as const;
 }

@@ -4,7 +4,7 @@ import { ChatBlocks } from '@/components';
 
 import { useConversationsWatcher, useCurrentUser, useUserStoreRedirect } from '@/hooks';
 
-const Chat = memo(function Chat() {
+const Chat = memo(() => {
   const [data, onSignout] = useCurrentUser();
 
   useUserStoreRedirect();

@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
 import { AppShell, Flex, Title, Button } from '@mantine/core';
 import { useHeadroom } from '@mantine/hooks';
 import { Link } from 'react-router-dom';

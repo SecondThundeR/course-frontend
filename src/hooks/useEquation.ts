@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useCallback, useState } from 'react';
+import { type ChangeEventHandler, useCallback, useState } from 'react';
 
 const DEFAULT_EQUATION = '\\int_0^\\infty x^2 dx';
 

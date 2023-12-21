@@ -2,8 +2,6 @@ import { memo } from 'react';
 
 import { RegisterPage } from '@/components';
 
-const Register = memo(function Register() {
-  return <RegisterPage />;
-});
+const Register = memo(() => <RegisterPage />);
 
 export default Register;

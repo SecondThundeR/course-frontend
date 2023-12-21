@@ -4,7 +4,7 @@ import { Landing } from '@/components';
 
 import { useUserStoreRedirect } from '@/hooks';
 
-const Home = memo(function Home() {
+const Home = memo(() => {
   useUserStoreRedirect(false);
 
   return (

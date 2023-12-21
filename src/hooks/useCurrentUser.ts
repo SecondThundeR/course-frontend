@@ -34,23 +34,23 @@ export default function useCurrentUser() {
       return navigate(LOGIN_ROUTE);
     }
 
-    if (!res || !res.data) {
+    if (!res?.data) {
       throw new Error('Failed to fetch user data');
     }
 
     setUserData(res.data.currentUser);
-  }, []);
+  }, [accessToken, getUser, navigate, resetConversations, resetTokens, resetUserData, setUserData]);
 
   const onSignout = useCallback(() => {
     resetTokens();
     resetUserData();
 
     return navigate(ROOT_ROUTE);
-  }, []);
+  }, [navigate, resetTokens, resetUserData]);
 
   useEffect(() => {
     getUserData().catch(console.error);
-  }, []);
+  }, [getUserData]);
 
   return [userData, onSignout] as const;
 }

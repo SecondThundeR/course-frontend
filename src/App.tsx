@@ -14,14 +14,12 @@ const client = new ApolloClient({
   }),
 });
 
-const App = memo(function App() {
-  return (
-    <ApolloProvider client={client}>
-      <MantineProvider theme={theme}>
-        <Router />
-      </MantineProvider>
-    </ApolloProvider>
-  );
-});
+const App = memo(() => (
+  <ApolloProvider client={client}>
+    <MantineProvider theme={theme}>
+      <Router />
+    </MantineProvider>
+  </ApolloProvider>
+));
 
 export default App;

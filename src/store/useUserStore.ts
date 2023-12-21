@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-import { CurrentUserQuery } from '@/__generated__/graphql';
+import { type CurrentUserQuery } from '@/__generated__/graphql';
 
 export type User = CurrentUserQuery['currentUser'];
 
