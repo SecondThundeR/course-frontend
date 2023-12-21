@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 
 import { CurrentUserQuery } from '@/__generated__/graphql';
 
-export type User = Omit<CurrentUserQuery['currentUser'], '__typename'>;
+export type User = CurrentUserQuery['currentUser'];
 
 type UserStore = {
   userData: User | null;
