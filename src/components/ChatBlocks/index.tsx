@@ -4,19 +4,21 @@ import {
   Burger,
   Group,
   ScrollArea,
-  Skeleton,
   Title,
   Flex,
   Button,
   Avatar,
   Text,
+  NavLink as Link,
   rem,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconMessageDots } from '@tabler/icons-react';
-import { Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useParams } from 'react-router-dom';
 
-import { type User } from '@/store';
+import { CHAT_ROUTE } from '@/constants/routes';
+
+import { useConversationsStore, type ConversationInfo, type User } from '@/store';
 
 import { ThemeToggle } from '../ThemeToggle';
 import { SearchInput } from '../SearchInput';
@@ -30,6 +32,16 @@ interface ChatShellProps {
 
 type UserFooterProps = Pick<ChatShellProps, 'user' | 'onSignout'>;
 
+type ChatListProps = {
+  user: User | null;
+  currentChatId?: string;
+};
+
+type ChatListElementProps = Omit<ConversationInfo, 'createdAt' | 'updatedAt'> & {
+  userId?: string;
+  isActive: boolean;
+};
+
 const UserFooter = memo(function UserFooter({ user, onSignout }: UserFooterProps) {
   if (!user) return null;
 
@@ -40,7 +52,7 @@ const UserFooter = memo(function UserFooter({ user, onSignout }: UserFooterProps
   return (
     <Flex direction="column" gap="sm">
       <Flex gap="md" align="center">
-        <Avatar color="cyan" size="md" radius="xl">
+        <Avatar color="blue" size="md" radius="xl">
           {avatarLetters}
         </Avatar>
         <Flex direction="column">
@@ -55,8 +67,70 @@ const UserFooter = memo(function UserFooter({ user, onSignout }: UserFooterProps
   );
 });
 
+const ChatListElement = memo(function ChatListElement({
+  id,
+  messages,
+  participants,
+  userId,
+  isActive,
+}: ChatListElementProps) {
+  const message = messages[messages.length - 1];
+  const { firstname, lastname } = participants.filter((user) => user.id !== userId)[0];
+
+  const fullName = `${firstname}${lastname ? ` ${lastname}` : ''}`;
+  const avatarLetters = `${firstname[0]}${lastname ? `${lastname[0]}` : ''}`;
+  const sentTime = new Date(message.createdAt as string);
+  const formattedTime = `${sentTime.getHours()}:${
+    sentTime.getMinutes() < 10 ? `0${sentTime.getMinutes()}` : sentTime.getMinutes()
+  }`;
+
+  return (
+    <Link
+      component={NavLink}
+      to={`${CHAT_ROUTE}/${id}`}
+      variant="light"
+      active={isActive}
+      leftSection={
+        <Avatar color="blue" size="md" radius="xl">
+          {avatarLetters}
+        </Avatar>
+      }
+      label={<Title order={4}>{fullName}</Title>}
+      description={<Text>{message.content}</Text>}
+      rightSection={
+        <Text c={!isActive ? 'dimmed' : undefined} size="sm">
+          {formattedTime}
+        </Text>
+      }
+      styles={{
+        root: {
+          borderRadius: 8,
+        },
+      }}
+    />
+  );
+});
+
+const ChatList = memo(function ChatList({ user, currentChatId }: ChatListProps) {
+  const { conversations } = useConversationsStore();
+
+  return (
+    <>
+      {conversations.map((conversation) => (
+        <ChatListElement
+          key={conversation.id}
+          userId={user?.id}
+          isActive={conversation.id === currentChatId}
+          {...conversation}
+        />
+      ))}
+    </>
+  );
+});
+
 const ChatShell = memo(function ChatShell({ ...currentUserData }: ChatShellProps) {
   const [opened, { toggle }] = useDisclosure();
+  const { chatId } = useParams();
 
   return (
     <AppShell
@@ -77,12 +151,7 @@ const ChatShell = memo(function ChatShell({ ...currentUserData }: ChatShellProps
           <SearchInput />
         </AppShell.Section>
         <AppShell.Section grow my="md" component={ScrollArea}>
-          Chats placeholder
-          {Array(30)
-            .fill(0)
-            .map((_, index) => (
-              <Skeleton key={index} h={28} mt="sm" animate={false} />
-            ))}
+          <ChatList user={currentUserData.user} currentChatId={chatId} />
         </AppShell.Section>
         <AppShell.Section>
           <UserFooter {...currentUserData} />
