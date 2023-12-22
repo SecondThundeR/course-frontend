@@ -6,7 +6,7 @@ import {
   type ConversationsDataQuery,
 } from '@/__generated__/graphql';
 
-type ConversationInfo = ConversationsDataQuery['userConversations'][number];
+export type ConversationInfo = ConversationsDataQuery['userConversations'][number];
 
 type ConversationsStore = {
   conversations: ConversationInfo[];
