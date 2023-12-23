@@ -17,3 +17,29 @@ export const SIGNUP_MUTATION = gql(`
     }
   }
 `);
+
+export const CREATE_CONVERSATION = gql(`
+  mutation CreateConversation($data: CreateConversationInput!) {
+    createConversation(data: $data) {
+      id
+      createdAt
+      updatedAt
+      participants {
+        id
+        firstname
+        lastname
+      }
+      messages {
+        id
+        content
+        type
+        createdAt
+        updatedAt
+        contentHistory
+        from {
+            id
+        }
+      }
+    }
+  }
+`);
