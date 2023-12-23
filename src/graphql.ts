@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, HttpLink, split } from '@apollo/client';
+import { ApolloClient, InMemoryCache, HttpLink, split, type DefaultOptions } from '@apollo/client';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Kind, OperationTypeNode } from 'graphql';
@@ -26,9 +26,21 @@ const splitLink = split(
   httpLink
 );
 
+const defaultOptions: DefaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  },
+};
+
 export const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache({
     addTypename: false,
   }),
+  defaultOptions,
 });
