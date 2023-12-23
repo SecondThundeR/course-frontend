@@ -24,7 +24,7 @@ export default function useConversationsWatcher() {
     removeMessage,
     resetConversations,
   } = useConversationsStore();
-  const [getUser] = useLazyQuery(CONVERSATIONS_DATA);
+  const [getConversations] = useLazyQuery(CONVERSATIONS_DATA);
   const { data: conversationUpdate } = useSubscription(CONVERSATION_UPDATES, {
     variables: {
       userId,
@@ -38,13 +38,13 @@ export default function useConversationsWatcher() {
 
   const fetchConversations = useCallback(
     async (userId: string) => {
-      const res = await getUser({
+      const res = await getConversations({
         variables: {
           userId,
         },
         context: {
           headers: {
-            authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         },
       });
@@ -53,7 +53,7 @@ export default function useConversationsWatcher() {
 
       setConversations(res.data.userConversations);
     },
-    [accessToken, getUser, setConversations]
+    [accessToken, getConversations, setConversations]
   );
 
   const processConversationUpdate = useCallback(

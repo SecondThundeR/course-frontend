@@ -14,6 +14,12 @@ export default function useCurrentUser() {
   const { accessToken, resetTokens } = useTokensStore();
   const { resetConversations } = useConversationsStore();
 
+  const resetData = useCallback(() => {
+    resetUserData();
+    resetTokens();
+    resetConversations();
+  }, [resetConversations, resetTokens, resetUserData]);
+
   const getUserData = useCallback(async () => {
     if (!accessToken) {
       return navigate(ROOT_ROUTE);
@@ -22,15 +28,13 @@ export default function useCurrentUser() {
     const res = await getUser({
       context: {
         headers: {
-          authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       },
     });
 
     if (res?.error?.message === 'Unauthorized') {
-      resetUserData();
-      resetTokens();
-      resetConversations();
+      resetData();
       return navigate(LOGIN_ROUTE);
     }
 
@@ -39,18 +43,16 @@ export default function useCurrentUser() {
     }
 
     setUserData(res.data.currentUser);
-  }, [accessToken, getUser, navigate, resetConversations, resetTokens, resetUserData, setUserData]);
+  }, [accessToken, getUser, navigate, resetData, setUserData]);
 
   const onSignout = useCallback(() => {
-    resetTokens();
-    resetUserData();
-
+    resetData();
     return navigate(ROOT_ROUTE);
-  }, [navigate, resetTokens, resetUserData]);
+  }, [navigate, resetData]);
 
   useEffect(() => {
     getUserData().catch(console.error);
   }, [getUserData]);
 
-  return [userData, onSignout] as const;
+  return { userData, onSignout };
 }
