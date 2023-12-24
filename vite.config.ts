@@ -14,6 +14,7 @@ export default defineConfig({
       '@/pages': resolve(__dirname, './src/pages'),
       '@/router': resolve(__dirname, './src/router'),
       '@/store': resolve(__dirname, './src/store'),
+      '@/utils': resolve(__dirname, './src/utils'),
     },
   },
 });
