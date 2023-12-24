@@ -9,6 +9,7 @@ module.exports = {
         'mantine-breakpoint-lg': '75em',
         'mantine-breakpoint-xl': '88em',
         'chatshell-outlet-height': 'calc(100dvh - 60px)',
+        'chatmessages-wrapper-height': 'calc(100dvh - 157px)',
       },
     },
   },

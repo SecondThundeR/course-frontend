@@ -1,3 +1,5 @@
+import 'katex/dist/katex.min.css';
+
 import { memo } from 'react';
 import {
   AppShell,
@@ -15,24 +17,27 @@ import {
   TextInput,
   Checkbox,
   Alert,
+  ActionIcon,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
-import { IconMessage2, IconMessage2Plus, IconCircleX } from '@tabler/icons-react';
-import { NavLink, Outlet, useParams } from 'react-router-dom';
+import { BlockMath } from 'react-katex';
+import { IconMessage2, IconMessage2Plus, IconCircleX, IconSend } from '@tabler/icons-react';
+import { NavLink, Navigate, Outlet, useParams } from 'react-router-dom';
 
 import { CHAT_ROUTE } from '@/constants/routes';
 
 import { useChatCreate, useCurrentUser, useModal } from '@/hooks';
 
-import { useConversationsStore, type ConversationInfo, type User } from '@/store';
+import { useConversationsStore, type ConversationInfo, type User, useUserStore } from '@/store';
 
-import { MessageType } from '@/__generated__/graphql';
+import { type Message, MessageType } from '@/__generated__/graphql';
 
 import { ThemeToggle } from '../ThemeToggle';
 import { SearchInput } from '../SearchInput';
 
 import classes from './ChatBlocks.module.css';
+import { timeFormat } from '@/utils/timeFormat';
 
 interface UserFooterProps {
   user: User | null;
@@ -97,10 +102,7 @@ const ChatListElement = memo(function ChatListElement({
 
   const fullName = `${firstname}${lastname ? ` ${lastname}` : ''}`;
   const avatarLetters = `${firstname[0]}${!!lastname ? `${lastname[0]}` : ''}`;
-  const sentTime = new Date(message.createdAt as string);
-  const formattedTime = `${sentTime.getHours()}:${
-    sentTime.getMinutes() < 10 ? `0${sentTime.getMinutes()}` : sentTime.getMinutes()
-  }`;
+  const formattedTime = timeFormat(message.createdAt as string);
   const isLatex = message.type === MessageType.Latex;
 
   return (
@@ -135,7 +137,7 @@ const ChatListElement = memo(function ChatListElement({
 });
 
 const ChatList = memo(function ChatList({ user, currentChatId }: ChatListProps) {
-  const { conversations } = useConversationsStore();
+  const conversations = useConversationsStore((state) => state.conversations);
 
   return (
     <>
@@ -257,7 +259,7 @@ const ChatShell = memo(function ChatShell() {
 });
 
 const ChatPlaceholder = memo(function ChatPlaceholder() {
-  const { conversations } = useConversationsStore();
+  const conversations = useConversationsStore((state) => state.conversations);
   const hasChats = conversations.length > 0;
   const iconSettings = {
     style: { width: rem(96), height: rem(96) },
@@ -289,6 +291,108 @@ const ChatPlaceholder = memo(function ChatPlaceholder() {
   );
 });
 
+const ChatInput = memo(function ChatInput({ conversationId }: { conversationId: string }) {
+  const form = useForm({
+    initialValues: {
+      message: '',
+      isLatex: false,
+    },
+
+    validate: {
+      message: (value) => (value.length > 0 ? null : 'Сообщение не может быть пустым'),
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit((values) => {})} className={classes.chat__input}>
+      <Flex p="md" direction="column" gap="xs">
+        <Flex gap="md" align="center">
+          <TextInput w="100%" placeholder="Введите сообщение" {...form.getInputProps('message')} />
+          <ActionIcon type="submit" size="36" disabled={form.values.message.length === 0}>
+            <IconSend className={classes.chat_message__send} />
+          </ActionIcon>
+        </Flex>
+        <Checkbox label="Отправить как LaTeX сообщение" {...form.getInputProps('isLatex')} />
+      </Flex>
+    </form>
+  );
+});
+
+type ChatMessageProps = Pick<Message, 'content' | 'type'> & {
+  createdAt: string;
+};
+
+const ChatMessageFrom = memo(function ChatMessageFrom({
+  content,
+  type,
+  createdAt,
+}: ChatMessageProps) {
+  return (
+    <Flex w="100%" justify="flex-end">
+      <Flex
+        w="fit-content"
+        direction="column"
+        align="flex-end"
+        p="md"
+        className={classes.chat_message__from}
+      >
+        <Text className={classes.chat_message__from_text}>
+          {type === MessageType.Latex ? <BlockMath math={content} /> : content}
+        </Text>
+        <Text className={classes.chat_message__from_time}>{timeFormat(createdAt)}</Text>
+      </Flex>
+    </Flex>
+  );
+});
+
+const ChatMessageTo = memo(function ChatMessageTo({ content, type, createdAt }: ChatMessageProps) {
+  return (
+    <Flex
+      w="fit-content"
+      direction="column"
+      align="flex-start"
+      p="md"
+      className={classes.chat_message__to}
+    >
+      <Text>{type === MessageType.Latex ? <BlockMath math={content} /> : content}</Text>
+      <Text c="dimmed">{timeFormat(createdAt)}</Text>
+    </Flex>
+  );
+});
+
+const ChatConversation = memo(function ChatConversation() {
+  const { chatId } = useParams();
+  const userData = useUserStore((state) => state.userData);
+  const conversations = useConversationsStore((state) => state.conversations);
+
+  const currentConversation = conversations.filter((conversation) => conversation.id === chatId)[0];
+  if (!currentConversation) {
+    return <Navigate to={CHAT_ROUTE} />;
+  }
+
+  const chatMessages = currentConversation.messages
+    .toReversed()
+    .map(({ id, content, createdAt, type, from }) => {
+      if (from?.id === userData?.id) {
+        return (
+          <ChatMessageTo key={id} content={content} createdAt={createdAt as string} type={type} />
+        );
+      }
+      return (
+        <ChatMessageFrom key={id} content={content} createdAt={createdAt as string} type={type} />
+      );
+    });
+
+  return (
+    <Flex w="100%" direction="column">
+      <Flex direction="column-reverse" gap="md" className={classes.chat_messages__wrapper} p="md">
+        {chatMessages}
+      </Flex>
+      <ChatInput conversationId="" />
+    </Flex>
+  );
+});
+
 const ChatBase = memo(function ChatBase() {
   throw new Error("Doesn't use this `Chat` component. Export other components via dot notation");
 });
@@ -296,4 +400,5 @@ const ChatBase = memo(function ChatBase() {
 export const ChatBlocks = Object.assign(ChatBase, {
   Shell: ChatShell,
   Placeholder: ChatPlaceholder,
+  Conversation: ChatConversation,
 });

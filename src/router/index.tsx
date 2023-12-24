@@ -11,6 +11,7 @@ import {
 } from '@/constants/routes';
 
 const LazyChat = lazy(() => import('../pages/Chat.page'));
+const LazyChatConversation = lazy(() => import('../pages/ChatConversation.page'));
 const LazyChatIndex = lazy(() => import('../pages/ChatIndex.page'));
 const LazyHome = lazy(() => import('../pages/Home.page'));
 const LazyLogin = lazy(() => import('../pages/Login.page'));
@@ -71,7 +72,11 @@ const router = createBrowserRouter([
       },
       {
         path: CHAT_ID_ROUTE,
-        element: null,
+        element: (
+          <Suspense fallback={null}>
+            <LazyChatConversation />
+          </Suspense>
+        ),
       },
     ],
   },
