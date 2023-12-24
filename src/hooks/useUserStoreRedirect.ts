@@ -7,7 +7,7 @@ import { useUserStore } from '@/store';
 
 export default function useUserStoreRedirect(isCheckForLoggedIn = true) {
   const navigate = useNavigate();
-  const { userData } = useUserStore();
+  const userData = useUserStore((state) => state.userData);
 
   useEffect(() => {
     const isUserExists = userData !== null;

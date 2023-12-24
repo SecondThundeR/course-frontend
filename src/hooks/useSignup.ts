@@ -11,7 +11,7 @@ import { useTokensStore } from '@/store';
 
 export default function useSignup() {
   const navigate = useNavigate();
-  const { setTokens } = useTokensStore();
+  const setTokens = useTokensStore((state) => state.setTokens);
   const [signupUser, { loading, error }] = useMutation(SIGNUP_MUTATION);
 
   const onSignup = useCallback(

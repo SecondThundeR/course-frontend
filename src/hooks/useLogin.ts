@@ -11,7 +11,7 @@ import { useTokensStore } from '@/store';
 
 export default function useLogin() {
   const navigate = useNavigate();
-  const { setTokens } = useTokensStore();
+  const setTokens = useTokensStore((state) => state.setTokens);
   const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION);
   const [searchParams, setSearchParams] = useSearchParams();
 

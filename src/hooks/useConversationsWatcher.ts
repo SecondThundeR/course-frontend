@@ -13,9 +13,9 @@ import {
 } from '@/__generated__/graphql';
 
 export default function useConversationsWatcher() {
-  const { userData } = useUserStore();
+  const userData = useUserStore((state) => state.userData);
   const userId = userData?.id ?? '';
-  const { accessToken } = useTokensStore();
+  const accessToken = useTokensStore((state) => state.accessToken);
   const {
     setConversations,
     addConversation,

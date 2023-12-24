@@ -15,8 +15,8 @@ type OnCreateArgs = {
 };
 
 export default function useChatCreate() {
-  const { accessToken } = useTokensStore();
-  const { addConversation } = useConversationsStore();
+  const accessToken = useTokensStore((state) => state.accessToken);
+  const addConversation = useConversationsStore((state) => state.addConversation);
   const [createChat, { loading, error }] = useMutation(CREATE_CONVERSATION);
   const navigate = useNavigate();
 
