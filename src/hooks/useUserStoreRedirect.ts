@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { CHAT_ROUTE, ROOT_ROUTE } from '@/constants/routes';
+import { CHAT_ROUTE, LOGIN_ROUTE } from '@/constants/routes';
 
 import { useUserStore } from '@/store';
 
@@ -13,7 +13,7 @@ export default function useUserStoreRedirect(isCheckForLoggedIn = true) {
     const isUserExists = userData !== null;
 
     if (!isUserExists && isCheckForLoggedIn) {
-      navigate(ROOT_ROUTE);
+      navigate(`${LOGIN_ROUTE}?status=not-logged-in`);
     } else if (isUserExists && !isCheckForLoggedIn) {
       navigate(CHAT_ROUTE);
     }

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
 import { type LoginInput } from '@/__generated__/graphql';
@@ -13,9 +13,15 @@ export default function useLogin() {
   const navigate = useNavigate();
   const { setTokens } = useTokensStore();
   const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const isSessionExpired = searchParams.get('status') === 'session-expired';
+  const isNotLoggedIn = searchParams.get('status') === 'not-logged-in';
 
   const onLogin = useCallback(
     async (loginData: LoginInput) => {
+      setSearchParams(undefined);
+
       const res = await loginUser({
         variables: {
           data: loginData,
@@ -32,8 +38,8 @@ export default function useLogin() {
       setTokens(accessToken as string, refreshToken as string);
       navigate(CHAT_ROUTE);
     },
-    [loginUser, navigate, setTokens]
+    [loginUser, navigate, setSearchParams, setTokens]
   );
 
-  return [onLogin, { loading, error }] as const;
+  return [onLogin, { isSessionExpired, isNotLoggedIn, loading, error }] as const;
 }

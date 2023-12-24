@@ -19,7 +19,7 @@ import classes from './LoginPage.module.css';
 
 export function LoginPage() {
   const form = useLoginForm();
-  const [onLogin, { loading, error }] = useLogin();
+  const [onLogin, { isSessionExpired, isNotLoggedIn, loading, error }] = useLogin();
 
   useUserStoreRedirect(false);
 
@@ -42,6 +42,19 @@ export function LoginPage() {
           <strong>{error.message}</strong>
         </Alert>
       )}
+
+      {isSessionExpired && (
+        <Alert variant="filled" color="red" mt="md">
+          Сессия истекла! Войдите снова в систему
+        </Alert>
+      )}
+
+      {isNotLoggedIn && (
+        <Alert variant="filled" color="red" mt="md">
+          Войдите, чтобы продолжить
+        </Alert>
+      )}
+
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form onSubmit={form.onSubmit((values) => onLogin(values))}>
           <TextInput

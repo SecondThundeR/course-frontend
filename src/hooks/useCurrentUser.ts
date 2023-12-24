@@ -35,7 +35,7 @@ export default function useCurrentUser() {
 
     if (res?.error?.message === 'Unauthorized') {
       resetData();
-      return navigate(LOGIN_ROUTE);
+      return navigate(`${LOGIN_ROUTE}?status=session-expired`);
     }
 
     if (!res?.data) {
