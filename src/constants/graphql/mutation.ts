@@ -31,11 +31,11 @@ export const CREATE_CONVERSATION = gql(`
       }
       messages {
         id
-        content
         type
+        content
+        contentHistory
         createdAt
         updatedAt
-        contentHistory
         from {
             id
         }
@@ -50,14 +50,33 @@ export const CREATE_MESSAGE = gql(`
       id
       type
       content
-      updatedAt
-      createdAt
       contentHistory
+      createdAt
+      updatedAt
       from {
-          id
+        id
       }
       conversation {
-          id
+        id
+      }
+    }
+  }
+`);
+
+export const DELETE_MESSAGE = gql(`
+  mutation DeleteMessage($messageId: String!) {
+    deleteMessage(messageId: $messageId) {
+      id
+      type
+      content
+      contentHistory
+      createdAt
+      updatedAt
+      from {
+        id
+      }
+      conversation {
+        id
       }
     }
   }

@@ -10,6 +10,7 @@ export { default as useEquation } from './useEquation';
 export { default as useUserStoreRedirect } from './useUserStoreRedirect';
 export { default as useLogin } from './useLogin';
 export { default as useLoginForm } from './useLoginForm';
+export { default as useMessageModalDelete } from './useMessageModalDelete';
 export { default as useModal } from './useModal';
 export { default as useSearch } from './useSearch';
 export { default as useSignup } from './useSignup';

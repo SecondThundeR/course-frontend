@@ -33,11 +33,23 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
     .map(({ id, content, createdAt, type, from }) => {
       if (from?.id !== userData?.id) {
         return (
-          <Message.To key={id} content={content} createdAt={createdAt as string} type={type} />
+          <Message.To
+            key={id}
+            id={id}
+            content={content}
+            createdAt={createdAt as string}
+            type={type}
+          />
         );
       }
       return (
-        <Message.From key={id} content={content} createdAt={createdAt as string} type={type} />
+        <Message.From
+          key={id}
+          id={id}
+          content={content}
+          createdAt={createdAt as string}
+          type={type}
+        />
       );
     });
 
