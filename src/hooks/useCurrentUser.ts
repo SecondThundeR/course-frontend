@@ -8,14 +8,14 @@ import { CURRENT_USER } from '@/constants/graphql/queries';
 import { useConversationsStore, useTokensStore, useUserStore } from '@/store';
 
 export default function useCurrentUser() {
-  const navigate = useNavigate();
-  const [getUser] = useLazyQuery(CURRENT_USER);
   const { userData, setUserData, resetUserData } = useUserStore();
   const { accessToken, resetTokens } = useTokensStore((state) => ({
     accessToken: state.accessToken,
     resetTokens: state.resetTokens,
   }));
   const resetConversations = useConversationsStore((state) => state.resetConversations);
+  const [getUser] = useLazyQuery(CURRENT_USER);
+  const navigate = useNavigate();
 
   const resetData = useCallback(() => {
     resetUserData();

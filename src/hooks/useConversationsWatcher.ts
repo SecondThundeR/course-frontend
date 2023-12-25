@@ -13,8 +13,6 @@ import {
 } from '@/__generated__/graphql';
 
 export default function useConversationsWatcher() {
-  const userData = useUserStore((state) => state.userData);
-  const userId = userData?.id ?? '';
   const accessToken = useTokensStore((state) => state.accessToken);
   const {
     setConversations,
@@ -24,6 +22,8 @@ export default function useConversationsWatcher() {
     removeMessage,
     resetConversations,
   } = useConversationsStore();
+  const userData = useUserStore((state) => state.userData);
+  const userId = userData?.id ?? '';
   const [getConversations] = useLazyQuery(CONVERSATIONS_DATA);
   const { data: conversationUpdate } = useSubscription(CONVERSATION_UPDATES, {
     variables: {
@@ -91,7 +91,6 @@ export default function useConversationsWatcher() {
   useEffect(() => {
     if (!userId) return;
     fetchConversations(userId).catch(console.error);
-
     return () => resetConversations();
   }, [fetchConversations, resetConversations, userId]);
 

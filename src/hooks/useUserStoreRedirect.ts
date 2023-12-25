@@ -6,8 +6,8 @@ import { CHAT_ROUTE, LOGIN_ROUTE } from '@/constants/routes';
 import { useUserStore } from '@/store';
 
 export default function useUserStoreRedirect(isCheckForLoggedIn = true) {
-  const navigate = useNavigate();
   const userData = useUserStore((state) => state.userData);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const isUserExists = userData !== null;
