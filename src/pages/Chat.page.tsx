@@ -10,7 +10,7 @@ const Chat = memo(() => {
 
   return (
     <Suspense>
-      <LazyChatShell />;
+      <LazyChatShell />
     </Suspense>
   );
 });
