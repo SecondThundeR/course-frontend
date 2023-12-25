@@ -4,6 +4,8 @@ import { Navigate, useParams } from 'react-router-dom';
 
 import { CHAT_ROUTE } from '@/constants/routes';
 
+import { useChatSend } from '@/hooks';
+
 import { useConversationsStore, useUserStore } from '@/store';
 
 import { Input } from '../Input';
@@ -15,6 +17,7 @@ export const Conversation = memo(function Conversation() {
   const { chatId } = useParams();
   const userData = useUserStore((state) => state.userData);
   const conversations = useConversationsStore((state) => state.conversations);
+  const { onSend, loading } = useChatSend(chatId);
 
   const currentConversation = conversations.filter((conversation) => conversation.id === chatId)[0];
   if (!currentConversation) {
@@ -24,7 +27,7 @@ export const Conversation = memo(function Conversation() {
   const chatMessages = currentConversation.messages
     .toReversed()
     .map(({ id, content, createdAt, type, from }) => {
-      if (from?.id === userData?.id) {
+      if (from?.id !== userData?.id) {
         return (
           <Message.To key={id} content={content} createdAt={createdAt as string} type={type} />
         );
@@ -39,11 +42,7 @@ export const Conversation = memo(function Conversation() {
       <Flex direction="column-reverse" gap="md" className={classes.messages__wrapper} p="md">
         {chatMessages}
       </Flex>
-      <Input
-        onSubmit={() => {
-          console.log();
-        }}
-      />
+      <Input isLoading={loading} onSubmit={onSend} />
     </Flex>
   );
 });
