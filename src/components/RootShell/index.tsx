@@ -7,7 +7,7 @@ import { LOGIN_ROUTE, REGISTER_ROUTE } from '@/constants/routes';
 
 import { ThemeToggle } from '../';
 
-export function RootShell({ children }: PropsWithChildren) {
+function RootShell({ children }: PropsWithChildren) {
   const pinned = useHeadroom({ fixedAt: 120 });
 
   return (
@@ -30,3 +30,5 @@ export function RootShell({ children }: PropsWithChildren) {
     </AppShell>
   );
 }
+
+export default RootShell;

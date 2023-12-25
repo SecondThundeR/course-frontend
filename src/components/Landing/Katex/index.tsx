@@ -1,3 +1,5 @@
+import 'katex/dist/katex.min.css';
+
 import { memo } from 'react';
 import { BlockMath } from 'react-katex';
 import { Title, Text, TextInput } from '@mantine/core';
@@ -6,7 +8,7 @@ import { useEquation } from '@/hooks';
 
 import classes from './Katex.module.css';
 
-export const LandingKatex = memo(function LandingKatex() {
+const LandingKatex = memo(function LandingKatex() {
   const { equation, onChange } = useEquation();
 
   return (
@@ -30,3 +32,5 @@ export const LandingKatex = memo(function LandingKatex() {
     </div>
   );
 });
+
+export default LandingKatex;

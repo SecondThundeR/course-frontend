@@ -1,19 +1,22 @@
-import { memo } from 'react';
-
-import { Landing } from '@/components';
+import { memo, lazy, Suspense } from 'react';
 
 import { useUserStoreRedirect } from '@/hooks';
+
+const LazyLandingHero = lazy(() => import('../components/Landing/Hero'));
+const LazyLandingFeatures = lazy(() => import('../components/Landing/Features'));
+const LazyLandingKatex = lazy(() => import('../components/Landing/Katex'));
+const LazyLandingFAQ = lazy(() => import('../components/Landing/FAQ'));
 
 const Home = memo(() => {
   useUserStoreRedirect(false);
 
   return (
-    <>
-      <Landing.Hero />
-      <Landing.Features />
-      <Landing.Katex />
-      <Landing.FAQ />
-    </>
+    <Suspense>
+      <LazyLandingHero />
+      <LazyLandingFeatures />
+      <LazyLandingKatex />
+      <LazyLandingFAQ />
+    </Suspense>
   );
 });
 

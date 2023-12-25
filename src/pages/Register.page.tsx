@@ -1,7 +1,11 @@
-import { memo } from 'react';
+import { memo, lazy, Suspense } from 'react';
 
-import { RegisterPage } from '@/components';
+const LazyRegisterPage = lazy(() => import('../components/RegisterPage'));
 
-const Register = memo(() => <RegisterPage />);
+const Register = memo(() => (
+  <Suspense>
+    <LazyRegisterPage />
+  </Suspense>
+));
 
 export default Register;

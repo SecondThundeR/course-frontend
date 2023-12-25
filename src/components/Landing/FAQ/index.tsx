@@ -5,7 +5,7 @@ import { FAQ_DATA } from '@/constants/landing/faq';
 
 import classes from './FAQ.module.css';
 
-export const LandingFAQ = memo(function LandingFAQ() {
+const LandingFAQ = memo(function LandingFAQ() {
   return (
     <Container size="sm" className={classes.wrapper}>
       <Title ta="center" className={classes.title}>
@@ -22,3 +22,5 @@ export const LandingFAQ = memo(function LandingFAQ() {
     </Container>
   );
 });
+
+export default LandingFAQ;

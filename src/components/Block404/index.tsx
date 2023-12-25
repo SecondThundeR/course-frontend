@@ -7,7 +7,7 @@ import { ROOT_ROUTE } from '@/constants/routes';
 import { Illustration } from './illustration';
 import classes from './Block404.module.css';
 
-export const Block404 = memo(function Block404() {
+const Block404 = memo(function Block404() {
   return (
     <Container className={classes.root}>
       <div className={classes.inner}>
@@ -28,3 +28,5 @@ export const Block404 = memo(function Block404() {
     </Container>
   );
 });
+
+export default Block404;

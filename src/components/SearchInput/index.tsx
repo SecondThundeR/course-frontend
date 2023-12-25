@@ -3,7 +3,7 @@ import { TextInput } from '@mantine/core';
 
 import { useSearch } from '@/hooks';
 
-export const SearchInput = memo(function SearchInput() {
+const SearchInput = memo(function SearchInput() {
   const { q, onChange } = useSearch();
 
   return (
@@ -18,3 +18,5 @@ export const SearchInput = memo(function SearchInput() {
     />
   );
 });
+
+export default SearchInput;

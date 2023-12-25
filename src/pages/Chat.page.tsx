@@ -1,14 +1,18 @@
-import { memo } from 'react';
-
-import { ChatBlocks } from '@/components';
+import { Suspense, lazy, memo } from 'react';
 
 import { useConversationsWatcher, useUserStoreRedirect } from '@/hooks';
+
+const LazyChatShell = lazy(() => import('../components/Chat/Shell'));
 
 const Chat = memo(() => {
   useUserStoreRedirect();
   useConversationsWatcher();
 
-  return <ChatBlocks.Shell />;
+  return (
+    <Suspense>
+      <LazyChatShell />;
+    </Suspense>
+  );
 });
 
 export default Chat;

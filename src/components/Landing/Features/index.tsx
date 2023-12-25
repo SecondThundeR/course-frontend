@@ -5,7 +5,7 @@ import { FEATURES } from '@/constants/landing/features';
 
 import classes from './Features.module.css';
 
-export const LandingFeatures = memo(function LandingFeatures() {
+const LandingFeatures = memo(function LandingFeatures() {
   const theme = useMantineTheme();
   const features = FEATURES.map((feature) => (
     <Card key={feature.id} shadow="md" radius="md" className={classes.card} padding="xl">
@@ -38,3 +38,5 @@ export const LandingFeatures = memo(function LandingFeatures() {
     </Container>
   );
 });
+
+export default LandingFeatures;

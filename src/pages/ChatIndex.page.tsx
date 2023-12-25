@@ -1,7 +1,11 @@
-import { memo } from 'react';
+import { Suspense, lazy, memo } from 'react';
 
-import { ChatBlocks } from '@/components';
+const LazyChatPlaceholder = lazy(() => import('../components/Chat/Placeholder'));
 
-const ChatIndex = memo(() => <ChatBlocks.Placeholder />);
+const ChatIndex = memo(() => (
+  <Suspense>
+    <LazyChatPlaceholder />
+  </Suspense>
+));
 
 export default ChatIndex;

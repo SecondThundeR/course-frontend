@@ -3,8 +3,7 @@ import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { AppShell, Flex, Group, Burger, Title, ScrollArea, em } from '@mantine/core';
 import { Outlet, useParams } from 'react-router-dom';
 
-import { SearchInput } from '@/components/SearchInput';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { SearchInput, ThemeToggle } from '@/components';
 
 import { useCurrentUser, useModal } from '@/hooks';
 
@@ -16,7 +15,7 @@ import { CreateModal } from '../CreateModal';
 import { List } from '../List';
 import { UserFooter } from '../UserFooter';
 
-export const Shell = memo(function Shell() {
+const Shell = memo(function Shell() {
   const { userData, onSignout } = useCurrentUser();
   const { modalOpened, onOpen, onClose } = useModal();
   const [opened, { toggle, close }] = useDisclosure();
@@ -77,3 +76,5 @@ export const Shell = memo(function Shell() {
     </>
   );
 });
+
+export default Shell;

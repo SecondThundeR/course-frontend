@@ -23,7 +23,7 @@ const router = createBrowserRouter([
   {
     path: ROOT_ROUTE,
     element: (
-      <Suspense fallback={null}>
+      <Suspense>
         <LazyRoot />
       </Suspense>
     ),
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       {
         path: ROOT_ROUTE,
         element: (
-          <Suspense fallback={null}>
+          <Suspense>
             <LazyHome />
           </Suspense>
         ),
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
   {
     path: LOGIN_ROUTE,
     element: (
-      <Suspense fallback={null}>
+      <Suspense>
         <LazyLogin />
       </Suspense>
     ),
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
   {
     path: REGISTER_ROUTE,
     element: (
-      <Suspense fallback={null}>
+      <Suspense>
         <LazyRegister />
       </Suspense>
     ),
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
   {
     path: CHAT_ROUTE,
     element: (
-      <Suspense fallback={null}>
+      <Suspense>
         <LazyChat />
       </Suspense>
     ),
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <Suspense fallback={null}>
+          <Suspense>
             <LazyChatIndex />
           </Suspense>
         ),
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
       {
         path: CHAT_ID_ROUTE,
         element: (
-          <Suspense fallback={null}>
+          <Suspense>
             <LazyChatConversation />
           </Suspense>
         ),
@@ -83,7 +83,7 @@ const router = createBrowserRouter([
   {
     path: ANY_ROUTE,
     element: (
-      <Suspense fallback={null}>
+      <Suspense>
         <LazyNotFound />
       </Suspense>
     ),

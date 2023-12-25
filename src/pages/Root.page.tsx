@@ -1,12 +1,14 @@
-import { memo } from 'react';
+import { memo, lazy, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { RootShell } from '@/components';
+const LazyRootShell = lazy(() => import('../components/RootShell'));
 
 const Root = memo(() => (
-  <RootShell>
-    <Outlet />
-  </RootShell>
+  <Suspense>
+    <LazyRootShell>
+      <Outlet />
+    </LazyRootShell>
+  </Suspense>
 ));
 
 export default Root;

@@ -1,7 +1,11 @@
-import { memo } from 'react';
+import { memo, lazy, Suspense } from 'react';
 
-import { Block404 } from '@/components';
+const LazyBlock404 = lazy(() => import('../components/Block404'));
 
-const NotFound = memo(() => <Block404 />);
+const NotFound = memo(() => (
+  <Suspense>
+    <LazyBlock404 />
+  </Suspense>
+));
 
 export default NotFound;

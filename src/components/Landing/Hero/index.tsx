@@ -6,7 +6,7 @@ import { LOGIN_ROUTE } from '@/constants/routes';
 
 import classes from './Hero.module.css';
 
-export const LandingHero = memo(function LandingHero() {
+const LandingHero = memo(function LandingHero() {
   return (
     <div className={classes.wrapper}>
       <Container size={700} className={classes.inner}>
@@ -37,3 +37,5 @@ export const LandingHero = memo(function LandingHero() {
     </div>
   );
 });
+
+export default LandingHero;

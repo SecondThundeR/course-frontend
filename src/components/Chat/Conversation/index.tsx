@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Flex } from '@mantine/core';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import { CHAT_ROUTE } from '@/constants/routes';
 
@@ -13,8 +13,11 @@ import { Message } from '../Message';
 
 import classes from './Conversation.module.css';
 
-export const Conversation = memo(function Conversation() {
-  const { chatId } = useParams();
+type ConversationProps = {
+  chatId?: string;
+};
+
+const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
   const { onSend, loading } = useChatSend(chatId);
   const userData = useUserStore((state) => state.userData);
   const conversations = useConversationsStore((state) => state.conversations);
@@ -48,3 +51,5 @@ export const Conversation = memo(function Conversation() {
     </Flex>
   );
 });
+
+export default Conversation;

@@ -6,7 +6,7 @@ import { useConversationsStore } from '@/store';
 
 import classes from './Placeholder.module.css';
 
-export const Placeholder = memo(function Placeholder() {
+const Placeholder = memo(function Placeholder() {
   const conversations = useConversationsStore((state) => state.conversations);
   const hasChats = conversations.length > 0;
   const iconSettings = {
@@ -32,3 +32,5 @@ export const Placeholder = memo(function Placeholder() {
     </Flex>
   );
 });
+
+export default Placeholder;

@@ -1,7 +1,11 @@
-import { memo } from 'react';
+import { Suspense, lazy, memo } from 'react';
 
-import { LoginPage } from '@/components';
+const LazyLoginPage = lazy(() => import('../components/LoginPage'));
 
-const Login = memo(() => <LoginPage />);
+const Login = memo(() => (
+  <Suspense>
+    <LazyLoginPage />
+  </Suspense>
+));
 
 export default Login;

@@ -18,7 +18,7 @@ import { useUserStoreRedirect, useLogin, useLoginForm } from '@/hooks';
 
 import classes from './LoginPage.module.css';
 
-export const LoginPage = memo(function LoginPage() {
+const LoginPage = memo(function LoginPage() {
   const form = useLoginForm();
   const [onLogin, { isSessionExpired, isNotLoggedIn, loading, error }] = useLogin();
 
@@ -81,3 +81,5 @@ export const LoginPage = memo(function LoginPage() {
     </Container>
   );
 });
+
+export default LoginPage;

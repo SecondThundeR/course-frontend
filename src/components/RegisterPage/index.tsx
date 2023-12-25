@@ -18,7 +18,7 @@ import { useUserStoreRedirect, useSignup, useSignupForm } from '@/hooks';
 
 import classes from './RegisterPage.module.css';
 
-export const RegisterPage = memo(function RegisterPage() {
+const RegisterPage = memo(function RegisterPage() {
   const form = useSignupForm();
   const [onSignup, { loading, error }] = useSignup();
 
@@ -83,3 +83,5 @@ export const RegisterPage = memo(function RegisterPage() {
     </Container>
   );
 });
+
+export default RegisterPage;
