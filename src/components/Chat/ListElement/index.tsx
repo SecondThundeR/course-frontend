@@ -30,6 +30,7 @@ export const ListElement = memo(function ListElement({
   const fullName = extractFullName(firstname, lastname);
   const formattedTime = lastMessageDateFormat(message.createdAt as string);
   const isLatex = message.type === MessageType.Latex;
+  const isSentByCurrentUser = message.from?.id === userId;
 
   return (
     <Link
@@ -45,6 +46,7 @@ export const ListElement = memo(function ListElement({
       label={<Title order={4}>{fullName}</Title>}
       description={
         <Text fs={isLatex ? 'italic' : undefined} c={isLatex ? 'dimmed' : undefined}>
+          {isSentByCurrentUser && 'Вы: '}
           {isLatex ? 'LaTeX-сообщение' : message.content}
         </Text>
       }
