@@ -4,7 +4,7 @@ import { Navigate, useParams } from 'react-router-dom';
 
 import { CHAT_ROUTE } from '@/constants/routes';
 
-import { useChatSend } from '@/hooks';
+import { useChatScroll, useChatSend } from '@/hooks';
 
 import { useConversationsStore, useUserStore } from '@/store';
 
@@ -15,11 +15,12 @@ import classes from './Conversation.module.css';
 
 export const Conversation = memo(function Conversation() {
   const { chatId } = useParams();
+  const { onSend, loading } = useChatSend(chatId);
   const userData = useUserStore((state) => state.userData);
   const conversations = useConversationsStore((state) => state.conversations);
-  const { onSend, loading } = useChatSend(chatId);
-
   const currentConversation = conversations.filter((conversation) => conversation.id === chatId)[0];
+  const targetRef = useChatScroll(currentConversation.messages);
+
   if (!currentConversation) {
     return <Navigate to={CHAT_ROUTE} />;
   }
@@ -40,6 +41,7 @@ export const Conversation = memo(function Conversation() {
   return (
     <Flex w="100%" direction="column">
       <Flex direction="column-reverse" gap="md" className={classes.messages__wrapper} p="md">
+        <div id="scroll-div" ref={targetRef} />
         {chatMessages}
       </Flex>
       <Input isLoading={loading} onSubmit={onSend} />

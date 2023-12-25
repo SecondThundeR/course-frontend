@@ -1,6 +1,7 @@
 export { default as useChatClose } from './useChatClose';
 export { default as useChatCreate } from './useChatCreate';
 export { default as useChatInputForm } from './useChatInputForm';
+export { default as useChatScroll } from './useChatScroll';
 export { default as useChatSend } from './useChatSend';
 export { default as useConversationsWatcher } from './useConversationsWatcher';
 export { default as useCreateForm } from './useCreateForm';
