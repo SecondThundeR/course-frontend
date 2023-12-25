@@ -43,3 +43,22 @@ export const CREATE_CONVERSATION = gql(`
     }
   }
 `);
+
+export const CREATE_MESSAGE = gql(`
+  mutation CreateMessage($data: CreateMessageInput!) {
+    createMessage(data: $data) {
+      id
+      type
+      content
+      updatedAt
+      createdAt
+      contentHistory
+      from {
+          id
+      }
+      conversation {
+          id
+      }
+    }
+  }
+`);
