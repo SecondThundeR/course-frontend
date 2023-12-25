@@ -4,6 +4,7 @@ module.exports = {
   parserOptions: {
     project: true,
   },
+  ignorePatterns: ['.eslintrc.cjs', 'vite.config.ts', 'postcss.config.cjs', 'codegen.ts'],
   plugins: ['@typescript-eslint'],
   extends: [
     'plugin:react/recommended',
