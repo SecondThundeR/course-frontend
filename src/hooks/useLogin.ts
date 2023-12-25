@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 
 import { type LoginInput } from '@/__generated__/graphql';
 
-import { LOGIN_MUTATION } from '@/constants/mutation';
+import { LOGIN_MUTATION } from '@/constants/graphql/mutation';
 import { CHAT_ROUTE } from '@/constants/routes';
 
 import { useTokensStore } from '@/store';

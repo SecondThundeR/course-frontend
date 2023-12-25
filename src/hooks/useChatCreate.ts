@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 
-import { CREATE_CONVERSATION } from '@/constants/mutation';
+import { CREATE_CONVERSATION } from '@/constants/graphql/mutation';
 import { CHAT_ROUTE } from '@/constants/routes';
 
 import { useConversationsStore, useTokensStore } from '@/store';

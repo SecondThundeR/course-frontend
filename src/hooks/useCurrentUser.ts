@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 
 import { LOGIN_ROUTE, ROOT_ROUTE } from '@/constants/routes';
-import { CURRENT_USER } from '@/constants/queries';
+import { CURRENT_USER } from '@/constants/graphql/queries';
 
 import { useConversationsStore, useTokensStore, useUserStore } from '@/store';
 

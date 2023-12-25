@@ -17,8 +17,8 @@ import {
 import { Link } from 'react-router-dom';
 import { BlockMath } from 'react-katex';
 
-import { FAQ_DATA } from '@/constants/faq';
-import { FEATURES } from '@/constants/features';
+import { FAQ_DATA } from '@/constants/landing/faq';
+import { FEATURES } from '@/constants/landing/features';
 import { LOGIN_ROUTE } from '@/constants/routes';
 
 import { useEquation } from '@/hooks';

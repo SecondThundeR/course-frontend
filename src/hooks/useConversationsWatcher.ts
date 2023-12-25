@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from 'react';
 import { useLazyQuery, useSubscription } from '@apollo/client';
 
-import { CONVERSATIONS_DATA } from '@/constants/queries';
-import { CONVERSATION_UPDATES, MESSAGE_UPDATES } from '@/constants/subscriptions';
+import { CONVERSATIONS_DATA } from '@/constants/graphql/queries';
+import { CONVERSATION_UPDATES, MESSAGE_UPDATES } from '@/constants/graphql/subscriptions';
 
 import { useConversationsStore, useTokensStore, useUserStore } from '@/store';
 
