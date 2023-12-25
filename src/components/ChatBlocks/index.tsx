@@ -25,19 +25,21 @@ import { BlockMath } from 'react-katex';
 import { IconMessage2, IconMessage2Plus, IconCircleX, IconSend } from '@tabler/icons-react';
 import { NavLink, Navigate, Outlet, useParams } from 'react-router-dom';
 
+import { type Message, MessageType } from '@/__generated__/graphql';
+
 import { CHAT_ROUTE } from '@/constants/routes';
 
 import { useChatCreate, useCurrentUser, useModal } from '@/hooks';
 
 import { useConversationsStore, type ConversationInfo, type User, useUserStore } from '@/store';
 
-import { type Message, MessageType } from '@/__generated__/graphql';
+import { lastMessageDateFormat } from '@/utils/lastMessageDateFormat';
+import { timeFormat } from '@/utils/timeFormat';
 
 import { ThemeToggle } from '../ThemeToggle';
 import { SearchInput } from '../SearchInput';
 
 import classes from './ChatBlocks.module.css';
-import { timeFormat } from '@/utils/timeFormat';
 
 interface UserFooterProps {
   user: User | null;
@@ -102,7 +104,7 @@ const ChatListElement = memo(function ChatListElement({
 
   const fullName = `${firstname}${lastname ? ` ${lastname}` : ''}`;
   const avatarLetters = `${firstname[0]}${!!lastname ? `${lastname[0]}` : ''}`;
-  const formattedTime = timeFormat(message.createdAt as string);
+  const formattedTime = lastMessageDateFormat(message.createdAt as string);
   const isLatex = message.type === MessageType.Latex;
 
   return (
