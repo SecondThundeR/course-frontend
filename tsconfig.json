@@ -20,6 +20,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "postcss.config.cjs", ".eslintrc.cjs", "vite.config.ts", "codegen.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
