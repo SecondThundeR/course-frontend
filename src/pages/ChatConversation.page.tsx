@@ -2,6 +2,12 @@ import { memo } from 'react';
 
 import { ChatBlocks } from '@/components';
 
-const ChatConversation = memo(() => <ChatBlocks.Conversation />);
+import { useChatClose } from '@/hooks';
+
+const ChatConversation = memo(() => {
+  useChatClose();
+
+  return <ChatBlocks.Conversation />;
+});
 
 export default ChatConversation;
