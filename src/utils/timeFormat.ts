@@ -1,7 +1,7 @@
-export function timeFormat(time: Date | string) {
+export function timeFormat(time: string | Date) {
   if (typeof time === 'string') return timeFormat(new Date(time));
 
-  return `${time.getHours()}:${
-    time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes()
-  }`;
+  const hours = time.getHours();
+  const minutes = time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes();
+  return `${hours}:${minutes}`;
 }
