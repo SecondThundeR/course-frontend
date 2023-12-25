@@ -16,11 +16,11 @@ if (import.meta.env.DEV) {
 }
 
 const App = memo(() => (
-  <ApolloProvider client={client}>
-    <MantineProvider theme={theme}>
+  <MantineProvider theme={theme}>
+    <ApolloProvider client={client}>
       <Router />
-    </MantineProvider>
-  </ApolloProvider>
+    </ApolloProvider>
+  </MantineProvider>
 ));
 
 export default App;
