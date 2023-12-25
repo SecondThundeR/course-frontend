@@ -7,7 +7,9 @@ import { Placeholder } from './Placeholder';
 import { Shell } from './Shell';
 
 const Base = memo(function Base() {
-  throw new Error("Doesn't use this `Chat` component. Export other components via dot notation");
+  throw new Error(
+    'Не используйте этот компонент. Вместо этого, используйте другие, используя нотацию через точку'
+  );
 });
 
 export const Chat = Object.assign(Base, {

@@ -8,7 +8,9 @@ import { LandingHero } from './Hero';
 import { LandingKatex } from './Katex';
 
 const LandingBase = memo(function LandingBase() {
-  throw new Error("Doesn't use this `Landing` component. Export other components via dot notation");
+  throw new Error(
+    'Не используйте этот компонент. Вместо этого, используйте другие, используя нотацию через точку'
+  );
 });
 
 export const Landing = Object.assign(LandingBase, {
