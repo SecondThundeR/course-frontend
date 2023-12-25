@@ -8,16 +8,18 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 
 import { useCurrentUser, useModal } from '@/hooks';
 
+import { useConversationsStore } from '@/store';
+
+import { extractFullName } from '@/utils/extractFullName';
+
 import { CreateModal } from '../CreateModal';
 import { List } from '../List';
 import { UserFooter } from '../UserFooter';
-import { useConversationsStore } from '@/store';
-import { extractFullName } from '@/utils/extractFullName';
 
 export const Shell = memo(function Shell() {
   const { userData, onSignout } = useCurrentUser();
   const { modalOpened, onOpen, onClose } = useModal();
-  const [opened, { toggle }] = useDisclosure();
+  const [opened, { toggle, close }] = useDisclosure();
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
   const { chatId } = useParams();
   const conversations = useConversationsStore((state) => state.conversations);
@@ -62,7 +64,7 @@ export const Shell = memo(function Shell() {
             <SearchInput />
           </AppShell.Section>
           <AppShell.Section grow my="md" component={ScrollArea}>
-            <List user={userData} currentChatId={chatId} />
+            <List user={userData} currentChatId={chatId} closeNavbar={close} />
           </AppShell.Section>
           <AppShell.Section>
             <UserFooter user={userData} onSignout={onSignout} onChatModalOpen={onOpen} />

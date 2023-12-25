@@ -15,6 +15,7 @@ import { lastMessageDateFormat } from '@/utils/lastMessageDateFormat';
 type ListElementProps = Omit<ConversationInfo, 'createdAt' | 'updatedAt'> & {
   userId?: string;
   isActive: boolean;
+  closeNavbar: () => void;
 };
 
 export const ListElement = memo(function ListElement({
@@ -23,6 +24,7 @@ export const ListElement = memo(function ListElement({
   participants,
   userId,
   isActive,
+  closeNavbar,
 }: ListElementProps) {
   const message = messages[messages.length - 1];
   const { firstname, lastname } = participants.filter((user) => user.id !== userId)[0];
@@ -36,6 +38,7 @@ export const ListElement = memo(function ListElement({
     <Link
       component={NavLink}
       to={`${CHAT_ROUTE}/${id}`}
+      onClick={closeNavbar}
       variant="light"
       active={isActive}
       leftSection={
