@@ -1,5 +1,7 @@
 export { default as useChatCreate } from './useChatCreate';
+export { default as useChatInputForm } from './useChatInputForm';
 export { default as useConversationsWatcher } from './useConversationsWatcher';
+export { default as useCreateForm } from './useCreateForm';
 export { default as useCurrentUser } from './useCurrentUser';
 export { default as useEquation } from './useEquation';
 export { default as useUserStoreRedirect } from './useUserStoreRedirect';

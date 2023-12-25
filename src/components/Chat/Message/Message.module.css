@@ -1,0 +1,18 @@
+.message__from {
+  border-radius: 8px;
+  background: light-dark(var(--mantine-color-blue-8), var(--mantine-color-white));
+}
+
+.message__from_text {
+  color: light-dark(var(--mantine-color-white), var(--mantine-color-black));
+}
+
+.message__from_time {
+  color: light-dark(var(--mantine-color-white), var(--mantine-color-black));
+  opacity: light-dark(1, 0.4);
+}
+
+.message__to {
+  border-radius: 8px;
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+}

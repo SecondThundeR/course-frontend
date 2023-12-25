@@ -1,0 +1,12 @@
+.input {
+  width: 100%;
+  height: fit-content;
+  position: sticky;
+  bottom: 0;
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+}
+
+.message__send {
+  width: rem(20px);
+  height: rem(20px);
+}

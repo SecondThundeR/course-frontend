@@ -1,5 +1,5 @@
 export { Block404 } from './Block404';
-export { ChatBlocks } from './ChatBlocks';
+export { Chat as ChatBlocks } from './Chat';
 export { Landing } from './Landing';
 export { LoginPage } from './LoginPage';
 export { RegisterPage } from './RegisterPage';

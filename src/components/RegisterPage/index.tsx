@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import {
   TextInput,
   PasswordInput,
@@ -17,7 +18,7 @@ import { useUserStoreRedirect, useSignup, useSignupForm } from '@/hooks';
 
 import classes from './RegisterPage.module.css';
 
-export function RegisterPage() {
+export const RegisterPage = memo(function RegisterPage() {
   const form = useSignupForm();
   const [onSignup, { loading, error }] = useSignup();
 
@@ -81,4 +82,4 @@ export function RegisterPage() {
       </Paper>
     </Container>
   );
-}
+});

@@ -8,14 +8,11 @@ import classes from './ThemeToggle.module.css';
 
 export const ThemeToggle = memo(function ThemeToggle() {
   const [isLight, onThemeSwitch] = useThemeSwitch();
+  const Icon = isLight ? IconSun : IconMoon;
 
   return (
     <ActionIcon onClick={onThemeSwitch} variant="default" size="36" aria-label="Смена темы">
-      {isLight ? (
-        <IconSun className={classes.icon} stroke={1.5} />
-      ) : (
-        <IconMoon className={classes.icon} stroke={1.5} />
-      )}
+      <Icon className={classes.icon} stroke={1.5} />
     </ActionIcon>
   );
 });
