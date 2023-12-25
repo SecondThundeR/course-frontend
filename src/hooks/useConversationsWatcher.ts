@@ -49,7 +49,7 @@ export default function useConversationsWatcher() {
         },
       });
 
-      if (!res?.data) throw new Error('Failed to fetch conversations data');
+      if (!res?.data) throw new Error('Не удалось получить данные о чате');
 
       setConversations(res.data.userConversations);
     },

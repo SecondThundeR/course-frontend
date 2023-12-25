@@ -42,7 +42,7 @@ export default function useCurrentUser() {
     }
 
     if (!res?.data) {
-      throw new Error('Failed to fetch user data');
+      throw new Error('Не удалось получить данные о пользователе');
     }
 
     setUserData(res.data.currentUser);
