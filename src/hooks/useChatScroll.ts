@@ -1,20 +1,24 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useScrollIntoView } from '@mantine/hooks';
 
 import { type ConversationInfo } from '@/store';
 
-export default function useChatScroll(messages: ConversationInfo['messages']) {
+export default function useChatScroll(messages?: ConversationInfo['messages']) {
   const { targetRef, scrollIntoView } = useScrollIntoView<HTMLDivElement>({
     duration: 0,
     offset: 200,
   });
 
-  useEffect(() => {
-    console.log('Triggered!');
+  const onScroll = useCallback(() => {
     scrollIntoView({
       alignment: 'end',
     });
-  }, [messages, scrollIntoView]);
+  }, [scrollIntoView]);
 
-  return targetRef;
+  useEffect(() => {
+    if (!messages) return;
+    onScroll();
+  }, [messages, onScroll]);
+
+  return { targetRef, onScroll };
 }
