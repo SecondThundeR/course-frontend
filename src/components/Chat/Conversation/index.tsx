@@ -8,6 +8,8 @@ import { useChatScroll, useChatSend } from '@/hooks';
 
 import { useConversationsStore, useUserStore } from '@/store';
 
+import { isDaysDifferent } from '@/utils/isDaysDifferent';
+
 import { Input } from '../Input';
 import { Message } from '../Message';
 
@@ -29,29 +31,26 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
   }
 
   const chatMessages = currentConversation.messages
-    .toReversed()
-    .map(({ id, content, createdAt, type, from }) => {
-      if (from?.id !== userData?.id) {
-        return (
-          <Message.To
+    .map(({ id, content, createdAt, type, from }, index, messagesArray) => {
+      const prevCreatedAt = messagesArray[index - 1]?.createdAt as string | undefined;
+      const currCreatedAt = createdAt as string;
+      const isDifferent = isDaysDifferent(prevCreatedAt, currCreatedAt);
+      const MessageComponent = from?.id !== userData?.id ? Message.To : Message.From;
+
+      return (
+        <>
+          <MessageComponent
             key={id}
             id={id}
             content={content}
-            createdAt={createdAt as string}
+            createdAt={currCreatedAt}
             type={type}
           />
-        );
-      }
-      return (
-        <Message.From
-          key={id}
-          id={id}
-          content={content}
-          createdAt={createdAt as string}
-          type={type}
-        />
+          {isDifferent && <Message.Service date={new Date(currCreatedAt)} />}
+        </>
       );
-    });
+    })
+    .toReversed();
 
   return (
     <Flex w="100%" direction="column">

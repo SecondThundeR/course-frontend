@@ -1,7 +1,7 @@
 import 'katex/dist/katex.min.css';
 
 import { memo, useCallback } from 'react';
-import { Alert, Button, Flex, Modal, Text } from '@mantine/core';
+import { Alert, Button, Flex, Modal, Paper, Text } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCheck, IconCopy, IconTrash } from '@tabler/icons-react';
 import { BlockMath } from 'react-katex';
@@ -10,17 +10,22 @@ import { MessageType, type Message as Msg } from '@/__generated__/graphql';
 
 import { useMessageModalDelete } from '@/hooks';
 
+import { formatServiceMessage } from '@/utils/formatServiceMessage';
 import { timeFormat } from '@/utils/timeFormat';
 
 import classes from './Message.module.css';
 
-type MessageProps = Pick<Msg, 'id' | 'content' | 'type'> & {
-  createdAt: string;
+type MessageServiceProps = {
+  date: Date;
 };
 
-type MessageBaseProps = MessageProps & {
-  direction: 'from' | 'to';
-};
+const MessageService = memo(function MessageService({ date }: MessageServiceProps) {
+  return (
+    <Paper px={12} py={4} withBorder radius="xl" w="fit-content" mx="auto">
+      <Text>{formatServiceMessage(date)}</Text>
+    </Paper>
+  );
+});
 
 type MessageModalProps = {
   opened: boolean;
@@ -56,6 +61,11 @@ const MessageModal = memo(function MessageModal({
     </Modal>
   );
 });
+
+type MessageBaseProps = Pick<Msg, 'id' | 'content' | 'type'> & {
+  createdAt: string;
+  direction: 'from' | 'to';
+};
 
 const MessageBase = memo(function MessageBase({
   id,
@@ -127,6 +137,8 @@ const MessageBase = memo(function MessageBase({
   );
 });
 
+type MessageProps = Omit<MessageBaseProps, 'direction'>;
+
 const MessageFrom = memo(function MessageFrom(props: MessageProps) {
   return <MessageBase direction="from" {...props} />;
 });
@@ -144,4 +156,5 @@ const Base = memo(function Base() {
 export const Message = Object.assign(Base, {
   From: MessageFrom,
   To: MessageTo,
+  Service: MessageService,
 });
