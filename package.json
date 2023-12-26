@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "compile": "graphql-codegen",
     "watch": "graphql-codegen -w",
-    "lint": "eslint src",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prettier": "prettier --check \"**/*.{ts,tsx}\"",
     "prettier:write": "prettier --write \"**/*.{ts,tsx}\""
   },
