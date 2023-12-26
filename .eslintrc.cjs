@@ -1,7 +1,6 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   root: true,
-  env: { browser: true, es2024: true },
   parserOptions: {
     ecmaVersion: 'latest',
     project: true,
@@ -9,12 +8,11 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react-hooks/recommended',
-    'plugin:@typescript-eslint/recommended-type-checked',
-    'plugin:@typescript-eslint/stylistic-type-checked',
+    'plugin:@typescript-eslint/recommended',
   ],
-  ignorePatterns: ['dist', '*.cjs', '*.ts'],
+  ignorePatterns: ['dist', '*.cjs', 'vite.config.ts'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
+  plugins: ['@typescript-eslint', 'react-refresh'],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     '@typescript-eslint/array-type': 'off',
