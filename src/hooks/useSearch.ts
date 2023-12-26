@@ -7,20 +7,12 @@ export default function useSearch() {
 
   const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
     (event) => {
-      if (event.target.value === '') {
-        setSearchParams(undefined, {
-          replace: true,
-        });
-      } else {
-        setSearchParams(
-          {
-            q: event.target.value,
-          },
-          {
-            replace: true,
-          }
-        );
+      const qVal = event.target.value;
+      if (!qVal) {
+        setSearchParams(undefined, { replace: true });
+        return;
       }
+      setSearchParams({ q: qVal }, { replace: true });
     },
     [setSearchParams]
   );

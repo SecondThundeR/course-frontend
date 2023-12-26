@@ -5,7 +5,7 @@ import { Outlet, useParams } from 'react-router-dom';
 
 import { SearchInput, ThemeToggle } from '@/components';
 
-import { useCurrentUser, useModal } from '@/hooks';
+import { useCurrentUser, useModal, useSearch } from '@/hooks';
 
 import { useConversationsStore } from '@/store';
 
@@ -17,12 +17,14 @@ import { MenuButton } from '../MenuButton';
 import { UserFooter } from '../UserFooter';
 
 const Shell = memo(function Shell() {
-  const { userData, onSignout } = useCurrentUser();
-  const { modalOpened, onOpen, onClose } = useModal();
   const [opened, { toggle, close }] = useDisclosure();
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
   const { chatId } = useParams();
+  const { q, onChange } = useSearch();
+  const { modalOpened, onOpen, onClose } = useModal();
+  const { userData, onSignout } = useCurrentUser();
   const conversations = useConversationsStore((state) => state.conversations);
+
   const currentChatParticipant = conversations
     .filter((conversation) => conversation.id === chatId)
     .at(0)
@@ -64,10 +66,10 @@ const Shell = memo(function Shell() {
         </AppShell.Header>
         <AppShell.Navbar p="md">
           <AppShell.Section>
-            <SearchInput />
+            <SearchInput value={q} onChange={onChange} />
           </AppShell.Section>
           <AppShell.Section grow my="md" component={ScrollArea}>
-            <List user={userData} currentChatId={chatId} closeNavbar={close} />
+            <List user={userData} currentChatId={chatId} closeNavbar={close} searchValue={q} />
           </AppShell.Section>
           <AppShell.Section>
             <UserFooter user={userData} onSignout={onSignout} onChatModalOpen={onOpen} />

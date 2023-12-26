@@ -1,11 +1,12 @@
-import { memo } from 'react';
+import { type ChangeEventHandler, memo } from 'react';
 import { TextInput } from '@mantine/core';
 
-import { useSearch } from '@/hooks';
+type SearchInputProps = {
+  value: string | null;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+};
 
-const SearchInput = memo(function SearchInput() {
-  const { q, onChange } = useSearch();
-
+const SearchInput = memo(function SearchInput({ value, onChange }: SearchInputProps) {
   return (
     <TextInput
       id="q"
@@ -13,7 +14,7 @@ const SearchInput = memo(function SearchInput() {
       placeholder="Поиск"
       type="search"
       name="q"
-      defaultValue={q ?? ''}
+      defaultValue={value ?? ''}
       onChange={onChange}
     />
   );
