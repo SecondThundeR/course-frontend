@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Affix, Button, Transition, rem } from '@mantine/core';
+import { ActionIcon, Affix, Transition, rem } from '@mantine/core';
 import { IconArrowDown } from '@tabler/icons-react';
 
 import { useChatAffix } from '@/hooks';
@@ -13,13 +13,15 @@ export const BottomAffix = memo(function BottomAffix({ onScroll }: BottomAffixPr
     <Affix position={{ bottom: 120, right: 20 }}>
       <Transition transition="slide-up" mounted={scroll.y < scrollableHeight}>
         {(transitionStyles) => (
-          <Button
-            leftSection={<IconArrowDown style={{ width: rem(16), height: rem(16) }} />}
-            style={transitionStyles}
+          <ActionIcon
             onClick={onScroll}
+            variant="filled"
+            size="48"
+            radius="999"
+            style={transitionStyles}
           >
-            Вернуться назад
-          </Button>
+            <IconArrowDown style={{ width: rem(28), height: rem(28) }} stroke={1.5} />
+          </ActionIcon>
         )}
       </Transition>
     </Affix>
