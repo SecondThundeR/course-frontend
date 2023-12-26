@@ -41,7 +41,9 @@ export const Input = memo(function Input({ isLoading, onSubmit }: InputProps) {
         </Flex>
         <Checkbox
           label="Отправить как LaTeX сообщение"
-          {...form.getInputProps('isLatex')}
+          {...form.getInputProps('isLatex', {
+            type: 'checkbox',
+          })}
           disabled={isLoading}
         />
       </Flex>

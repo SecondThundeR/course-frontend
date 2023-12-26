@@ -52,7 +52,9 @@ export const CreateModal = memo(function CreateModal({ opened, onClose }: Create
           labelPosition="left"
           label="Отправить как LaTeX сообщение"
           disabled={loading}
-          {...form.getInputProps('isLatex')}
+          {...form.getInputProps('isLatex', {
+            type: 'checkbox',
+          })}
         />
         <Button mt="md" type="submit" fullWidth loading={loading}>
           Создать
