@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { Fragment, memo } from 'react';
 import { Flex } from '@mantine/core';
 import { Navigate } from 'react-router-dom';
 
@@ -37,18 +37,13 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
       const currCreatedAt = createdAt as string;
       const isDifferent = isDaysDifferent(prevCreatedAt, currCreatedAt);
       const MessageComponent = from?.id !== userData?.id ? Message.To : Message.From;
+      const fragmentKey = isDifferent ? `${id}-${currCreatedAt.toString()}` : id;
 
       return (
-        <>
-          <MessageComponent
-            key={id}
-            id={id}
-            content={content}
-            createdAt={currCreatedAt}
-            type={type}
-          />
+        <Fragment key={fragmentKey}>
+          <MessageComponent id={id} content={content} createdAt={currCreatedAt} type={type} />
           {isDifferent && <Message.DateSeparator date={new Date(currCreatedAt)} />}
-        </>
+        </Fragment>
       );
     })
     .toReversed();

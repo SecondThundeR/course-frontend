@@ -99,9 +99,11 @@ const MessageBase = memo(function MessageBase({
       p="md"
       className={classes[`message__${direction}`]}
     >
-      <Text className={directionFrom ? classes.message__from_text : undefined}>
-        {type === MessageType.Latex ? <BlockMath math={content} /> : content}
-      </Text>
+      {type === MessageType.Latex ? (
+        <BlockMath math={content} />
+      ) : (
+        <Text className={directionFrom ? classes.message__from_text : undefined}>{content}</Text>
+      )}
       <Flex align="center" gap="xs" direction="row-reverse">
         <Text
           c={direction === 'to' ? 'dimmed' : undefined}
