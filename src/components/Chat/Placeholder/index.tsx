@@ -22,7 +22,14 @@ const Placeholder = memo(function Placeholder() {
   );
 
   return (
-    <Flex direction="column" gap="md" justify="center" align="center" className={classes.wrapper}>
+    <Flex
+      direction="column"
+      gap="md"
+      px="md"
+      justify="center"
+      align="center"
+      className={classes.wrapper}
+    >
       {icon}
       <Title ta="center">
         {hasChats
