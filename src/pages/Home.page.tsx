@@ -1,6 +1,6 @@
 import { memo, lazy, Suspense } from 'react';
 
-import { useUserStoreRedirect } from '@/hooks';
+import { useAuthorizedRedirect } from '@/hooks';
 
 const LazyLandingHero = lazy(() => import('../components/Landing/Hero'));
 const LazyLandingFeatures = lazy(() => import('../components/Landing/Features'));
@@ -8,7 +8,7 @@ const LazyLandingKatex = lazy(() => import('../components/Landing/Katex'));
 const LazyLandingFAQ = lazy(() => import('../components/Landing/FAQ'));
 
 const Home = memo(() => {
-  useUserStoreRedirect(false);
+  useAuthorizedRedirect(false);
 
   return (
     <Suspense>

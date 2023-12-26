@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 import { LOGIN_ROUTE } from '@/constants/routes';
 
-import { useUserStoreRedirect, useSignup, useSignupForm } from '@/hooks';
+import { useAuthorizedRedirect, useSignup, useSignupForm } from '@/hooks';
 
 import classes from './RegisterPage.module.css';
 
@@ -22,7 +22,7 @@ const RegisterPage = memo(function RegisterPage() {
   const form = useSignupForm();
   const [onSignup, { loading, error }] = useSignup();
 
-  useUserStoreRedirect(false);
+  useAuthorizedRedirect(false);
 
   return (
     <Container size={420} my={40}>
