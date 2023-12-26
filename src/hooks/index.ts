@@ -1,3 +1,4 @@
+export { default as useAuthorizedRedirect } from './useAuthorizedRedirect';
 export { default as useChatClose } from './useChatClose';
 export { default as useChatCreate } from './useChatCreate';
 export { default as useChatInputForm } from './useChatInputForm';
@@ -7,7 +8,6 @@ export { default as useConversationsWatcher } from './useConversationsWatcher';
 export { default as useCreateForm } from './useCreateForm';
 export { default as useCurrentUser } from './useCurrentUser';
 export { default as useEquation } from './useEquation';
-export { default as useAuthorizedRedirect } from './useAuthorizedRedirect';
 export { default as useLogin } from './useLogin';
 export { default as useLoginForm } from './useLoginForm';
 export { default as useMessageModalDelete } from './useMessageModalDelete';
