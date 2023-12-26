@@ -15,11 +15,13 @@ import { timeFormat } from '@/utils/timeFormat';
 
 import classes from './Message.module.css';
 
-type MessageServiceProps = {
+type MessageDateSeparatorProps = {
   date: Date;
 };
 
-const MessageService = memo(function MessageService({ date }: MessageServiceProps) {
+const MessageDateSeparator = memo(function MessageDateSeparator({
+  date,
+}: MessageDateSeparatorProps) {
   return (
     <Paper px={12} py={4} withBorder radius="xl" w="fit-content" mx="auto">
       <Text>{formatServiceMessage(date)}</Text>
@@ -156,5 +158,5 @@ const Base = memo(function Base() {
 export const Message = Object.assign(Base, {
   From: MessageFrom,
   To: MessageTo,
-  Service: MessageService,
+  DateSeparator: MessageDateSeparator,
 });

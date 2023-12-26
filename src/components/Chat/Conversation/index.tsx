@@ -46,7 +46,7 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
             createdAt={currCreatedAt}
             type={type}
           />
-          {isDifferent && <Message.Service date={new Date(currCreatedAt)} />}
+          {isDifferent && <Message.DateSeparator date={new Date(currCreatedAt)} />}
         </>
       );
     })
