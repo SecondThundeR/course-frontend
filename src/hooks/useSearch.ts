@@ -1,26 +1,24 @@
-import { type ChangeEventHandler, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, type ChangeEvent, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 export default function useSearch() {
   const [searchParams, setSearchParams] = useSearchParams();
   const q = searchParams.get('q');
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (event) => {
+  const onChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
       const qVal = event.target.value;
-      if (!qVal) {
-        setSearchParams(undefined, { replace: true });
-        return;
-      }
-      setSearchParams({ q: qVal }, { replace: true });
+      setSearchParams(qVal ? { q: qVal } : undefined, { replace: true });
     },
     [setSearchParams]
   );
 
   useEffect(() => {
-    if (document.getElementById('q') === null) return;
-    (document.getElementById('q') as HTMLInputElement).value = q ?? '';
+    if (inputRef.current) {
+      inputRef.current.value = q ?? '';
+    }
   }, [q]);
 
-  return { q, onChange };
+  return { q, inputRef, onChange };
 }

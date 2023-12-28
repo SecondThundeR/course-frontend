@@ -1,4 +1,4 @@
-import { type ChangeEventHandler, memo } from 'react';
+import { type ChangeEventHandler, memo, forwardRef } from 'react';
 import { TextInput } from '@mantine/core';
 
 type SearchInputProps = {
@@ -6,18 +6,20 @@ type SearchInputProps = {
   onChange: ChangeEventHandler<HTMLInputElement>;
 };
 
-const SearchInput = memo(function SearchInput({ value, onChange }: SearchInputProps) {
-  return (
-    <TextInput
-      id="q"
-      aria-label="Поиск чатов"
-      placeholder="Поиск"
-      type="search"
-      name="q"
-      defaultValue={value ?? ''}
-      onChange={onChange}
-    />
-  );
-});
+const SearchInput = memo(
+  forwardRef<HTMLInputElement, SearchInputProps>(function SearchInput({ value, onChange }, ref) {
+    return (
+      <TextInput
+        ref={ref}
+        aria-label="Поиск чатов"
+        placeholder="Поиск"
+        type="search"
+        name="q"
+        defaultValue={value ?? ''}
+        onChange={onChange}
+      />
+    );
+  })
+);
 
 export default SearchInput;

@@ -35,5 +35,5 @@ export default function useSignup() {
     [navigate, setTokens, signupUser]
   );
 
-  return [onSignup, { loading, error }] as const;
+  return { onSignup, loading, error };
 }

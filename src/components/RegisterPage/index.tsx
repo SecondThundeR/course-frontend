@@ -20,7 +20,7 @@ import classes from './RegisterPage.module.css';
 
 const RegisterPage = memo(function RegisterPage() {
   const form = useSignupForm();
-  const [onSignup, { loading, error }] = useSignup();
+  const { onSignup, loading, error } = useSignup();
 
   useAuthorizedRedirect(false);
 

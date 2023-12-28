@@ -22,12 +22,11 @@ export default function useChatCreate() {
   const navigate = useNavigate();
 
   const onCreate = useCallback(
-    async (options: OnCreateArgs) => {
+    async ({ message, email, isLatex, onClose }: OnCreateArgs) => {
       setLocalError(undefined);
 
-      const { message, email, isLatex, onClose } = options;
       const isChatExistsAlready = conversations.some((conversation) =>
-        conversation.participants.some((user) => user.email == email)
+        conversation.participants.some((user) => user.email === email)
       );
 
       if (isChatExistsAlready) {

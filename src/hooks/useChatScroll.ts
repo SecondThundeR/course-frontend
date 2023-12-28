@@ -2,10 +2,11 @@ import { useCallback, useEffect } from 'react';
 import { usePrevious, useScrollIntoView } from '@mantine/hooks';
 
 import { type ConversationInfo, useUserStore } from '@/store';
+
 import { useChatAffix } from '.';
 
 export default function useChatScroll(lastMessage?: ConversationInfo['messages'][number]) {
-  const [scroll, scrollableHeight] = useChatAffix();
+  const { scroll, scrollableHeight } = useChatAffix();
   const previousMessage = usePrevious(lastMessage);
   const userData = useUserStore((state) => state.userData);
   const { targetRef, scrollIntoView } = useScrollIntoView<HTMLDivElement>({

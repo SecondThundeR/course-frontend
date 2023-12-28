@@ -20,7 +20,7 @@ import classes from './LoginPage.module.css';
 
 const LoginPage = memo(function LoginPage() {
   const form = useLoginForm();
-  const [onLogin, { isSessionExpired, isNotLoggedIn, loading, error }] = useLogin();
+  const { onLogin, isSessionExpired, isNotLoggedIn, loading, error } = useLogin();
 
   useAuthorizedRedirect(false);
 

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { CHAT_ROUTE } from '@/constants/routes';
 
+const ESCAPE_KEY = 'Escape';
+
 export default function useChatClose() {
   const navigate = useNavigate();
 
@@ -12,7 +14,7 @@ export default function useChatClose() {
 
   const keyDownHandler = useCallback(
     (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === ESCAPE_KEY) {
         event.preventDefault();
         closeChat();
       }

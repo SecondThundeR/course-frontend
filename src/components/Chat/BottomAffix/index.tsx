@@ -7,7 +7,7 @@ import { useChatAffix } from '@/hooks';
 type BottomAffixProps = { onScroll: () => void };
 
 export const BottomAffix = memo(function BottomAffix({ onScroll }: BottomAffixProps) {
-  const [scroll, scrollableHeight] = useChatAffix();
+  const { scroll, scrollableHeight } = useChatAffix();
 
   return (
     <Affix position={{ bottom: 120, right: 20 }}>

@@ -42,5 +42,5 @@ export default function useLogin() {
     [loginUser, navigate, setSearchParams, setTokens]
   );
 
-  return [onLogin, { isSessionExpired, isNotLoggedIn, loading, error }] as const;
+  return { onLogin, isSessionExpired, isNotLoggedIn, loading, error };
 }

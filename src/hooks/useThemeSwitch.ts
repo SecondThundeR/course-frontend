@@ -13,5 +13,5 @@ export default function useThemeSwitch() {
     [isLight, setColorScheme]
   );
 
-  return [isLight, onThemeSwitch] as const;
+  return { isLight, onThemeSwitch };
 }

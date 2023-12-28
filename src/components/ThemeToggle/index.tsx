@@ -7,7 +7,7 @@ import { useThemeSwitch } from '@/hooks';
 import classes from './ThemeToggle.module.css';
 
 const ThemeToggle = memo(function ThemeToggle() {
-  const [isLight, onThemeSwitch] = useThemeSwitch();
+  const { isLight, onThemeSwitch } = useThemeSwitch();
   const Icon = isLight ? IconSun : IconMoon;
 
   return (

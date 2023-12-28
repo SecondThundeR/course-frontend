@@ -6,5 +6,5 @@ export default function useChatAffix() {
   const [scroll] = useWindowScroll();
   const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight - SKIP_HEIGHT;
 
-  return [scroll, scrollableHeight] as const;
+  return { scroll, scrollableHeight };
 }

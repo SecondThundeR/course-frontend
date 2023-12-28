@@ -1,16 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { useMutation } from '@apollo/client';
 
 import { DELETE_MESSAGE } from '@/constants/graphql/mutation';
 
 import { useConversationsStore, useTokensStore } from '@/store';
 
-import useModal from './useModal';
-
 export default function useMessageModalDelete() {
   const [selectedMessageId, setSelectedMessageId] = useState<string>();
   const [localError, setLocalError] = useState<Error>();
-  const { modalOpened, onClose: close, onOpen: open } = useModal();
+  const [opened, { open, close }] = useDisclosure();
   const [deleteMsg, { loading, error }] = useMutation(DELETE_MESSAGE);
   const accessToken = useTokensStore((state) => state.accessToken);
   const removeMessage = useConversationsStore((state) => state.removeMessage);
@@ -55,14 +54,14 @@ export default function useMessageModalDelete() {
   }, [selectedMessageId, deleteMsg, accessToken, removeMessage, close]);
 
   useEffect(() => {
-    if (!modalOpened) {
+    if (!opened) {
       setSelectedMessageId(undefined);
       setLocalError(undefined);
     }
-  }, [modalOpened]);
+  }, [opened]);
 
   return {
-    modalOpened,
+    opened,
     loading,
     error: error ?? localError,
     handlers: { onOpen, onClose, onDelete },

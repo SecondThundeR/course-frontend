@@ -1,7 +1,9 @@
-import { DELETE_CONVERSATION } from '@/constants/graphql/mutation';
-import { useConversationsStore, useTokensStore } from '@/store';
-import { useMutation } from '@apollo/client';
 import { useCallback } from 'react';
+import { useMutation } from '@apollo/client';
+
+import { DELETE_CONVERSATION } from '@/constants/graphql/mutation';
+
+import { useConversationsStore, useTokensStore } from '@/store';
 
 export default function useChatDelete(conversationId: string, onDeleteCallback?: () => void) {
   const accessToken = useTokensStore((state) => state.accessToken);

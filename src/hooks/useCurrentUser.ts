@@ -4,6 +4,7 @@ import { useLazyQuery } from '@apollo/client';
 
 import { LOGIN_ROUTE, ROOT_ROUTE } from '@/constants/routes';
 import { CURRENT_USER } from '@/constants/graphql/queries';
+import { SESSION_EXPIRED } from '@/constants/statuses';
 
 import { useConversationsStore, useTokensStore, useUserStore } from '@/store';
 
@@ -38,7 +39,7 @@ export default function useCurrentUser() {
 
     if (res?.error?.message === 'Unauthorized') {
       resetData();
-      return navigate(`${LOGIN_ROUTE}?status=session-expired`);
+      return navigate(`${LOGIN_ROUTE}?status=${SESSION_EXPIRED}`);
     }
 
     if (!res?.data) {

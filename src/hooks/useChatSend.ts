@@ -1,10 +1,13 @@
 import { useCallback } from 'react';
 import { useMutation } from '@apollo/client';
-import { CREATE_MESSAGE } from '@/constants/graphql/mutation';
-import { useConversationsStore, useTokensStore } from '@/store';
+
 import { MessageType } from '@/__generated__/graphql';
 
-export default function useChatSend(conversationId?: string, onSendCallback?: () => void) {
+import { CREATE_MESSAGE } from '@/constants/graphql/mutation';
+
+import { useConversationsStore, useTokensStore } from '@/store';
+
+export default function useChatSend(conversationId?: string) {
   const accessToken = useTokensStore((state) => state.accessToken);
   const addMessage = useConversationsStore((state) => state.addMessage);
   const [createMsg, { loading }] = useMutation(CREATE_MESSAGE);
@@ -32,9 +35,8 @@ export default function useChatSend(conversationId?: string, onSendCallback?: ()
       if (!res.data) throw new Error('Не удалось отправить сообщение');
 
       addMessage(res.data.createMessage);
-      onSendCallback?.();
     },
-    [accessToken, addMessage, conversationId, createMsg, onSendCallback]
+    [accessToken, addMessage, conversationId, createMsg]
   );
 
   return { onSend, loading };

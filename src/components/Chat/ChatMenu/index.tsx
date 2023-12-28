@@ -1,14 +1,13 @@
 import { memo } from 'react';
 import { Menu, ActionIcon, rem } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { IconDots, IconTrash } from '@tabler/icons-react';
-
-import { useModal } from '@/hooks';
 
 import { DeleteChatModal } from './DeleteChatModal';
 import { type ChatMenuProps } from './interfaces';
 
 export const ChatMenu = memo(function ChatMenu({ chatId }: ChatMenuProps) {
-  const { modalOpened: deleteModalOpened, onClose, onOpen } = useModal();
+  const [opened, { open, close }] = useDisclosure();
 
   return (
     <>
@@ -23,14 +22,14 @@ export const ChatMenu = memo(function ChatMenu({ chatId }: ChatMenuProps) {
           <Menu.Label>Управление чатом</Menu.Label>
           <Menu.Item
             color="red"
-            onClick={onOpen}
+            onClick={open}
             leftSection={<IconTrash style={{ width: rem(14), height: rem(14) }} />}
           >
             Удалить чат
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
-      <DeleteChatModal chatId={chatId} opened={deleteModalOpened} onClose={onClose} />
+      <DeleteChatModal chatId={chatId} opened={opened} onClose={close} />
     </>
   );
 });

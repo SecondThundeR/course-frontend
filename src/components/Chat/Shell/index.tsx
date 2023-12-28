@@ -5,7 +5,7 @@ import { Outlet, useParams } from 'react-router-dom';
 
 import { SearchInput, ThemeToggle } from '@/components';
 
-import { useCurrentUser, useModal, useSearch } from '@/hooks';
+import { useCurrentUser, useSearch } from '@/hooks';
 
 import { useConversationsStore } from '@/store';
 
@@ -17,13 +17,13 @@ import { ChatMenu } from '../ChatMenu';
 import { UserFooter } from '../UserFooter';
 
 const Shell = memo(function Shell() {
-  const [opened, { toggle, close }] = useDisclosure();
-  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
   const { chatId } = useParams();
-  const { q, onChange } = useSearch();
-  const { modalOpened, onOpen, onClose } = useModal();
-  const { userData, onSignout } = useCurrentUser();
+  const [opened, { toggle, close }] = useDisclosure();
+  const [modalOpened, { open: onOpen, close: onClose }] = useDisclosure();
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
   const conversations = useConversationsStore((state) => state.conversations);
+  const { q, inputRef, onChange } = useSearch();
+  const { userData, onSignout } = useCurrentUser();
 
   const currentChatParticipant = conversations
     .filter((conversation) => conversation.id === chatId)
@@ -66,7 +66,7 @@ const Shell = memo(function Shell() {
         </AppShell.Header>
         <AppShell.Navbar p="md">
           <AppShell.Section>
-            <SearchInput value={q} onChange={onChange} />
+            <SearchInput ref={inputRef} value={q} onChange={onChange} />
           </AppShell.Section>
           <AppShell.Section grow my="md" component={ScrollArea}>
             <List user={userData} currentChatId={chatId} closeNavbar={close} searchValue={q} />
