@@ -1,16 +1,13 @@
 import { memo, useMemo } from 'react';
 import { Text } from '@mantine/core';
 
-import { type User, useConversationsStore } from '@/store';
+import { useConversationsStore } from '@/store';
 
-import { ListElement } from '../ListElement';
+import { conversationsMapper } from '@/utils/conversations/mapper';
+import { sortConversations } from '@/utils/conversations/sort';
+import { filterUndefinedData } from '@/utils/filterUndefinedData';
 
-type ListProps = {
-  user: User | null;
-  currentChatId?: string;
-  closeNavbar: () => void;
-  searchValue: string | null;
-};
+import { type ListProps } from './interfaces';
 
 export const List = memo(function List({
   user,
@@ -19,38 +16,25 @@ export const List = memo(function List({
   searchValue,
 }: ListProps) {
   const conversations = useConversationsStore((state) => state.conversations);
-  const listElements = useMemo(
+  const mapConversations = useMemo(
     () =>
-      conversations
-        .map((conversation) => {
-          const isShown =
-            !searchValue?.toLocaleLowerCase() ||
-            conversation.participants.filter(
-              ({ firstname, lastname }) =>
-                firstname.toLocaleLowerCase().includes(searchValue?.toLocaleLowerCase()) ||
-                lastname?.toLocaleLowerCase().includes(searchValue?.toLocaleLowerCase())
-            ).length > 0;
-
-          if (isShown)
-            return (
-              <ListElement
-                key={conversation.id}
-                userId={user?.id}
-                isActive={conversation.id === currentChatId}
-                closeNavbar={closeNavbar}
-                {...conversation}
-              />
-            );
-        })
-        .filter((item) => item),
-    [closeNavbar, conversations, currentChatId, searchValue, user?.id]
+      conversationsMapper({
+        searchValue,
+        closeNavbar,
+        currentChatId,
+        userId: user?.id,
+      }),
+    [closeNavbar, currentChatId, searchValue, user?.id]
   );
+  const listElements = useMemo(
+    () => conversations.sort(sortConversations).map(mapConversations).filter(filterUndefinedData),
+    [conversations, mapConversations]
+  );
+  const isListEmpty = listElements.length === 0;
 
   return (
     <>
-      {listElements.length === 0 && (
-        <Text ta="center">Не найдено чатов для запроса "{searchValue}"</Text>
-      )}
+      {isListEmpty && <Text ta="center">Не найдено чатов для запроса "{searchValue}"</Text>}
       {listElements}
     </>
   );
