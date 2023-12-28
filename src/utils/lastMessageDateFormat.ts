@@ -1,7 +1,8 @@
 import { DAYS_MAP } from '@/constants/date';
 import { timeFormat } from './timeFormat';
 
-export function lastMessageDateFormat(time: string | Date) {
+export function lastMessageDateFormat(time?: string | Date) {
+  if (!time) return null;
   if (typeof time === 'string') return lastMessageDateFormat(new Date(time));
 
   const currentDate = new Date();
