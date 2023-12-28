@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { DELETE_MESSAGE } from '@/constants/graphql/mutation';
@@ -7,21 +7,36 @@ import { useConversationsStore, useTokensStore } from '@/store';
 
 import useModal from './useModal';
 
-export default function useMessageModalDelete(id: string) {
+export default function useMessageModalDelete() {
+  const [selectedMessageId, setSelectedMessageId] = useState<string>();
   const [localError, setLocalError] = useState<Error>();
-  const { modalOpened, onClose: close, onOpen } = useModal();
+  const { modalOpened, onClose: close, onOpen: open } = useModal();
   const [deleteMsg, { loading, error }] = useMutation(DELETE_MESSAGE);
   const accessToken = useTokensStore((state) => state.accessToken);
   const removeMessage = useConversationsStore((state) => state.removeMessage);
 
+  const onOpen = useCallback(
+    (messageId: string) => {
+      setSelectedMessageId(messageId);
+      open();
+    },
+    [open]
+  );
+
   const onClose = useCallback(() => {
-    if (!loading) close();
+    if (loading) return;
+
+    close();
+    setSelectedMessageId(undefined);
+    setLocalError(undefined);
   }, [close, loading]);
 
   const onDelete = useCallback(async () => {
+    if (!selectedMessageId) return;
+
     const res = await deleteMsg({
       variables: {
-        messageId: id,
+        messageId: selectedMessageId,
       },
       context: {
         headers: {
@@ -37,7 +52,14 @@ export default function useMessageModalDelete(id: string) {
 
     removeMessage(res.data.deleteMessage);
     close();
-  }, [accessToken, deleteMsg, id, close, removeMessage]);
+  }, [selectedMessageId, deleteMsg, accessToken, removeMessage, close]);
+
+  useEffect(() => {
+    if (!modalOpened) {
+      setSelectedMessageId(undefined);
+      setLocalError(undefined);
+    }
+  }, [modalOpened]);
 
   return {
     modalOpened,

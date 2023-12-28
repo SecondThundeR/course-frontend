@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 import { CHAT_ROUTE } from '@/constants/routes';
 
-import { useChatScroll, useChatSend } from '@/hooks';
+import { useChatScroll, useChatSend, useMessageModalDelete } from '@/hooks';
 
 import { useConversationsStore, useUserStore } from '@/store';
 
@@ -16,9 +16,16 @@ import { Message } from '../Message';
 
 import classes from './Conversation.module.css';
 import { type ConversationProps } from './interfaces';
+import { DeleteMessageModal } from '@/components/DeleteMessageModal';
 
 const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
   const { onSend, loading } = useChatSend(chatId);
+  const {
+    modalOpened,
+    loading: deleteLoading,
+    error,
+    handlers: { onOpen, onClose, onDelete },
+  } = useMessageModalDelete();
   const userData = useUserStore((state) => state.userData);
   const conversations = useConversationsStore((state) => state.conversations);
   const currentConversation = conversations.filter((conversation) => conversation.id === chatId)[0];
@@ -38,7 +45,13 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
 
       return (
         <Fragment key={fragmentKey}>
-          <MessageComponent id={id} content={content} createdAt={currCreatedAt} type={type} />
+          <MessageComponent
+            id={id}
+            content={content}
+            createdAt={currCreatedAt}
+            type={type}
+            onOpen={onOpen}
+          />
           {isDifferent && <Message.DateSeparator date={new Date(currCreatedAt)} />}
         </Fragment>
       );
@@ -69,6 +82,13 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
         <Input isLoading={loading} onSubmit={onSend} />
       </Flex>
       <BottomAffix onScroll={onScroll} />
+      <DeleteMessageModal
+        opened={modalOpened}
+        loading={deleteLoading}
+        error={error}
+        onClose={onClose}
+        onDelete={onDelete}
+      />
     </>
   );
 });

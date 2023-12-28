@@ -1,15 +1,15 @@
 import { memo } from 'react';
 import { Modal, Alert, Text, Flex, Button } from '@mantine/core';
 
-import { type DeleteModalProps } from './interfaces';
+import { type DeleteMessageModalProps } from './interfaces';
 
-export const DeleteModal = memo(function DeleteModal({
+export const DeleteMessageModal = memo(function DeleteMessageModal({
   opened,
   loading,
   error,
   onClose,
   onDelete,
-}: DeleteModalProps) {
+}: DeleteMessageModalProps) {
   return (
     <Modal opened={opened} onClose={onClose} title="Удалить сообщение" centered>
       {error && (

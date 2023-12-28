@@ -1,4 +1,4 @@
-export type DeleteModalProps = {
+export type DeleteMessageModalProps = {
   opened: boolean;
   loading: boolean;
   error?: Error;
