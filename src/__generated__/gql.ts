@@ -17,6 +17,7 @@ const documents = {
     "\n  mutation SignupMutation($data: SignupInput!) {\n    signup(data: $data) {\n      accessToken\n      refreshToken\n    }\n  }\n": types.SignupMutationDocument,
     "\n  mutation CreateConversation($data: CreateConversationInput!) {\n    createConversation(data: $data) {\n      id\n      createdAt\n      updatedAt\n      participants {\n        id\n        firstname\n        lastname\n        email\n      }\n      messages {\n        id\n        type\n        content\n        contentHistory\n        createdAt\n        updatedAt\n        from {\n          id\n          email\n        }\n      }\n    }\n  }\n": types.CreateConversationDocument,
     "\n  mutation CreateMessage($data: CreateMessageInput!) {\n    createMessage(data: $data) {\n      id\n      type\n      content\n      contentHistory\n      createdAt\n      updatedAt\n      from {\n        id\n        email\n      }\n      conversation {\n        id\n      }\n    }\n  }\n": types.CreateMessageDocument,
+    "\n  mutation DeleteConversation($data: DeleteConversationInput!) {\n    deleteConversation(data: $data) {\n      id\n    }\n  }\n": types.DeleteConversationDocument,
     "\n  mutation DeleteMessage($messageId: String!) {\n    deleteMessage(messageId: $messageId) {\n      id\n      type\n      content\n      contentHistory\n      createdAt\n      updatedAt\n      from {\n        id\n        email\n      }\n      conversation {\n        id\n      }\n    }\n  }\n": types.DeleteMessageDocument,
     "\n    query CurrentUser {\n        currentUser {\n            id\n            firstname\n            lastname\n            email\n        }\n    }": types.CurrentUserDocument,
     "\n    query ConversationsData($userId: String!) {\n        userConversations(userId: $userId) {\n            id\n            createdAt\n            updatedAt\n            participants {\n                id\n                firstname\n                lastname\n                email\n            }\n            messages {\n                id\n                content\n                type\n                createdAt\n                updatedAt\n                contentHistory\n                from {\n                    id\n                    email\n                }\n            }\n        }\n    }\n": types.ConversationsDataDocument,
@@ -54,6 +55,10 @@ export function gql(source: "\n  mutation CreateConversation($data: CreateConver
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation CreateMessage($data: CreateMessageInput!) {\n    createMessage(data: $data) {\n      id\n      type\n      content\n      contentHistory\n      createdAt\n      updatedAt\n      from {\n        id\n        email\n      }\n      conversation {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation CreateMessage($data: CreateMessageInput!) {\n    createMessage(data: $data) {\n      id\n      type\n      content\n      contentHistory\n      createdAt\n      updatedAt\n      from {\n        id\n        email\n      }\n      conversation {\n        id\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation DeleteConversation($data: DeleteConversationInput!) {\n    deleteConversation(data: $data) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation DeleteConversation($data: DeleteConversationInput!) {\n    deleteConversation(data: $data) {\n      id\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

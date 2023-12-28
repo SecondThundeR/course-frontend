@@ -66,6 +66,14 @@ export const CREATE_MESSAGE = gql(`
   }
 `);
 
+export const DELETE_CONVERSATION = gql(`
+  mutation DeleteConversation($data: DeleteConversationInput!) {
+    deleteConversation(data: $data) {
+      id
+    }
+  }
+`);
+
 export const DELETE_MESSAGE = gql(`
   mutation DeleteMessage($messageId: String!) {
     deleteMessage(messageId: $messageId) {
