@@ -30,9 +30,10 @@ export const ListElement = memo(function ListElement({
   const { firstname, lastname } = participants.filter((user) => user.id !== userId)[0];
   const avatarLetters = extractAvatarLetters(firstname, lastname);
   const fullName = extractFullName(firstname, lastname);
-  const formattedTime = lastMessageDateFormat(message.createdAt as string);
-  const isLatex = message.type === MessageType.Latex;
-  const isSentByCurrentUser = message.from?.id === userId;
+  const formattedTime = lastMessageDateFormat(message?.createdAt as string);
+  const isConversationEmpty = !message;
+  const isLatex = message?.type === MessageType.Latex;
+  const isSentByCurrentUser = message?.from?.id === userId;
 
   return (
     <Link
@@ -50,11 +51,12 @@ export const ListElement = memo(function ListElement({
       description={
         <Text
           lineClamp={isLatex ? 2 : 1}
-          fs={isLatex ? 'italic' : undefined}
-          c={isLatex ? 'dimmed' : undefined}
+          fs={isLatex || isConversationEmpty ? 'italic' : undefined}
+          c={isLatex || isConversationEmpty ? 'dimmed' : undefined}
         >
           {isSentByCurrentUser && 'Вы: '}
-          {isLatex ? 'LaTeX-сообщение' : message.content}
+          {isLatex ? 'LaTeX-сообщение' : message?.content}
+          {isConversationEmpty && 'Пустой чат'}
         </Text>
       }
       rightSection={
