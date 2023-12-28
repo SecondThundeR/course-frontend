@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,13 +16,24 @@ type OnCreateArgs = {
 
 export default function useChatCreate() {
   const accessToken = useTokensStore((state) => state.accessToken);
-  const addConversation = useConversationsStore((state) => state.addConversation);
+  const { conversations, addConversation } = useConversationsStore();
   const [createChat, { loading, error }] = useMutation(CREATE_CONVERSATION);
+  const [localError, setLocalError] = useState<Error>();
   const navigate = useNavigate();
 
   const onCreate = useCallback(
     async (options: OnCreateArgs) => {
+      setLocalError(undefined);
+
       const { message, email, isLatex, onClose } = options;
+      const isChatExistsAlready = conversations.some((conversation) =>
+        conversation.participants.some((user) => user.email == email)
+      );
+
+      if (isChatExistsAlready) {
+        setLocalError(new Error(`Чат с "${email}" уже существует`));
+        return;
+      }
 
       const res = await createChat({
         variables: {
@@ -46,8 +57,8 @@ export default function useChatCreate() {
       onClose();
       navigate(`${CHAT_ROUTE}/${createConversation.id}`);
     },
-    [accessToken, addConversation, createChat, navigate]
+    [accessToken, addConversation, conversations, createChat, navigate]
   );
 
-  return { loading, error, onCreate };
+  return { loading, error: error ?? localError, onCreate };
 }
