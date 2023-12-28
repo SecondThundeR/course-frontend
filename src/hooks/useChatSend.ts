@@ -4,7 +4,7 @@ import { CREATE_MESSAGE } from '@/constants/graphql/mutation';
 import { useConversationsStore, useTokensStore } from '@/store';
 import { MessageType } from '@/__generated__/graphql';
 
-export default function useChatSend(conversationId?: string) {
+export default function useChatSend(conversationId?: string, onSendCallback?: () => void) {
   const accessToken = useTokensStore((state) => state.accessToken);
   const addMessage = useConversationsStore((state) => state.addMessage);
   const [createMsg, { loading }] = useMutation(CREATE_MESSAGE);
@@ -32,8 +32,9 @@ export default function useChatSend(conversationId?: string) {
       if (!res.data) throw new Error('Не удалось отправить сообщение');
 
       addMessage(res.data.createMessage);
+      onSendCallback?.();
     },
-    [accessToken, addMessage, conversationId, createMsg]
+    [accessToken, addMessage, conversationId, createMsg, onSendCallback]
   );
 
   return { onSend, loading };

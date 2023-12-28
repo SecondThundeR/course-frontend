@@ -19,7 +19,8 @@ import { type ConversationProps } from './interfaces';
 import { DeleteMessageModal } from '@/components/DeleteMessageModal';
 
 const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
-  const { onSend, loading } = useChatSend(chatId);
+  const { targetRef, onScroll } = useChatScroll();
+  const { onSend, loading } = useChatSend(chatId, onScroll);
   const {
     modalOpened,
     loading: deleteLoading,
@@ -29,7 +30,6 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
   const userData = useUserStore((state) => state.userData);
   const conversations = useConversationsStore((state) => state.conversations);
   const currentConversation = conversations.filter((conversation) => conversation.id === chatId)[0];
-  const { targetRef, onScroll } = useChatScroll(currentConversation?.messages);
 
   if (!currentConversation) {
     return <Navigate to={CHAT_ROUTE} />;
