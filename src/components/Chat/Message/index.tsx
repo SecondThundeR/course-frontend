@@ -47,7 +47,7 @@ const MessageModal = memo(function MessageModal({
   return (
     <Modal opened={opened} onClose={onClose} title="Удалить сообщение" centered>
       {error && (
-        <Alert variant="filled" color="red" mb="md">
+        <Alert variant="filled" color="red" title="Не удалось удалить сообщение" mb="md">
           {error.message}
         </Alert>
       )}
