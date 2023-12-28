@@ -1,12 +1,9 @@
 import { useForm } from '@mantine/form';
 
-import { CHAT_CREATE_INITIAL_VALUES, CHAT_CREATE_VALUES_VALIDATOR } from '@/constants/form';
+import { CHAT_CREATE_FORM } from '@/constants/form';
 
 export default function useCreateForm() {
-  const form = useForm({
-    initialValues: CHAT_CREATE_INITIAL_VALUES,
-    validate: CHAT_CREATE_VALUES_VALIDATOR,
-  });
+  const form = useForm(CHAT_CREATE_FORM);
 
   return form;
 }

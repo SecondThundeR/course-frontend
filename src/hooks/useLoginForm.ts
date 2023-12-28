@@ -1,12 +1,9 @@
 import { useForm } from '@mantine/form';
 
-import { LOGIN_INITIAL_VALUES, LOGIN_VALUES_VALIDATOR } from '@/constants/form';
+import { LOGIN_FORM } from '@/constants/form';
 
 export default function useLoginForm() {
-  const form = useForm({
-    initialValues: LOGIN_INITIAL_VALUES,
-    validate: LOGIN_VALUES_VALIDATOR,
-  });
+  const form = useForm(LOGIN_FORM);
 
   return form;
 }
