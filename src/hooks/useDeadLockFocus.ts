@@ -1,11 +1,7 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function useDeadLockFocus() {
   const ref = useRef<HTMLInputElement>(null);
-
-  const onFocus = useCallback(() => {
-    ref.current?.focus();
-  }, []);
 
   useEffect(() => {
     const inputElement = ref.current;
@@ -24,5 +20,5 @@ export default function useDeadLockFocus() {
     }
   }, []);
 
-  return { ref, onFocus };
+  return ref;
 }

@@ -12,7 +12,7 @@ type InputProps = {
 };
 
 export const Input = memo(function Input({ isLoading, onSubmit }: InputProps) {
-  const { ref, onFocus } = useDeadLockFocus();
+  const ref = useDeadLockFocus();
   const form = useChatInputForm();
 
   return (
@@ -20,7 +20,6 @@ export const Input = memo(function Input({ isLoading, onSubmit }: InputProps) {
       onSubmit={form.onSubmit(async (values) => {
         await onSubmit(values.message, values.isLatex);
         form.reset();
-        onFocus();
       })}
       className={classes.input}
     >
