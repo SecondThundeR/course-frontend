@@ -15,10 +15,7 @@ import { Input } from '../Input';
 import { Message } from '../Message';
 
 import classes from './Conversation.module.css';
-
-type ConversationProps = {
-  chatId?: string;
-};
+import { type ConversationProps } from './interfaces';
 
 const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
   const { onSend, loading } = useChatSend(chatId);
