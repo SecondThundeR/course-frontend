@@ -2,6 +2,7 @@ export { default as useAuthorizedRedirect } from './useAuthorizedRedirect';
 export { default as useChatAffix } from './useChatAffix';
 export { default as useChatClose } from './useChatClose';
 export { default as useChatCreate } from './useChatCreate';
+export { default as useChatDelete } from './useChatDelete';
 export { default as useChatInputForm } from './useChatInputForm';
 export { default as useChatScroll } from './useChatScroll';
 export { default as useChatSend } from './useChatSend';
