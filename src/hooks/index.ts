@@ -8,6 +8,7 @@ export { default as useChatSend } from './useChatSend';
 export { default as useConversationsWatcher } from './useConversationsWatcher';
 export { default as useCreateForm } from './useCreateForm';
 export { default as useCurrentUser } from './useCurrentUser';
+export { default as useDeadLockFocus } from './useDeadLockFocus';
 export { default as useEquation } from './useEquation';
 export { default as useLogin } from './useLogin';
 export { default as useLoginForm } from './useLoginForm';
