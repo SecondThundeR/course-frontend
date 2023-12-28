@@ -13,7 +13,7 @@ import { extractFullName } from '@/utils/extractFullName';
 
 import { CreateModal } from '../CreateModal';
 import { List } from '../List';
-import { MenuButton } from '../MenuButton';
+import { ChatMenu } from '../ChatMenu';
 import { UserFooter } from '../UserFooter';
 
 const Shell = memo(function Shell() {
@@ -60,7 +60,7 @@ const Shell = memo(function Shell() {
             </Group>
             <Group>
               <ThemeToggle />
-              {chatId !== undefined && <MenuButton />}
+              {chatId !== undefined && <ChatMenu chatId={chatId} />}
             </Group>
           </Flex>
         </AppShell.Header>
