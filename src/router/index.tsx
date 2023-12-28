@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: ROOT_ROUTE,
+        index: true,
         element: (
           <Suspense>
             <LazyHome />
