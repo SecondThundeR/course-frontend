@@ -12,6 +12,7 @@ export const CONVERSATION_UPDATES = gql(`
                     id
                     firstname
                     lastname
+                    email
                 }
                 messages {
                     id
@@ -22,6 +23,7 @@ export const CONVERSATION_UPDATES = gql(`
                     contentHistory
                     from {
                         id
+                        email
                     }
                 }
             }
@@ -42,6 +44,7 @@ export const MESSAGE_UPDATES = gql(`
                 contentHistory
                 from {
                     id
+                    email
                 }
                 conversation {
                     id

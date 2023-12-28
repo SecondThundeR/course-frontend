@@ -28,6 +28,7 @@ export const CREATE_CONVERSATION = gql(`
         id
         firstname
         lastname
+        email
       }
       messages {
         id
@@ -37,7 +38,8 @@ export const CREATE_CONVERSATION = gql(`
         createdAt
         updatedAt
         from {
-            id
+          id
+          email
         }
       }
     }
@@ -55,6 +57,7 @@ export const CREATE_MESSAGE = gql(`
       updatedAt
       from {
         id
+        email
       }
       conversation {
         id
@@ -74,6 +77,7 @@ export const DELETE_MESSAGE = gql(`
       updatedAt
       from {
         id
+        email
       }
       conversation {
         id

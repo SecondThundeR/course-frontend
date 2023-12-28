@@ -20,6 +20,7 @@ export const CONVERSATIONS_DATA = gql(`
                 id
                 firstname
                 lastname
+                email
             }
             messages {
                 id
@@ -30,6 +31,7 @@ export const CONVERSATIONS_DATA = gql(`
                 contentHistory
                 from {
                     id
+                    email
                 }
             }
         }
