@@ -1,10 +1,11 @@
 import { DAYS_MAP } from '@/constants/date';
+
 import { timeFormat } from './timeFormat';
 
 export function lastMessageDateFormat(time?: string | Date) {
   if (!time) return null;
-  if (typeof time === 'string') return lastMessageDateFormat(new Date(time));
 
+  const date = typeof time === 'string' ? new Date(time) : time;
   const currentDate = new Date();
 
   /**
@@ -12,18 +13,18 @@ export function lastMessageDateFormat(time?: string | Date) {
    * than week, show full date
    */
   if (
-    time.getFullYear() < currentDate.getFullYear() ||
-    time.getMonth() < currentDate.getMonth() ||
-    currentDate.getDate() - time.getDate() > 7
+    date.getFullYear() < currentDate.getFullYear() ||
+    date.getMonth() < currentDate.getMonth() ||
+    currentDate.getDate() - date.getDate() > 7
   ) {
-    return `${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()}`;
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
   }
 
   // If dates aren't equal, show date string
-  if (time.getDate() < currentDate.getDate()) {
-    return DAYS_MAP[time.getDay()];
+  if (date.getDate() < currentDate.getDate()) {
+    return DAYS_MAP[date.getDay()];
   }
 
   // Otherwise, re-use `timeFormat`
-  return timeFormat(time);
+  return timeFormat(date);
 }
