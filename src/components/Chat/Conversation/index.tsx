@@ -1,5 +1,5 @@
 import { Fragment, memo } from 'react';
-import { Flex } from '@mantine/core';
+import { Flex, Title } from '@mantine/core';
 import { Navigate } from 'react-router-dom';
 
 import { CHAT_ROUTE } from '@/constants/routes';
@@ -47,13 +47,27 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
       );
     })
     .toReversed();
+  const isChatEmpty = chatMessages.length === 0;
 
   return (
     <>
       <Flex w="100%" direction="column">
-        <Flex direction="column-reverse" gap="md" className={classes.messages__wrapper} p="md">
-          <div id="scroll-div" ref={targetRef} />
-          {chatMessages}
+        <Flex
+          direction="column-reverse"
+          align={isChatEmpty ? 'center' : undefined}
+          justify={isChatEmpty ? 'center' : undefined}
+          gap="md"
+          className={classes.messages__wrapper}
+          p="md"
+        >
+          {isChatEmpty ? (
+            <Title order={2}>Самое время начать общение!</Title>
+          ) : (
+            <>
+              <div id="scroll-div" ref={targetRef} />
+              {chatMessages}
+            </>
+          )}
         </Flex>
         <Input isLoading={loading} onSubmit={onSend} />
       </Flex>
