@@ -100,7 +100,9 @@ const MessageBase = memo(function MessageBase({
       className={classes[`message__${direction}`]}
     >
       {type === MessageType.Latex ? (
-        <BlockMath math={content} />
+        <div className={directionFrom ? classes.message__from_text : undefined}>
+          <BlockMath math={content} />
+        </div>
       ) : (
         <Text className={directionFrom ? classes.message__from_text : undefined}>{content}</Text>
       )}
