@@ -19,8 +19,7 @@ import { type ConversationProps } from './interfaces';
 import { DeleteMessageModal } from '@/components/DeleteMessageModal';
 
 const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
-  const { targetRef, onScroll } = useChatScroll();
-  const { onSend, loading } = useChatSend(chatId, onScroll);
+  const { onSend, loading } = useChatSend(chatId);
   const {
     modalOpened,
     loading: deleteLoading,
@@ -30,6 +29,7 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
   const userData = useUserStore((state) => state.userData);
   const conversations = useConversationsStore((state) => state.conversations);
   const currentConversation = conversations.filter((conversation) => conversation.id === chatId)[0];
+  const { targetRef, onScroll } = useChatScroll(currentConversation.messages.at(-1));
 
   if (!currentConversation) {
     return <Navigate to={CHAT_ROUTE} />;
@@ -61,26 +61,24 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
 
   return (
     <>
-      <Flex w="100%" direction="column">
-        <Flex
-          direction="column-reverse"
-          align={isChatEmpty ? 'center' : undefined}
-          justify={isChatEmpty ? 'center' : undefined}
-          gap="md"
-          className={classes.messages__wrapper}
-          p="md"
-        >
-          {isChatEmpty ? (
-            <Title order={2}>Самое время начать общение!</Title>
-          ) : (
-            <>
-              <div id="scroll-div" ref={targetRef} />
-              {chatMessages}
-            </>
-          )}
-        </Flex>
-        <Input isLoading={loading} onSubmit={onSend} />
+      <Flex
+        direction="column-reverse"
+        align={isChatEmpty ? 'center' : undefined}
+        justify={isChatEmpty ? 'center' : undefined}
+        gap="md"
+        className={classes.messages__wrapper}
+        p="md"
+      >
+        {isChatEmpty ? (
+          <Title order={2}>Самое время начать общение!</Title>
+        ) : (
+          <>
+            <div id="scroll-div" ref={targetRef} />
+            {chatMessages}
+          </>
+        )}
       </Flex>
+      <Input isLoading={loading} onSubmit={onSend} />
       <BottomAffix onScroll={onScroll} />
       <DeleteMessageModal
         opened={modalOpened}
