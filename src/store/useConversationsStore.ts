@@ -22,21 +22,31 @@ export const useConversationsStore = create<ConversationsStore>()(
   persist(
     (set) => ({
       conversations: [],
-      setConversations: (conversations) => set(() => ({ conversations })),
+      setConversations: (conversations) => set({ conversations }),
       addConversation: (conversation) =>
         set((state) => {
           const isAdded =
             state.conversations.findIndex((conv) => conv.id === conversation.id) !== -1;
-          return {
-            conversations: isAdded ? state.conversations : [...state.conversations, conversation],
-          };
+
+          return isAdded
+            ? state
+            : {
+                conversations: [...state.conversations, conversation],
+              };
         }),
       removeConversation: (conversationId) =>
-        set((state) => ({
-          conversations: state.conversations.filter(
+        set((state) => {
+          const newConversations = state.conversations.filter(
             (conversation) => conversation.id !== conversationId
-          ),
-        })),
+          );
+          const isNotRemoved = newConversations.length === state.conversations.length;
+
+          return isNotRemoved
+            ? state
+            : {
+                conversations: newConversations,
+              };
+        }),
       addMessage: (message) =>
         set((state) => {
           return {
@@ -45,16 +55,9 @@ export const useConversationsStore = create<ConversationsStore>()(
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
               const { conversation: _conversation, ...restMessage } = message;
               const { messages, ...restConversation } = conversation;
-              const newMessages = [
-                ...messages,
-                {
-                  ...restMessage,
-                },
-              ];
-
               return {
                 ...restConversation,
-                messages: [...newMessages],
+                messages: [...messages, restMessage],
               };
             }),
           };
@@ -70,7 +73,7 @@ export const useConversationsStore = create<ConversationsStore>()(
 
               return {
                 ...restConversation,
-                messages: [...newMessages],
+                messages: newMessages,
               };
             }),
           };

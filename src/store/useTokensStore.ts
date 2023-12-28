@@ -13,8 +13,8 @@ export const useTokensStore = create<TokensStore>()(
     (set) => ({
       accessToken: null,
       refreshToken: null,
-      setTokens: (accessToken, refreshToken) => set(() => ({ accessToken, refreshToken })),
-      resetTokens: () => set(() => ({ accessToken: null, refreshToken: null })),
+      setTokens: (accessToken, refreshToken) => set({ accessToken, refreshToken }),
+      resetTokens: () => set({ accessToken: null, refreshToken: null }),
     }),
     {
       name: 'tokens-storage',

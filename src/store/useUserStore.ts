@@ -15,8 +15,8 @@ export const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
       userData: null,
-      setUserData: (user) => set(() => ({ userData: user })),
-      resetUserData: () => set(() => ({ userData: null })),
+      setUserData: (user) => set({ userData: user }),
+      resetUserData: () => set({ userData: null }),
     }),
     {
       name: 'user-storage',
