@@ -16,12 +16,12 @@ import { Message } from '../Message';
 
 import classes from './Conversation.module.css';
 import { type ConversationProps } from './interfaces';
-import { DeleteMessageModal } from '@/components/DeleteMessageModal';
+import { DeleteMessageModal } from '../DeleteMessageModal';
 
 const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
   const { onSend, loading } = useChatSend(chatId);
   const {
-    modalOpened,
+    opened,
     loading: deleteLoading,
     error,
     handlers: { onOpen, onClose, onDelete },
@@ -81,7 +81,7 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
       <Input isLoading={loading} onSubmit={onSend} />
       <BottomAffix onScroll={onScroll} />
       <DeleteMessageModal
-        opened={modalOpened}
+        opened={opened}
         loading={deleteLoading}
         error={error}
         onClose={onClose}
