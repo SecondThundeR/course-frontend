@@ -7,6 +7,7 @@ import classes from './Features.module.css';
 
 const LandingFeatures = memo(function LandingFeatures() {
   const theme = useMantineTheme();
+
   const features = FEATURES.map((feature) => (
     <Card key={feature.id} shadow="md" radius="md" className={classes.card} padding="xl">
       <feature.icon

@@ -23,8 +23,8 @@ const LandingKatex = memo(function LandingKatex() {
         <BlockMath math={equation} />
         <TextInput
           w="full"
-          label="Введённое выражение"
-          placeholder="Введите выражение сюда"
+          label="LaTeX-выражение"
+          placeholder="Введите выражение для отображения"
           value={equation}
           onChange={onChange}
         />
