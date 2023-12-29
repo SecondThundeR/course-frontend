@@ -1,15 +1,15 @@
 import { type PropsWithChildren } from 'react';
-import { AppShell, Flex, Title, Button, em } from '@mantine/core';
-import { useHeadroom, useMediaQuery } from '@mantine/hooks';
+import { AppShell, Flex, Title, Button } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
 import { LOGIN_ROUTE, REGISTER_ROUTE } from '@/constants/routes';
 
+import { useRootShellData } from '@/hooks';
+
 import { ThemeToggle } from '../';
 
 function RootShell({ children }: PropsWithChildren) {
-  const pinned = useHeadroom({ fixedAt: 120 });
-  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
+  const { pinned, isMobile } = useRootShellData();
 
   return (
     <AppShell header={{ height: 60, collapsed: !pinned, offset: false }}>
