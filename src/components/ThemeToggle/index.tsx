@@ -4,15 +4,19 @@ import { IconSun, IconMoon } from '@tabler/icons-react';
 
 import { useThemeSwitch } from '@/hooks';
 
-import classes from './ThemeToggle.module.css';
+import { type ThemeToggleProps } from './interfaces';
 
-const ThemeToggle = memo(function ThemeToggle() {
+const ThemeToggle = memo(function ThemeToggle({
+  buttonSize = 36,
+  iconSize = 20,
+  iconStroke = 1.5,
+}: ThemeToggleProps) {
   const { isLight, onThemeSwitch } = useThemeSwitch();
   const Icon = isLight ? IconSun : IconMoon;
 
   return (
-    <ActionIcon onClick={onThemeSwitch} variant="default" size="36" aria-label="Смена темы">
-      <Icon className={classes.icon} stroke={1.5} />
+    <ActionIcon onClick={onThemeSwitch} variant="default" size={buttonSize} aria-label="Смена темы">
+      <Icon size={iconSize} stroke={iconStroke} />
     </ActionIcon>
   );
 });
