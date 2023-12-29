@@ -35,7 +35,6 @@ const RegisterPage = memo(function RegisterPage() {
           Войти в аккаунт
         </Anchor>
       </Text>
-
       {error && (
         <Alert variant="filled" color="red" mt="md">
           Произошла ошибка!

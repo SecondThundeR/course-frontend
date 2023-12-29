@@ -35,7 +35,6 @@ const LoginPage = memo(function LoginPage() {
           Создать аккаунт
         </Anchor>
       </Text>
-
       {error && (
         <Alert variant="filled" color="red" mt="md">
           Произошла ошибка!
@@ -43,19 +42,16 @@ const LoginPage = memo(function LoginPage() {
           <strong>{error.message}</strong>
         </Alert>
       )}
-
       {isSessionExpired && (
         <Alert variant="filled" color="red" mt="md">
           Сессия истекла! Войдите снова в систему
         </Alert>
       )}
-
       {isNotLoggedIn && (
         <Alert variant="filled" color="red" mt="md">
           Войдите, чтобы продолжить
         </Alert>
       )}
-
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form onSubmit={form.onSubmit((values) => onLogin(values))}>
           <TextInput
