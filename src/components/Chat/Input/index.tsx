@@ -2,24 +2,17 @@ import { memo } from 'react';
 import { ActionIcon, Checkbox, Flex, TextInput } from '@mantine/core';
 import { IconSend } from '@tabler/icons-react';
 
-import { useChatInputForm, useDeadLockFocus } from '@/hooks';
+import { useChatInput } from '@/hooks';
 
 import classes from './Input.module.css';
 
 import { type InputProps } from './interfaces';
 
 export const Input = memo(function Input({ isLoading, onSubmit }: InputProps) {
-  const ref = useDeadLockFocus();
-  const form = useChatInputForm();
+  const { ref, form, onFormSubmit } = useChatInput(onSubmit);
 
   return (
-    <form
-      onSubmit={form.onSubmit(async (values) => {
-        await onSubmit(values.message, values.isLatex);
-        form.reset();
-      })}
-      className={classes.input}
-    >
+    <form onSubmit={onFormSubmit} className={classes.input}>
       <Flex p="md" direction="column" gap="xs">
         <Flex gap="md" align="center">
           <TextInput
