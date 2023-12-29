@@ -6,7 +6,7 @@ import { DateSeparator } from './DateSeparator';
 
 const PlaceholderBase = memo(function PlaceholderBase() {
   throw new Error(
-    'Не используйте этот компонент. Вместо этого, используйте другие, используя нотацию через точку'
+    'Не используйте компонент "Message" напрямую. Используйте "Message.From", "Message.To" или "Message.DateSeparator"'
   );
 });
 

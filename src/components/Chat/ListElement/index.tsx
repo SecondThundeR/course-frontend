@@ -6,17 +6,11 @@ import { MessageType } from '@/__generated__/graphql';
 
 import { CHAT_ROUTE } from '@/constants/routes';
 
-import { type ConversationInfo } from '@/store';
-
 import { extractAvatarLetters } from '@/utils/extractAvatarLetters';
 import { extractFullName } from '@/utils/extractFullName';
 import { lastMessageDateFormat } from '@/utils/lastMessageDateFormat';
 
-type ListElementProps = Omit<ConversationInfo, 'createdAt' | 'updatedAt'> & {
-  userId?: string;
-  isActive: boolean;
-  closeNavbar: () => void;
-};
+import { type ListElementProps } from './interfaces';
 
 export const ListElement = memo(function ListElement({
   id,
@@ -26,19 +20,28 @@ export const ListElement = memo(function ListElement({
   isActive,
   closeNavbar,
 }: ListElementProps) {
-  const message = messages[messages.length - 1];
-  const { firstname, lastname } = participants.filter((user) => user.id !== userId)[0];
-  const avatarLetters = extractAvatarLetters(firstname, lastname);
-  const fullName = extractFullName(firstname, lastname);
-  const formattedTime = lastMessageDateFormat(message?.createdAt as string);
-  const isConversationEmpty = !message;
-  const isLatex = message?.type === MessageType.Latex;
-  const isSentByCurrentUser = message?.from?.id === userId;
+  const lastMessage = messages.at(-1);
+  const isConversationEmpty = !lastMessage;
+  const isLatex = lastMessage?.type === MessageType.Latex;
+  const isLatexOrEmpty = isLatex || isConversationEmpty;
+  const isSentByCurrentUser = lastMessage?.from?.id === userId;
+
+  const otherParticipant = participants.find((user) => user.id !== userId)!;
+  const avatarLetters = extractAvatarLetters(otherParticipant.firstname, otherParticipant.lastname);
+  const fullName = extractFullName(otherParticipant.firstname, otherParticipant.lastname);
+
+  const textStyles = {
+    lineClamp: isLatex ? 2 : 1,
+    fs: isLatexOrEmpty ? 'italic' : undefined,
+    c: isLatexOrEmpty ? 'dimmed' : undefined,
+  };
+  const linkDestination = `${CHAT_ROUTE}/${id}`;
+  const formattedTime = lastMessageDateFormat(lastMessage?.createdAt as string);
 
   return (
     <Link
       component={NavLink}
-      to={`${CHAT_ROUTE}/${id}`}
+      to={linkDestination}
       onClick={closeNavbar}
       variant="light"
       active={isActive}
@@ -47,21 +50,17 @@ export const ListElement = memo(function ListElement({
           {avatarLetters}
         </Avatar>
       }
-      label={<Title order={4}>{fullName}</Title>}
-      description={
-        <Text
-          lineClamp={isLatex ? 2 : 1}
-          fs={isLatex || isConversationEmpty ? 'italic' : undefined}
-          c={isLatex || isConversationEmpty ? 'dimmed' : undefined}
-        >
-          {isSentByCurrentUser && 'Вы: '}
-          {isLatex ? 'LaTeX-сообщение' : message?.content}
-          {isConversationEmpty && 'Пустой чат'}
+      rightSection={
+        <Text c={isActive ? undefined : 'dimmed'} size="sm">
+          {formattedTime}
         </Text>
       }
-      rightSection={
-        <Text c={!isActive ? 'dimmed' : undefined} size="sm">
-          {formattedTime}
+      label={<Title order={4}>{fullName}</Title>}
+      description={
+        <Text {...textStyles}>
+          {isSentByCurrentUser && 'Вы: '}
+          {isLatex ? 'LaTeX-сообщение' : lastMessage?.content}
+          {isConversationEmpty && 'Пустой чат'}
         </Text>
       }
       styles={{

@@ -4,10 +4,7 @@ import { IconCircleX } from '@tabler/icons-react';
 
 import { useCreateForm, useChatCreate } from '@/hooks';
 
-type CreateModalProps = {
-  opened: boolean;
-  onClose: () => void;
-};
+import { type CreateModalProps } from './interfaces';
 
 export const CreateModal = memo(function CreateModal({ opened, onClose }: CreateModalProps) {
   const form = useCreateForm();

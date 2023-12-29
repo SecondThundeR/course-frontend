@@ -11,12 +11,12 @@ import { useConversationsStore, useUserStore } from '@/store';
 import { isDaysDifferent } from '@/utils/isDaysDifferent';
 
 import { BottomAffix } from '../BottomAffix';
+import { DeleteMessageModal } from '../DeleteMessageModal';
 import { Input } from '../Input';
 import { Message } from '../Message';
 
 import classes from './Conversation.module.css';
 import { type ConversationProps } from './interfaces';
-import { DeleteMessageModal } from '../DeleteMessageModal';
 
 const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
   const { onSend, loading } = useChatSend(chatId);
@@ -28,8 +28,8 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
   } = useMessageModalDelete();
   const userData = useUserStore((state) => state.userData);
   const conversations = useConversationsStore((state) => state.conversations);
-  const currentConversation = conversations.filter((conversation) => conversation.id === chatId)[0];
-  const { targetRef, onScroll } = useChatScroll(currentConversation.messages.at(-1));
+  const currentConversation = conversations.find((conversation) => conversation.id === chatId);
+  const { targetRef, onScroll } = useChatScroll(currentConversation?.messages.at(-1));
 
   if (!currentConversation) {
     return <Navigate to={CHAT_ROUTE} />;
@@ -40,6 +40,8 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
       const prevCreatedAt = messagesArray[index - 1]?.createdAt as string | undefined;
       const currCreatedAt = createdAt as string;
       const isDifferent = isDaysDifferent(prevCreatedAt, currCreatedAt);
+      const dateSeparatorDate = isDifferent ? new Date(currCreatedAt) : undefined;
+
       const MessageComponent = from?.id !== userData?.id ? Message.To : Message.From;
       const fragmentKey = isDifferent ? `${id}-${currCreatedAt.toString()}` : id;
 
@@ -52,7 +54,7 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
             type={type}
             onOpen={onOpen}
           />
-          {isDifferent && <Message.DateSeparator date={new Date(currCreatedAt)} />}
+          {isDifferent && <Message.DateSeparator date={dateSeparatorDate} />}
         </Fragment>
       );
     })

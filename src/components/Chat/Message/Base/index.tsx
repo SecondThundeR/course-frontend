@@ -3,10 +3,11 @@ import 'katex/dist/katex.min.css';
 import { memo, useCallback } from 'react';
 import { BlockMath } from 'react-katex';
 import { Flex, Text } from '@mantine/core';
-import { useClipboard } from '@mantine/hooks';
 import { IconCheck, IconCopy, IconTrash } from '@tabler/icons-react';
 
 import { MessageType } from '@/__generated__/graphql';
+
+import { useContentCopy } from '@/hooks';
 
 import { timeFormat } from '@/utils/timeFormat';
 
@@ -21,16 +22,11 @@ export const Base = memo(function Base({
   direction,
   onOpen,
 }: BaseProps) {
-  const { copy, copied } = useClipboard({
-    timeout: 1500,
-  });
+  const { copied, onCopy } = useContentCopy(content);
   const onDeleteOpen = useCallback(() => {
     onOpen(id);
   }, [id, onOpen]);
-  const onCopy = useCallback(() => {
-    if (copied) return;
-    copy(content);
-  }, [content, copied, copy]);
+
   const CopyIcon = copied ? IconCheck : IconCopy;
   const isLatex = type === MessageType.Latex;
   const directionFrom = direction === 'from';
@@ -42,7 +38,7 @@ export const Base = memo(function Base({
       p="md"
       className={classes[`message__${direction}`]}
     >
-      {type === MessageType.Latex ? (
+      {isLatex ? (
         <div className={directionFrom ? classes.message__from_text : undefined}>
           <BlockMath math={content} />
         </div>
@@ -66,15 +62,12 @@ export const Base = memo(function Base({
     </Flex>
   );
 
-  return (
-    <>
-      {directionFrom ? (
-        <Flex w="100%" justify="flex-end">
-          {message}
-        </Flex>
-      ) : (
-        message
-      )}
-    </>
-  );
+  if (directionFrom)
+    return (
+      <Flex w="100%" justify="flex-end">
+        {message}
+      </Flex>
+    );
+
+  return message;
 });

@@ -6,10 +6,7 @@ import { useChatInputForm, useDeadLockFocus } from '@/hooks';
 
 import classes from './Input.module.css';
 
-type InputProps = {
-  isLoading: boolean;
-  onSubmit: (message: string, isLatex: boolean) => Promise<void>;
-};
+import { type InputProps } from './interfaces';
 
 export const Input = memo(function Input({ isLoading, onSubmit }: InputProps) {
   const ref = useDeadLockFocus();

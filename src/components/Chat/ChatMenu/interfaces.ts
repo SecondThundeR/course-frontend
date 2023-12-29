@@ -1,1 +1,1 @@
-export type ChatMenuProps = { chatId: string };
+export type ChatMenuProps = { chatId?: string };

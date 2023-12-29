@@ -4,7 +4,7 @@ import { IconArrowDown } from '@tabler/icons-react';
 
 import { useChatAffix } from '@/hooks';
 
-type BottomAffixProps = { onScroll: () => void };
+import { type BottomAffixProps } from './interfaces';
 
 export const BottomAffix = memo(function BottomAffix({ onScroll }: BottomAffixProps) {
   const { scroll, scrollableHeight } = useChatAffix();

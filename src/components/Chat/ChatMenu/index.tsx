@@ -9,6 +9,8 @@ import { type ChatMenuProps } from './interfaces';
 export const ChatMenu = memo(function ChatMenu({ chatId }: ChatMenuProps) {
   const [opened, { open, close }] = useDisclosure();
 
+  if (!chatId) return null;
+
   return (
     <>
       <Menu shadow="md" position="bottom-end" withArrow>

@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { AppShell, Flex, Group, Burger, Title, ScrollArea, em } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { AppShell, Flex, Group, Burger, ScrollArea } from '@mantine/core';
 import { Outlet, useParams } from 'react-router-dom';
 
 import { SearchInput, ThemeToggle } from '@/components';
@@ -9,34 +9,31 @@ import { useCurrentUser, useSearch } from '@/hooks';
 
 import { useConversationsStore } from '@/store';
 
-import { extractFullName } from '@/utils/extractFullName';
+import { getCurrentChatParticipantFullName } from '@/utils/getCurrentChatParticipantFullName';
 
 import { CreateModal } from '../CreateModal';
 import { List } from '../List';
 import { ChatMenu } from '../ChatMenu';
 import { UserFooter } from '../UserFooter';
 
+import { HeaderTitle } from './HeaderTitle';
+
 const Shell = memo(function Shell() {
   const { chatId } = useParams();
   const [opened, { toggle, close }] = useDisclosure();
   const [modalOpened, { open: onOpen, close: onClose }] = useDisclosure();
-  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
   const conversations = useConversationsStore((state) => state.conversations);
   const { q, inputRef, onChange } = useSearch();
   const { userData, onSignout } = useCurrentUser();
 
-  const currentChatParticipant = conversations
-    .filter((conversation) => conversation.id === chatId)
-    .at(0)
-    ?.participants.filter((participant) => participant.id !== userData?.id)
-    .at(0);
-  const participantFullName = !currentChatParticipant
-    ? null
-    : extractFullName(currentChatParticipant.firstname, currentChatParticipant.lastname);
+  const participantFullName = getCurrentChatParticipantFullName({
+    conversations,
+    chatId,
+    userId: userData?.id,
+  });
 
   return (
     <>
-      <CreateModal opened={modalOpened} onClose={onClose} />
       <AppShell
         header={{ height: 60 }}
         navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
@@ -45,22 +42,11 @@ const Shell = memo(function Shell() {
           <Flex h="100%" px="md" gap="md" justify="space-between" align="center">
             <Group>
               <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-              <Flex direction="column">
-                {!isMobile && <Title order={3}>Чаты</Title>}
-                {isMobile && (
-                  <Title order={4}>
-                    {opened || (!opened && !participantFullName)
-                      ? 'Чаты'
-                      : participantFullName
-                        ? `Чат с ${participantFullName}`
-                        : null}
-                  </Title>
-                )}
-              </Flex>
+              <HeaderTitle opened={opened} participantFullName={participantFullName} />
             </Group>
             <Group>
               <ThemeToggle />
-              {chatId !== undefined && <ChatMenu chatId={chatId} />}
+              <ChatMenu chatId={chatId} />
             </Group>
           </Flex>
         </AppShell.Header>
@@ -79,6 +65,7 @@ const Shell = memo(function Shell() {
           <Outlet />
         </AppShell.Main>
       </AppShell>
+      <CreateModal opened={modalOpened} onClose={onClose} />
     </>
   );
 });

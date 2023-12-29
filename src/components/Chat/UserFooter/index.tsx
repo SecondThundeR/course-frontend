@@ -1,16 +1,10 @@
 import { memo } from 'react';
 import { Flex, Avatar, Title, Text, Button } from '@mantine/core';
 
-import { type User } from '@/store';
-
 import { extractAvatarLetters } from '@/utils/extractAvatarLetters';
 import { extractFullName } from '@/utils/extractFullName';
 
-interface UserFooterProps {
-  user: User | null;
-  onSignout: () => void;
-  onChatModalOpen: () => void;
-}
+import { type UserFooterProps } from './interfaces';
 
 export const UserFooter = memo(function UserFooter({
   user,

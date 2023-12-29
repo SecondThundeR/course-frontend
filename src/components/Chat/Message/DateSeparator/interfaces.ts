@@ -1,3 +1,3 @@
 export type DateSeparatorProps = {
-  date: Date;
+  date?: Date;
 };

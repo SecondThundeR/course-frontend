@@ -1,8 +1,9 @@
 import { memo } from 'react';
 import { Modal, Alert, Text, Flex, Button } from '@mantine/core';
 
-import { type DeleteChatModalProps } from './interfaces';
 import { useChatDelete } from '@/hooks';
+
+import { type DeleteChatModalProps } from './interfaces';
 
 export const DeleteChatModal = memo(function DeleteChatModal({
   chatId,

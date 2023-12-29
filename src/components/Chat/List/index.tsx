@@ -26,10 +26,14 @@ export const List = memo(function List({
       }),
     [closeNavbar, currentChatId, searchValue, user?.id]
   );
+  const sortedAndMappedConversations = useMemo(() => {
+    return conversations.sort(sortConversations).map(mapConversations);
+  }, [conversations, mapConversations]);
   const listElements = useMemo(
-    () => conversations.sort(sortConversations).map(mapConversations).filter(filterUndefinedData),
-    [conversations, mapConversations]
+    () => sortedAndMappedConversations.filter(filterUndefinedData),
+    [sortedAndMappedConversations]
   );
+
   const isListEmpty = listElements.length === 0;
 
   return (

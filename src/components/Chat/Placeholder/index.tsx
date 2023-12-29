@@ -1,25 +1,17 @@
 import { memo } from 'react';
-import { Flex, Title, rem } from '@mantine/core';
+import { Flex, Title } from '@mantine/core';
 import { IconMessage2, IconMessage2Plus } from '@tabler/icons-react';
 
-import { useConversationsStore } from '@/store';
+import { CHAT_PLACEHOLDER_ICON_DEFAULTS } from '@/constants/defaultOptions';
+
+import { useHasChats } from '@/hooks';
 
 import classes from './Placeholder.module.css';
 
 const Placeholder = memo(function Placeholder() {
-  const conversations = useConversationsStore((state) => state.conversations);
-  const hasChats = conversations.length > 0;
-  const iconSettings = {
-    style: { width: rem(96), height: rem(96) },
-    stroke: 1.5,
-    color: 'var(--mantine-color-blue-filled)',
-  };
+  const hasChats = useHasChats();
 
-  const icon = hasChats ? (
-    <IconMessage2 {...iconSettings} />
-  ) : (
-    <IconMessage2Plus {...iconSettings} />
-  );
+  const Icon = hasChats ? IconMessage2 : IconMessage2Plus;
 
   return (
     <Flex
@@ -30,7 +22,7 @@ const Placeholder = memo(function Placeholder() {
       align="center"
       className={classes.wrapper}
     >
-      {icon}
+      <Icon {...CHAT_PLACEHOLDER_ICON_DEFAULTS} />
       <Title ta="center">
         {hasChats
           ? 'Выберите чат из списка, чтобы продолжить'
