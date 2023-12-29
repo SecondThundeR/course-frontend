@@ -2,14 +2,16 @@ import { memo } from 'react';
 import { ActionIcon } from '@mantine/core';
 import { IconSun, IconMoon } from '@tabler/icons-react';
 
+import { THEME_TOGGLE_DEFAULTS } from '@/constants/defaultOptions';
+
 import { useThemeSwitch } from '@/hooks';
 
 import { type ThemeToggleProps } from './interfaces';
 
 const ThemeToggle = memo(function ThemeToggle({
-  buttonSize = 36,
-  iconSize = 20,
-  iconStroke = 1.5,
+  buttonSize = THEME_TOGGLE_DEFAULTS.buttonSize,
+  iconSize = THEME_TOGGLE_DEFAULTS.iconSize,
+  iconStroke = THEME_TOGGLE_DEFAULTS.iconStroke,
 }: ThemeToggleProps) {
   const { isLight, onThemeSwitch } = useThemeSwitch();
   const Icon = isLight ? IconSun : IconMoon;
