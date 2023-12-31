@@ -55,7 +55,7 @@ export const ListElement = memo(function ListElement({
           {formattedTime}
         </Text>
       }
-      label={<Title order={4}>{fullName}</Title>}
+      label={<Title order={5}>{fullName}</Title>}
       description={
         <Text {...textStyles}>
           {isSentByCurrentUser && 'Вы: '}
