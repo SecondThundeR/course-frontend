@@ -38,7 +38,11 @@ export const List = memo(function List({
 
   return (
     <>
-      {isListEmpty && <Text ta="center">Не найдено чатов для запроса "{searchValue}"</Text>}
+      {isListEmpty && (
+        <Text ta="center">
+          {searchValue ? `Не найдено чатов для запроса "${searchValue}"` : 'Нет чатов'}
+        </Text>
+      )}
       {listElements}
     </>
   );
