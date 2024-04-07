@@ -8,7 +8,6 @@ export default function AuthorizedRedirectLayout({
   children,
   isCheckForLoggedIn,
 }: AuthorizedRedirectLayoutProps) {
-  console.log('Rendered!');
   const redirectPath = useAuthorizedRedirectPath(isCheckForLoggedIn);
 
   return redirectPath ? <Navigate to={redirectPath} /> : children;
