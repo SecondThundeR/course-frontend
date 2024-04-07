@@ -25,17 +25,15 @@ export function useChatScroll(lastMessage?: ConversationInfo['messages'][number]
   }, [onScroll]);
 
   useEffect(() => {
-    const isTheSameMessage = lastMessage?.id === previousMessage?.id;
-    if (isTheSameMessage) return;
+    const isSameMessage = lastMessage?.id === previousMessage?.id;
+    if (isSameMessage) return;
 
     const isScrollThreshold = scroll.y >= scrollableHeight;
     const lastMessageAuthor = lastMessage?.from?.id;
     const isMessageFromCurrentUser = lastMessageAuthor === userData?.id;
-    const isMessageFromOtherUser = lastMessageAuthor !== userData?.id;
 
-    if (isMessageFromCurrentUser || (isMessageFromOtherUser && isScrollThreshold)) {
+    if (isMessageFromCurrentUser || (!isMessageFromCurrentUser && isScrollThreshold)) {
       onScroll();
-      return;
     }
   }, [lastMessage, onScroll, previousMessage?.id, scroll.y, scrollableHeight, userData?.id]);
 

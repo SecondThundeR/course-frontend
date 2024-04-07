@@ -65,6 +65,10 @@ export function useConversationsWatcher() {
         case UpdateType.Added:
           addConversation(conversation);
           break;
+        case UpdateType.Edited:
+          // * Currently, there are no edit conversation event,
+          // * so we are skipping this
+          break;
         case UpdateType.Deleted:
           removeConversation(conversation.id);
           break;
