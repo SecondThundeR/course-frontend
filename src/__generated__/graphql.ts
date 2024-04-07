@@ -82,6 +82,12 @@ export type DeleteConversationInput = {
   conversationId: Scalars['String']['input'];
 };
 
+export type EditMessageInput = {
+  content: Scalars['String']['input'];
+  conversationId: Scalars['String']['input'];
+  messageId: Scalars['String']['input'];
+};
+
 export type LoginInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -132,6 +138,7 @@ export type Mutation = {
   createMessage: Message;
   deleteConversation: Conversation;
   deleteMessage: Message;
+  editMessage: Message;
   login: Auth;
   refreshToken: Token;
   signup: Auth;
@@ -161,6 +168,11 @@ export type MutationDeleteConversationArgs = {
 
 export type MutationDeleteMessageArgs = {
   messageId: Scalars['String']['input'];
+};
+
+
+export type MutationEditMessageArgs = {
+  data: EditMessageInput;
 };
 
 
