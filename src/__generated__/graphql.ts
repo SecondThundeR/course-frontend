@@ -291,7 +291,8 @@ export type Token = {
 
 export enum UpdateType {
   Added = 'ADDED',
-  Deleted = 'DELETED'
+  Deleted = 'DELETED',
+  Edited = 'EDITED'
 }
 
 export type UpdateUserInput = {
