@@ -9,7 +9,7 @@ import { CHAT_ROUTE } from '@/constants/routes';
 
 import { useTokensStore } from '@/store';
 
-export default function useSignup() {
+export function useSignup() {
   const setTokens = useTokensStore.use.setTokens();
   const [signupUser, { loading, error }] = useMutation(SIGNUP_MUTATION);
   const navigate = useNavigate();

@@ -1,12 +1,15 @@
 import 'katex/dist/katex.min.css';
 
-import { memo } from 'react';
-import { BlockMath } from 'react-katex';
+import { Suspense, lazy, memo } from 'react';
 import { Title, Text, TextInput } from '@mantine/core';
 
 import { useEquation } from '@/hooks';
 
 import classes from './Katex.module.css';
+
+const LazyBlockMath = lazy(() =>
+  import('react-katex').then((module) => ({ default: module.BlockMath }))
+);
 
 const LandingKatex = memo(function LandingKatex() {
   const { equation, onChange } = useEquation();
@@ -20,7 +23,9 @@ const LandingKatex = memo(function LandingKatex() {
         </Text>
       </div>
       <div className={classes.block}>
-        <BlockMath math={equation} />
+        <Suspense>
+          <LazyBlockMath math={equation} />
+        </Suspense>
         <TextInput
           w="full"
           label="LaTeX-выражение"

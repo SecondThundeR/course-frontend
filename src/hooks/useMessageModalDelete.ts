@@ -6,11 +6,11 @@ import { DELETE_MESSAGE } from '@/constants/graphql/mutation';
 
 import { useConversationsStore, useTokensStore } from '@/store';
 
-export default function useMessageModalDelete() {
+export function useMessageModalDelete() {
   const [selectedMessageId, setSelectedMessageId] = useState<string>();
-  const [localError, setLocalError] = useState<Error>();
+  const [error, setError] = useState<Error>();
   const [opened, { open, close }] = useDisclosure();
-  const [deleteMsg, { loading, error }] = useMutation(DELETE_MESSAGE);
+  const [deleteMsg, { loading, error: mutationError }] = useMutation(DELETE_MESSAGE);
   const accessToken = useTokensStore.use.accessToken();
   const removeMessage = useConversationsStore.use.removeMessage();
 
@@ -27,7 +27,7 @@ export default function useMessageModalDelete() {
 
     close();
     setSelectedMessageId(undefined);
-    setLocalError(undefined);
+    setError(undefined);
   }, [close, loading]);
 
   const onDelete = useCallback(async () => {
@@ -45,7 +45,7 @@ export default function useMessageModalDelete() {
     });
 
     if (!res.data) {
-      setLocalError(new Error('Не удалось удалить сообщение!'));
+      setError(new Error('Не удалось удалить сообщение!'));
       return;
     }
 
@@ -54,16 +54,16 @@ export default function useMessageModalDelete() {
   }, [selectedMessageId, deleteMsg, accessToken, removeMessage, close]);
 
   useEffect(() => {
-    if (!opened) {
-      setSelectedMessageId(undefined);
-      setLocalError(undefined);
-    }
+    if (opened) return;
+
+    setSelectedMessageId(undefined);
+    setError(undefined);
   }, [opened]);
 
   return {
     opened,
     loading,
-    error: error ?? localError,
+    error: mutationError ?? error,
     handlers: { onOpen, onClose, onDelete },
   };
 }

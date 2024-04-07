@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { CREATE_CONVERSATION } from '@/constants/graphql/mutation';
 import { CHAT_ROUTE } from '@/constants/routes';
 
-import { useConversationsStore, useTokensStore } from '@/store';
 import { chatCreateSelector } from '@/store/selectors';
+import { useConversationsStore, useTokensStore } from '@/store';
 
 type OnCreateArgs = {
   email: string;
@@ -15,23 +15,23 @@ type OnCreateArgs = {
   onClose: () => void;
 };
 
-export default function useChatCreate() {
+export function useChatCreate() {
   const accessToken = useTokensStore.use.accessToken();
   const { conversations, addConversation } = useConversationsStore(chatCreateSelector);
-  const [createChat, { loading, error }] = useMutation(CREATE_CONVERSATION);
-  const [localError, setLocalError] = useState<Error>();
+  const [createChat, { loading, error: mutationError }] = useMutation(CREATE_CONVERSATION);
+  const [error, setError] = useState<Error>();
   const navigate = useNavigate();
 
   const onCreate = useCallback(
     async ({ message, email, isLatex, onClose }: OnCreateArgs) => {
-      setLocalError(undefined);
+      setError(undefined);
 
-      const isChatExistsAlready = conversations.some((conversation) =>
-        conversation.participants.some((user) => user.email === email)
+      const isChatExistsAlready = conversations.some(({ participants }) =>
+        participants.some((p) => p.email === email)
       );
 
       if (isChatExistsAlready) {
-        setLocalError(new Error(`Чат с "${email}" уже существует`));
+        setError(new Error(`Чат с "${email}" уже существует`));
         return;
       }
 
@@ -60,5 +60,5 @@ export default function useChatCreate() {
     [accessToken, addConversation, conversations, createChat, navigate]
   );
 
-  return { loading, error: error ?? localError, onCreate };
+  return { loading, error: mutationError ?? error, onCreate };
 }

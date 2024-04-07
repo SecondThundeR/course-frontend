@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export default function useInputFocus() {
+export function useInputFocus() {
   const ref = useRef<HTMLInputElement>(null);
 
   const onFocus = () => {

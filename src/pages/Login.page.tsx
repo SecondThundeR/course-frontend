@@ -1,11 +1,11 @@
-import { Suspense, lazy, memo } from 'react';
+import { memo } from 'react';
 
-const LazyLoginPage = lazy(() => import('../components/LoginPage'));
+import { AuthorizedRedirectLayout, LoginPage } from '@/components';
 
-const Login = memo(() => (
-  <Suspense>
-    <LazyLoginPage />
-  </Suspense>
+export const Component = memo(() => (
+  <AuthorizedRedirectLayout isCheckForLoggedIn={false}>
+    <LoginPage />
+  </AuthorizedRedirectLayout>
 ));
 
-export default Login;
+Component.displayName = 'Login';

@@ -1,7 +1,6 @@
 import 'katex/dist/katex.min.css';
 
-import { memo, useCallback } from 'react';
-import { BlockMath } from 'react-katex';
+import { Suspense, lazy, memo, useCallback } from 'react';
 import { Flex, Text } from '@mantine/core';
 import { IconCheck, IconCopy, IconTrash } from '@tabler/icons-react';
 
@@ -13,6 +12,10 @@ import { timeFormat } from '@/utils/timeFormat';
 
 import classes from './Base.module.css';
 import { type BaseProps } from './interfaces';
+
+const LazyBlockMath = lazy(() =>
+  import('react-katex').then((module) => ({ default: module.BlockMath }))
+);
 
 export const Base = memo(function Base({
   id,
@@ -40,7 +43,9 @@ export const Base = memo(function Base({
     >
       {isLatex ? (
         <div className={directionFrom ? classes.message__from_text : undefined}>
-          <BlockMath math={content} />
+          <Suspense>
+            <LazyBlockMath math={content} />
+          </Suspense>
         </div>
       ) : (
         <Text className={directionFrom ? classes.message__from_text : undefined}>{content}</Text>

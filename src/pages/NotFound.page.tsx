@@ -1,11 +1,7 @@
-import { memo, lazy, Suspense } from 'react';
+import { memo } from 'react';
 
-const LazyBlock404 = lazy(() => import('../components/Block404'));
+import { Block404 } from '@/components';
 
-const NotFound = memo(() => (
-  <Suspense>
-    <LazyBlock404 />
-  </Suspense>
-));
+export const Component = memo(() => <Block404 />);
 
-export default NotFound;
+Component.displayName = 'NotFound';

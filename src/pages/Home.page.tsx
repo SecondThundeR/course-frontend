@@ -1,25 +1,20 @@
-import { memo, lazy, Suspense } from 'react';
+import { memo } from 'react';
 
-import { useAuthorizedRedirect } from '@/hooks';
+import {
+  AuthorizedRedirectLayout,
+  LandingFAQ,
+  LandingFeatures,
+  LandingHero,
+  LandingKatex,
+} from '@/components';
 
-const LazyLandingHero = lazy(() => import('../components/Landing/Hero'));
-const LazyLandingFeatures = lazy(() => import('../components/Landing/Features'));
-const LazyLandingKatex = lazy(() => import('../components/Landing/Katex'));
-const LazyLandingFAQ = lazy(() => import('../components/Landing/FAQ'));
+export const Component = memo(() => (
+  <AuthorizedRedirectLayout isCheckForLoggedIn={false}>
+    <LandingHero />
+    <LandingFeatures />
+    <LandingKatex />
+    <LandingFAQ />
+  </AuthorizedRedirectLayout>
+));
 
-const CHECK_FOR_LOGGED_IN = false;
-
-const Home = memo(() => {
-  useAuthorizedRedirect(CHECK_FOR_LOGGED_IN);
-
-  return (
-    <Suspense>
-      <LazyLandingHero />
-      <LazyLandingFeatures />
-      <LazyLandingKatex />
-      <LazyLandingFAQ />
-    </Suspense>
-  );
-});
-
-export default Home;
+Component.displayName = 'Home';

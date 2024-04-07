@@ -1,18 +1,17 @@
-import { Suspense, lazy, memo } from 'react';
+import { memo } from 'react';
 
-import { useConversationsWatcher, useAuthorizedRedirect } from '@/hooks';
+import { AuthorizedRedirectLayout, ChatShell } from '@/components';
 
-const LazyChatShell = lazy(() => import('../components/Chat/Shell'));
+import { useConversationsWatcher } from '@/hooks';
 
-const Chat = memo(() => {
-  useAuthorizedRedirect();
+export const Component = memo(() => {
   useConversationsWatcher();
 
   return (
-    <Suspense>
-      <LazyChatShell />
-    </Suspense>
+    <AuthorizedRedirectLayout>
+      <ChatShell />
+    </AuthorizedRedirectLayout>
   );
 });
 
-export default Chat;
+Component.displayName = 'Chat';

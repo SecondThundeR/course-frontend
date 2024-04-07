@@ -2,15 +2,15 @@ import { type FormEvent, useCallback } from 'react';
 
 import { useChatInputForm, useInputFocus } from '.';
 
-export default function useChatInput(
-  onSubmit: (message: string, isLatex: boolean) => Promise<void>
-) {
+type ChatInputOnSubmitCallback = (message: string, isLatex: boolean) => Promise<void>;
+
+export function useChatInput(onSubmit: ChatInputOnSubmitCallback) {
   const form = useChatInputForm();
   const { ref, onFocus } = useInputFocus();
 
   const onFormSubmit = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
-      event;
+      event.preventDefault();
       const { message, isLatex } = form.values;
 
       await onSubmit(message, isLatex);

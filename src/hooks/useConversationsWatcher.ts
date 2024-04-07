@@ -12,7 +12,7 @@ import { CONVERSATION_UPDATES, MESSAGE_UPDATES } from '@/constants/graphql/subsc
 
 import { useConversationsStore, useTokensStore, useUserStore } from '@/store';
 
-export default function useConversationsWatcher() {
+export function useConversationsWatcher() {
   const accessToken = useTokensStore.use.accessToken();
   const {
     setConversations,

@@ -5,7 +5,7 @@ import { type ConversationInfo, useUserStore } from '@/store';
 
 import { useChatAffix } from '.';
 
-export default function useChatScroll(lastMessage?: ConversationInfo['messages'][number]) {
+export function useChatScroll(lastMessage?: ConversationInfo['messages'][number]) {
   const { scroll, scrollableHeight } = useChatAffix();
   const previousMessage = usePrevious(lastMessage);
   const userData = useUserStore.use.userData();

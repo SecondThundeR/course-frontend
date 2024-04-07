@@ -7,7 +7,7 @@ import { CREATE_MESSAGE } from '@/constants/graphql/mutation';
 
 import { useConversationsStore, useTokensStore } from '@/store';
 
-export default function useChatSend(conversationId?: string) {
+export function useChatSend(conversationId?: string) {
   const accessToken = useTokensStore.use.accessToken();
   const addMessage = useConversationsStore.use.addMessage();
   const [createMsg, { loading }] = useMutation(CREATE_MESSAGE);

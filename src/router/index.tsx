@@ -1,4 +1,4 @@
-import { memo, lazy, Suspense } from 'react';
+import { memo } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import {
@@ -10,83 +10,42 @@ import {
   ROOT_ROUTE,
 } from '@/constants/routes';
 
-const LazyChat = lazy(() => import('../pages/Chat.page'));
-const LazyChatConversation = lazy(() => import('../pages/ChatConversation.page'));
-const LazyChatIndex = lazy(() => import('../pages/ChatIndex.page'));
-const LazyHome = lazy(() => import('../pages/Home.page'));
-const LazyLogin = lazy(() => import('../pages/Login.page'));
-const LazyNotFound = lazy(() => import('../pages/NotFound.page'));
-const LazyRegister = lazy(() => import('../pages/Register.page'));
-const LazyRoot = lazy(() => import('../pages/Root.page'));
-
 const router = createBrowserRouter([
   {
     path: ROOT_ROUTE,
-    element: (
-      <Suspense>
-        <LazyRoot />
-      </Suspense>
-    ),
+    lazy: () => import('../pages/Root.page'),
     children: [
       {
         index: true,
-        element: (
-          <Suspense>
-            <LazyHome />
-          </Suspense>
-        ),
+        lazy: () => import('../pages/Home.page'),
       },
     ],
   },
   {
     path: LOGIN_ROUTE,
-    element: (
-      <Suspense>
-        <LazyLogin />
-      </Suspense>
-    ),
+    lazy: () => import('../pages/Login.page'),
   },
   {
     path: REGISTER_ROUTE,
-    element: (
-      <Suspense>
-        <LazyRegister />
-      </Suspense>
-    ),
+    lazy: () => import('../pages/Register.page'),
   },
   {
     path: CHAT_ROUTE,
-    element: (
-      <Suspense>
-        <LazyChat />
-      </Suspense>
-    ),
+    lazy: () => import('../pages/Chat.page'),
     children: [
       {
         index: true,
-        element: (
-          <Suspense>
-            <LazyChatIndex />
-          </Suspense>
-        ),
+        lazy: () => import('../pages/ChatIndex.page'),
       },
       {
         path: CHAT_ID_ROUTE,
-        element: (
-          <Suspense>
-            <LazyChatConversation />
-          </Suspense>
-        ),
+        lazy: () => import('../pages/ChatConversation.page'),
       },
     ],
   },
   {
     path: ANY_ROUTE,
-    element: (
-      <Suspense>
-        <LazyNotFound />
-      </Suspense>
-    ),
+    lazy: () => import('../pages/NotFound.page'),
   },
 ]);
 

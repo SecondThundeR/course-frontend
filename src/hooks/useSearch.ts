@@ -1,7 +1,7 @@
 import { useCallback, useEffect, type ChangeEvent, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-export default function useSearch() {
+export function useSearch() {
   const [searchParams, setSearchParams] = useSearchParams();
   const q = searchParams.get('q');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -15,9 +15,9 @@ export default function useSearch() {
   );
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.value = q ?? '';
-    }
+    if (!inputRef.current) return;
+
+    inputRef.current.value = q ?? '';
   }, [q]);
 
   return { q, inputRef, onChange };

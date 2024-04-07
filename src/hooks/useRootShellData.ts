@@ -3,7 +3,7 @@ import { useHeadroom, useMediaQuery } from '@mantine/hooks';
 
 import { USE_ROOT_SHELL_DATA_DEFAULTS } from '@/constants/defaultOptions';
 
-export default function useRootShellData(
+export function useRootShellData(
   fixedAt = USE_ROOT_SHELL_DATA_DEFAULTS.fixedAt,
   maxWidth = USE_ROOT_SHELL_DATA_DEFAULTS.maxWidth
 ) {

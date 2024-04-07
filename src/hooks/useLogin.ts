@@ -5,19 +5,20 @@ import { useMutation } from '@apollo/client';
 import { type LoginInput } from '@/__generated__/graphql';
 
 import { LOGIN_MUTATION } from '@/constants/graphql/mutation';
+import { PAGE_STATUS } from '@/constants/pageStatus';
 import { CHAT_ROUTE } from '@/constants/routes';
 
 import { useTokensStore } from '@/store';
 
-export default function useLogin() {
+export function useLogin() {
   const setTokens = useTokensStore.use.setTokens();
   const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const pageStatus = searchParams.get('status');
-  const isSessionExpired = pageStatus === 'session-expired';
-  const isNotLoggedIn = pageStatus === 'not-logged-in';
+  const isSessionExpired = pageStatus === PAGE_STATUS.sessionExpired;
+  const isNotLoggedIn = pageStatus === PAGE_STATUS.notLoggedIn;
 
   const onLogin = useCallback(
     async (loginData: LoginInput) => {

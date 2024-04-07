@@ -1,20 +1,16 @@
-import { Suspense, lazy, memo } from 'react';
+import { memo } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useChatClose } from '@/hooks';
+import { ChatConversation } from '@/components';
 
-const LazyChatConversation = lazy(() => import('../components/Chat/Conversation'));
+import { useChatKeyClose } from '@/hooks';
 
-const ChatConversation = memo(() => {
+export const Component = memo(() => {
   const { chatId } = useParams();
 
-  useChatClose();
+  useChatKeyClose();
 
-  return (
-    <Suspense>
-      <LazyChatConversation chatId={chatId} />
-    </Suspense>
-  );
+  return <ChatConversation chatId={chatId} />;
 });
 
-export default ChatConversation;
+Component.displayName = 'ChatConversation';

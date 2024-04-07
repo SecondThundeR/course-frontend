@@ -1,15 +1,15 @@
 import { useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createPath, createSearchParams, useNavigate } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 
-import { LOGIN_ROUTE, ROOT_ROUTE } from '@/constants/routes';
 import { CURRENT_USER } from '@/constants/graphql/queries';
-import { SESSION_EXPIRED } from '@/constants/statuses';
+import { LOGIN_ROUTE, ROOT_ROUTE } from '@/constants/routes';
+import { PAGE_STATUS } from '@/constants/pageStatus';
 
-import { useConversationsStore, useTokensStore, useUserStore } from '@/store';
 import { currentUserTokenSelector } from '@/store/selectors';
+import { useConversationsStore, useTokensStore, useUserStore } from '@/store';
 
-export default function useCurrentUser() {
+export function useCurrentUser() {
   const { userData, setUserData, resetUserData } = useUserStore();
   const { accessToken, resetTokens } = useTokensStore(currentUserTokenSelector);
   const resetConversations = useConversationsStore.use.resetConversations();
@@ -39,7 +39,14 @@ export default function useCurrentUser() {
 
     if (res?.error?.message === 'Unauthorized') {
       resetData();
-      return navigate(`${LOGIN_ROUTE}?status=${SESSION_EXPIRED}`);
+      return navigate(
+        createPath({
+          pathname: LOGIN_ROUTE,
+          search: `?${createSearchParams({
+            status: PAGE_STATUS.sessionExpired,
+          })}`,
+        })
+      );
     }
 
     if (!res?.data) {
@@ -51,7 +58,7 @@ export default function useCurrentUser() {
 
   const onSignout = useCallback(() => {
     resetData();
-    return navigate(ROOT_ROUTE);
+    navigate(ROOT_ROUTE);
   }, [navigate, resetData]);
 
   useEffect(() => {

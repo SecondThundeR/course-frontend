@@ -1,3 +1,4 @@
+export { default as AuthorizedRedirectLayout } from './AuthorizedRedirectLayout';
 export { default as Block404 } from './Block404';
 export { default as ChatConversation } from './Chat/Conversation';
 export { default as ChatPlaceholder } from './Chat/Placeholder';

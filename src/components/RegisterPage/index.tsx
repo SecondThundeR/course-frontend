@@ -15,15 +15,13 @@ import { IconAlertTriangle } from '@tabler/icons-react';
 
 import { LOGIN_ROUTE } from '@/constants/routes';
 
-import { useAuthorizedRedirect, useSignup, useSignupForm } from '@/hooks';
+import { useSignup, useSignupForm } from '@/hooks';
 
 import classes from './RegisterPage.module.css';
 
 const RegisterPage = memo(function RegisterPage() {
   const form = useSignupForm();
   const { onSignup, loading, error } = useSignup();
-
-  useAuthorizedRedirect(false);
 
   return (
     <Container size={420} my={40}>
