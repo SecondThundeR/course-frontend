@@ -8,10 +8,8 @@ export function lastMessageDateFormat(time?: string | Date) {
   const date = typeof time === 'string' ? new Date(time) : time;
   const currentDate = new Date();
 
-  /**
-   * If there are difference with year, month or subtract of days are bigger
-   * than week, show full date
-   */
+  // If there are difference with year, month or subtract of days are bigger
+  // than week, show full date
   if (
     date.getFullYear() < currentDate.getFullYear() ||
     date.getMonth() < currentDate.getMonth() ||

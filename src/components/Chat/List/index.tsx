@@ -3,8 +3,7 @@ import { Text } from '@mantine/core';
 
 import { useConversationsStore } from '@/store';
 
-import { conversationsMapper } from '@/utils/conversations/mapper';
-import { sortConversations } from '@/utils/conversations/sort';
+import { conversationsMapper, sortConversations } from '@/utils/conversations';
 import { filterUndefinedData } from '@/utils/filterUndefinedData';
 
 import { type ListProps } from './interfaces';
@@ -19,8 +18,8 @@ export const List = memo(function List({
   const mapConversations = useMemo(
     () =>
       conversationsMapper({
-        searchValue,
         userId,
+        searchValue,
         closeNavbar,
         currentChatId,
       }),

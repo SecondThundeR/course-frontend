@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import { Flex, Avatar, Title, Text, Button } from '@mantine/core';
 
-import { extractAvatarLetters } from '@/utils/extractAvatarLetters';
-import { extractFullName } from '@/utils/extractFullName';
+import { getAvatarLetters } from '@/utils/getAvatarLetters';
+import { getFullName } from '@/utils/getFullName';
 
 import { type UserFooterProps } from './interfaces';
 
@@ -15,8 +15,8 @@ export const UserFooter = memo(function UserFooter({
 }: UserFooterProps) {
   if (!firstname || !lastname || !email) return null;
 
-  const avatarLetters = extractAvatarLetters(firstname, lastname);
-  const fullName = extractFullName(firstname, lastname);
+  const avatarLetters = getAvatarLetters(firstname, lastname);
+  const fullName = getFullName(firstname, lastname);
 
   return (
     <Flex direction="column" gap="sm">

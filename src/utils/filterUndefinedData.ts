@@ -1,3 +1,1 @@
-export function filterUndefinedData<T>(item?: T) {
-  return item !== undefined;
-}
+export const filterUndefinedData = <T>(item?: T): item is NonNullable<T> => item !== undefined;

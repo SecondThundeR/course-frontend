@@ -1,8 +1,8 @@
 import { type ConversationInfo } from '@/store';
 
-import { findById } from './conversations/findById';
-import { findOtherParticipant } from './participants/findOtherParticipant';
-import { extractFullName } from './extractFullName';
+import { findConversationById } from './conversations';
+import { findOtherParticipant } from './participants';
+import { getFullName } from './getFullName';
 
 type GetCurrentChatParticipantOptions = {
   conversations: ConversationInfo[];
@@ -15,7 +15,7 @@ export function getCurrentChatParticipantFullName({
   chatId,
   userId,
 }: GetCurrentChatParticipantOptions) {
-  const findConvresationPredicate = findById(chatId);
+  const findConvresationPredicate = findConversationById(chatId);
   const findParticipantPredicate = findOtherParticipant(userId);
 
   const currentChatParticipant = conversations
@@ -23,5 +23,5 @@ export function getCurrentChatParticipantFullName({
     ?.participants.find(findParticipantPredicate);
 
   if (!currentChatParticipant) return null;
-  return extractFullName(currentChatParticipant.firstname, currentChatParticipant.lastname);
+  return getFullName(currentChatParticipant.firstname, currentChatParticipant.lastname);
 }

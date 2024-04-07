@@ -6,8 +6,8 @@ import { MessageType } from '@/__generated__/graphql';
 
 import { CHAT_ROUTE } from '@/constants/routes';
 
-import { extractAvatarLetters } from '@/utils/extractAvatarLetters';
-import { extractFullName } from '@/utils/extractFullName';
+import { getAvatarLetters } from '@/utils/getAvatarLetters';
+import { getFullName } from '@/utils/getFullName';
 import { lastMessageDateFormat } from '@/utils/lastMessageDateFormat';
 
 import { type ListElementProps } from './interfaces';
@@ -27,8 +27,8 @@ export const ListElement = memo(function ListElement({
   const isSentByCurrentUser = lastMessage?.from?.id === userId;
 
   const otherParticipant = participants.find(({ id }) => id !== userId)!;
-  const avatarLetters = extractAvatarLetters(otherParticipant.firstname, otherParticipant.lastname);
-  const fullName = extractFullName(otherParticipant.firstname, otherParticipant.lastname);
+  const avatarLetters = getAvatarLetters(otherParticipant.firstname, otherParticipant.lastname);
+  const fullName = getFullName(otherParticipant.firstname, otherParticipant.lastname);
 
   const textStyles = {
     lineClamp: isLatex ? 2 : 1,
