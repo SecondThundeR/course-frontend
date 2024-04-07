@@ -7,8 +7,10 @@ const LazyLandingFeatures = lazy(() => import('../components/Landing/Features'))
 const LazyLandingKatex = lazy(() => import('../components/Landing/Katex'));
 const LazyLandingFAQ = lazy(() => import('../components/Landing/FAQ'));
 
+const CHECK_FOR_LOGGED_IN = false;
+
 const Home = memo(() => {
-  useAuthorizedRedirect(false);
+  useAuthorizedRedirect(CHECK_FOR_LOGGED_IN);
 
   return (
     <Suspense>
