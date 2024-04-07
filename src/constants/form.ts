@@ -1,3 +1,10 @@
+import { zodResolver } from '@mantine/form';
+
+import { chatInputSchema } from '@/schema/chatInput';
+import { createChatSchema } from '@/schema/createChat';
+import { loginSchema } from '@/schema/login';
+import { signupSchema } from '@/schema/signup';
+
 export const SIGNUP_FORM = {
   initialValues: {
     firstname: '',
@@ -5,11 +12,7 @@ export const SIGNUP_FORM = {
     email: '',
     password: '',
   },
-  validate: {
-    firstname: (value: string) => (value.length < 1 ? 'Имя должно быть больше 1 символа' : null),
-    email: (value: string) => (/^\S+@\S+$/.test(value) ? null : 'Неправильная почта'),
-    password: (value: string) => (value.length < 8 ? 'Пароль должен быть больше 8 символов' : null),
-  },
+  validate: zodResolver(signupSchema),
 };
 
 export const LOGIN_FORM = {
@@ -17,10 +20,7 @@ export const LOGIN_FORM = {
     email: '',
     password: '',
   },
-  validate: {
-    email: (value: string) => (/^\S+@\S+$/.test(value) ? null : 'Неправильная почта'),
-    password: (value: string) => (value.length < 8 ? 'Пароль должен быть больше 8 символов' : null),
-  },
+  validate: zodResolver(loginSchema),
 };
 
 export const CHAT_CREATE_FORM = {
@@ -29,10 +29,7 @@ export const CHAT_CREATE_FORM = {
     message: '',
     isLatex: false,
   },
-  validate: {
-    email: (value: string) => (/^\S+@\S+$/.test(value) ? null : 'Неправильная почта'),
-    message: (value: string) => (value.length > 0 ? null : 'Сообщение не может быть пустым'),
-  },
+  validate: zodResolver(createChatSchema),
 };
 
 export const CHAT_INPUT_FORM = {
@@ -40,7 +37,5 @@ export const CHAT_INPUT_FORM = {
     message: '',
     isLatex: false,
   },
-  validate: {
-    message: (value: string) => (value.length > 0 ? null : 'Сообщение не может быть пустым'),
-  },
+  validate: zodResolver(chatInputSchema),
 };
