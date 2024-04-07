@@ -15,7 +15,9 @@ export default function useCurrentUser() {
     resetTokens: state.resetTokens,
   }));
   const resetConversations = useConversationsStore((state) => state.resetConversations);
-  const [getUser] = useLazyQuery(CURRENT_USER);
+  const [getUser] = useLazyQuery(CURRENT_USER, {
+    errorPolicy: 'all',
+  });
   const navigate = useNavigate();
 
   const resetData = useCallback(() => {
