@@ -8,22 +8,6 @@ import classes from './Features.module.css';
 const LandingFeatures = memo(function LandingFeatures() {
   const theme = useMantineTheme();
 
-  const features = FEATURES.map((feature) => (
-    <Card key={feature.id} shadow="md" radius="md" className={classes.card} padding="xl">
-      <feature.icon
-        style={{ width: rem(50), height: rem(50) }}
-        stroke={2}
-        color={theme.colors.blue[6]}
-      />
-      <Text fz="lg" fw={500} className={classes.cardTitle} mt="md">
-        {feature.title}
-      </Text>
-      <Text fz="sm" c="dimmed" mt="sm">
-        {feature.description}
-      </Text>
-    </Card>
-  ));
-
   return (
     <Container size="lg" py="xl">
       <Title order={2} className={classes.title} ta="center" mt="sm">
@@ -34,7 +18,21 @@ const LandingFeatures = memo(function LandingFeatures() {
         не заметить, как это происходит
       </Text>
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" mt={50}>
-        {features}
+        {FEATURES.map(({ id, title, description, icon: Icon }) => (
+          <Card key={id} shadow="md" radius="md" className={classes.card} padding="xl">
+            <Icon
+              style={{ width: rem(50), height: rem(50) }}
+              stroke={2}
+              color={theme.colors.blue[6]}
+            />
+            <Text fz="lg" fw={500} className={classes.cardTitle} mt="md">
+              {title}
+            </Text>
+            <Text fz="sm" c="dimmed" mt="sm">
+              {description}
+            </Text>
+          </Card>
+        ))}
       </SimpleGrid>
     </Container>
   );

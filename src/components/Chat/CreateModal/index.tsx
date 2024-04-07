@@ -2,21 +2,16 @@ import { memo } from 'react';
 import { Modal, Alert, TextInput, Checkbox, Button } from '@mantine/core';
 import { IconCircleX } from '@tabler/icons-react';
 
-import { useCreateForm, useChatCreate } from '@/hooks';
+import { useChatCreate } from '@/hooks';
 
 import { type CreateModalProps } from './interfaces';
 
 export const CreateModal = memo(function CreateModal({ opened, onClose }: CreateModalProps) {
-  const form = useCreateForm();
-  const { loading, error, onCreate } = useChatCreate();
+  const { form, onSubmit, loading, error } = useChatCreate(onClose);
 
   return (
     <Modal opened={opened} onClose={onClose} title="Создать чат" centered>
-      <form
-        onSubmit={form.onSubmit((values) => {
-          onCreate({ ...values, onClose }).catch(console.error);
-        })}
-      >
+      <form onSubmit={onSubmit}>
         {error && (
           <Alert
             mb="md"

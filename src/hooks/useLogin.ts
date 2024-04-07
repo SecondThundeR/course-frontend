@@ -10,7 +10,10 @@ import { CHAT_ROUTE } from '@/constants/routes';
 
 import { useTokensStore } from '@/store';
 
+import { useLoginForm } from './useLoginForm';
+
 export function useLogin() {
+  const form = useLoginForm();
   const setTokens = useTokensStore.use.setTokens();
   const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -43,5 +46,7 @@ export function useLogin() {
     [loginUser, navigate, setSearchParams, setTokens]
   );
 
-  return { onLogin, isSessionExpired, isNotLoggedIn, loading, error };
+  const onSubmit = useCallback(() => form.onSubmit((values) => onLogin(values)), [form, onLogin]);
+
+  return { form, onSubmit, isSessionExpired, isNotLoggedIn, loading, error };
 }

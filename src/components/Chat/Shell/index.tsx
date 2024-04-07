@@ -1,11 +1,9 @@
 import { memo } from 'react';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { AppShell, Flex, Group, Burger, ScrollArea, em } from '@mantine/core';
-import { Outlet, useMatch, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 
 import { SearchInput, ThemeToggle } from '@/components';
-
-import { CHAT_ROUTE } from '@/constants/routes';
 
 import { useCurrentUser, useSearch } from '@/hooks';
 
@@ -24,12 +22,12 @@ const Shell = memo(function Shell() {
   const { chatId } = useParams();
   const [opened, { toggle, close }] = useDisclosure();
   const [modalOpened, { open: onOpen, close: onClose }] = useDisclosure();
-  const conversations = useConversationsStore.use.conversations();
   const { q, inputRef, onChange } = useSearch();
   const { userData, onSignout } = useCurrentUser();
-  const isNoConversationOpened = useMatch(CHAT_ROUTE) !== null;
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
+  const conversations = useConversationsStore.use.conversations();
 
+  const isNoConversationOpened = chatId === undefined;
   const isNavbarOpened = isNoConversationOpened || opened;
   const { id, email, firstname, lastname } = { ...userData };
   const participantFullName = getCurrentChatParticipantFullName({

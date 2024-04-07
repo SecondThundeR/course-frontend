@@ -15,17 +15,14 @@ export const UserFooter = memo(function UserFooter({
 }: UserFooterProps) {
   if (!firstname || !lastname || !email) return null;
 
-  const avatarLetters = getAvatarLetters(firstname, lastname);
-  const fullName = getFullName(firstname, lastname);
-
   return (
     <Flex direction="column" gap="sm">
       <Flex gap="md" align="center">
         <Avatar color="blue" size="md" radius="xl">
-          {avatarLetters}
+          {getAvatarLetters(firstname, lastname)}
         </Avatar>
         <Flex direction="column">
-          <Title order={5}>{fullName}</Title>
+          <Title order={5}>{getFullName(firstname, lastname)}</Title>
           <Text c="dimmed">{email}</Text>
         </Flex>
       </Flex>

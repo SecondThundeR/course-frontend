@@ -15,13 +15,12 @@ import { IconClockExclamation, IconLogin, IconAlertTriangle } from '@tabler/icon
 
 import { REGISTER_ROUTE } from '@/constants/routes';
 
-import { useLogin, useLoginForm } from '@/hooks';
+import { useLogin } from '@/hooks';
 
 import classes from './LoginPage.module.css';
 
 const LoginPage = memo(function LoginPage() {
-  const form = useLoginForm();
-  const { onLogin, isSessionExpired, isNotLoggedIn, loading, error } = useLogin();
+  const { form, onSubmit, isSessionExpired, isNotLoggedIn, loading, error } = useLogin();
 
   return (
     <Container size={420} my={40}>
@@ -65,7 +64,7 @@ const LoginPage = memo(function LoginPage() {
         />
       )}
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <form onSubmit={form.onSubmit((values) => onLogin(values))}>
+        <form onSubmit={onSubmit}>
           <TextInput
             label="Почта"
             placeholder="me@prometheus.org"

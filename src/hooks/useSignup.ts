@@ -9,7 +9,10 @@ import { CHAT_ROUTE } from '@/constants/routes';
 
 import { useTokensStore } from '@/store';
 
+import { useSignupForm } from './useSignupForm';
+
 export function useSignup() {
+  const form = useSignupForm();
   const setTokens = useTokensStore.use.setTokens();
   const [signupUser, { loading, error }] = useMutation(SIGNUP_MUTATION);
   const navigate = useNavigate();
@@ -35,5 +38,7 @@ export function useSignup() {
     [navigate, setTokens, signupUser]
   );
 
-  return { onSignup, loading, error };
+  const onSubmit = useCallback(() => form.onSubmit((values) => onSignup(values)), [form, onSignup]);
+
+  return { form, onSubmit, loading, error };
 }

@@ -7,6 +7,7 @@ import { CHAT_ROUTE } from '@/constants/routes';
 
 import { chatCreateSelector } from '@/store/selectors';
 import { useConversationsStore, useTokensStore } from '@/store';
+import { useCreateForm } from './useCreateForm';
 
 type OnCreateArgs = {
   email: string;
@@ -15,7 +16,8 @@ type OnCreateArgs = {
   onClose: () => void;
 };
 
-export function useChatCreate() {
+export function useChatCreate(onClose: OnCreateArgs['onClose']) {
+  const form = useCreateForm();
   const accessToken = useTokensStore.use.accessToken();
   const { conversations, addConversation } = useConversationsStore(chatCreateSelector);
   const [createChat, { loading, error: mutationError }] = useMutation(CREATE_CONVERSATION);
@@ -60,5 +62,13 @@ export function useChatCreate() {
     [accessToken, addConversation, conversations, createChat, navigate]
   );
 
-  return { loading, error: mutationError ?? error, onCreate };
+  const onSubmit = useCallback(
+    () =>
+      form.onSubmit((values) => {
+        onCreate({ ...values, onClose }).catch(console.error);
+      }),
+    [form, onClose, onCreate]
+  );
+
+  return { form, onSubmit, loading, error: mutationError ?? error };
 }

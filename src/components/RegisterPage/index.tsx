@@ -15,13 +15,12 @@ import { IconAlertTriangle } from '@tabler/icons-react';
 
 import { LOGIN_ROUTE } from '@/constants/routes';
 
-import { useSignup, useSignupForm } from '@/hooks';
+import { useSignup } from '@/hooks';
 
 import classes from './RegisterPage.module.css';
 
 const RegisterPage = memo(function RegisterPage() {
-  const form = useSignupForm();
-  const { onSignup, loading, error } = useSignup();
+  const { form, onSubmit, loading, error } = useSignup();
 
   return (
     <Container size={420} my={40}>
@@ -47,7 +46,7 @@ const RegisterPage = memo(function RegisterPage() {
         </Alert>
       )}
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <form onSubmit={form.onSubmit((values) => onSignup(values))}>
+        <form onSubmit={onSubmit}>
           <TextInput
             label="Имя"
             placeholder="Алиса"

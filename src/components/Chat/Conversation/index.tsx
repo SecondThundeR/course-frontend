@@ -36,9 +36,10 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
   }
 
   const chatMessages = currentConversation.messages
-    .map(({ id, content, createdAt, type, from }, index, messagesArray) => {
+    .map(({ id, content, createdAt, updatedAt, type, from }, index, messagesArray) => {
       const prevCreatedAt = messagesArray[index - 1]?.createdAt as string | undefined;
       const currCreatedAt = createdAt as string;
+      const currUpdatedAt = updatedAt as string;
       const isDifferent = isDaysDifferent(prevCreatedAt, currCreatedAt);
       const dateSeparatorDate = isDifferent ? new Date(currCreatedAt) : undefined;
 
@@ -51,6 +52,7 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
             id={id}
             content={content}
             createdAt={currCreatedAt}
+            updatedAt={currUpdatedAt}
             type={type}
             onOpen={onOpen}
           />

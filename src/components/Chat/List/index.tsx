@@ -25,9 +25,10 @@ export const List = memo(function List({
       }),
     [closeNavbar, currentChatId, searchValue, userId]
   );
-  const sortedAndMappedConversations = useMemo(() => {
-    return conversations.sort(sortConversations).map(mapConversations);
-  }, [conversations, mapConversations]);
+  const sortedAndMappedConversations = useMemo(
+    () => conversations.sort(sortConversations).map(mapConversations),
+    [conversations, mapConversations]
+  );
   const listElements = useMemo(
     () => sortedAndMappedConversations.filter(filterUndefinedData),
     [sortedAndMappedConversations]

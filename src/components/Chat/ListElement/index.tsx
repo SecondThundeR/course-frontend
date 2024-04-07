@@ -21,43 +21,37 @@ export const ListElement = memo(function ListElement({
   closeNavbar,
 }: ListElementProps) {
   const lastMessage = messages.at(-1);
-  const isConversationEmpty = !lastMessage;
+  const { firstname, lastname } = participants.find(({ id }) => id !== userId)!;
+
+  const isConversationEmpty = lastMessage === undefined;
   const isLatex = lastMessage?.type === MessageType.Latex;
-  const isLatexOrEmpty = isLatex || isConversationEmpty;
   const isSentByCurrentUser = lastMessage?.from?.id === userId;
-
-  const otherParticipant = participants.find(({ id }) => id !== userId)!;
-  const avatarLetters = getAvatarLetters(otherParticipant.firstname, otherParticipant.lastname);
-  const fullName = getFullName(otherParticipant.firstname, otherParticipant.lastname);
-
-  const textStyles = {
-    lineClamp: isLatex ? 2 : 1,
-    fs: isLatexOrEmpty ? 'italic' : undefined,
-    c: isLatexOrEmpty ? 'dimmed' : undefined,
-  };
-  const linkDestination = `${CHAT_ROUTE}/${id}`;
-  const formattedTime = lastMessageDateFormat(lastMessage?.createdAt as string);
+  const isLatexOrEmpty = isLatex || isConversationEmpty;
 
   return (
     <Link
       component={NavLink}
-      to={linkDestination}
+      to={`${CHAT_ROUTE}/${id}`}
       onClick={closeNavbar}
       variant="light"
       active={isActive}
       leftSection={
         <Avatar color="blue" size="md" radius="xl">
-          {avatarLetters}
+          {getAvatarLetters(firstname, lastname)}
         </Avatar>
       }
       rightSection={
         <Text c={isActive ? undefined : 'dimmed'} size="sm">
-          {formattedTime}
+          {lastMessageDateFormat(lastMessage?.createdAt as string)}
         </Text>
       }
-      label={<Title order={5}>{fullName}</Title>}
+      label={<Title order={5}>{getFullName(firstname, lastname)}</Title>}
       description={
-        <Text {...textStyles}>
+        <Text
+          lineClamp={isLatex ? 2 : 1}
+          fs={isLatexOrEmpty ? 'italic' : undefined}
+          c={isLatexOrEmpty ? 'dimmed' : undefined}
+        >
           {isSentByCurrentUser && 'Вы: '}
           {isLatex ? 'LaTeX-сообщение' : lastMessage?.content}
           {isConversationEmpty && 'Пустой чат'}

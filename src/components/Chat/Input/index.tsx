@@ -19,8 +19,8 @@ export const Input = memo(function Input({ isLoading, onSubmit }: InputProps) {
             ref={ref}
             w="100%"
             placeholder="Введите сообщение"
-            {...form.getInputProps('message')}
             disabled={isLoading}
+            {...form.getInputProps('message')}
           />
           <ActionIcon
             type="submit"
@@ -33,10 +33,10 @@ export const Input = memo(function Input({ isLoading, onSubmit }: InputProps) {
         </Flex>
         <Checkbox
           label="Отправить как LaTeX сообщение"
+          disabled={isLoading}
           {...form.getInputProps('isLatex', {
             type: 'checkbox',
           })}
-          disabled={isLoading}
         />
       </Flex>
     </form>
