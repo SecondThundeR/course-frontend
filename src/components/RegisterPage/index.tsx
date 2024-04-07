@@ -11,6 +11,7 @@ import {
   Alert,
 } from '@mantine/core';
 import { Link } from 'react-router-dom';
+import { IconAlertTriangle } from '@tabler/icons-react';
 
 import { LOGIN_ROUTE } from '@/constants/routes';
 
@@ -36,10 +37,15 @@ const RegisterPage = memo(function RegisterPage() {
         </Anchor>
       </Text>
       {error && (
-        <Alert variant="filled" color="red" mt="md">
-          Произошла ошибка!
-          <br />
-          <strong>{error.message}</strong>
+        <Alert
+          title="Произошла ошибка!"
+          variant="filled"
+          color="red"
+          mt="md"
+          icon={<IconAlertTriangle />}
+        >
+          Убедитесь, что данные верны и попробуйте ещё раз. В противном случае, ошибка может быть на
+          стороне сервера
         </Alert>
       )}
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">

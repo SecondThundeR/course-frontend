@@ -11,6 +11,7 @@ import {
   Alert,
 } from '@mantine/core';
 import { Link } from 'react-router-dom';
+import { IconClockExclamation, IconLogin, IconAlertTriangle } from '@tabler/icons-react';
 
 import { REGISTER_ROUTE } from '@/constants/routes';
 
@@ -36,21 +37,34 @@ const LoginPage = memo(function LoginPage() {
         </Anchor>
       </Text>
       {error && (
-        <Alert variant="filled" color="red" mt="md">
-          Произошла ошибка!
-          <br />
-          <strong>{error.message}</strong>
+        <Alert
+          title="Произошла ошибка!"
+          variant="filled"
+          color="red"
+          mt="md"
+          icon={<IconAlertTriangle />}
+        >
+          Убедитесь, что данные верны и попробуйте ещё раз. В противном случае, ошибка может быть на
+          стороне сервера
         </Alert>
       )}
       {isSessionExpired && (
-        <Alert variant="filled" color="red" mt="md">
-          Сессия истекла! Войдите снова в систему
-        </Alert>
+        <Alert
+          title="Сессия истекла! Войдите снова в систему"
+          variant="filled"
+          color="red"
+          mt="md"
+          icon={<IconClockExclamation />}
+        />
       )}
       {isNotLoggedIn && (
-        <Alert variant="filled" color="red" mt="md">
-          Войдите, чтобы продолжить
-        </Alert>
+        <Alert
+          title="Войдите, чтобы продолжить"
+          variant="filled"
+          color="red"
+          mt="md"
+          icon={<IconLogin />}
+        />
       )}
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form onSubmit={form.onSubmit((values) => onLogin(values))}>
