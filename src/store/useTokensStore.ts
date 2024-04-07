@@ -1,14 +1,15 @@
+import { createSelectors } from '@/utils/zustand/createSelectors';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-type TokensStore = {
+export type TokensStore = {
   accessToken: string | null;
   refreshToken: string | null;
   setTokens: (accessToken: string, refreshToken: string) => void;
   resetTokens: () => void;
 };
 
-export const useTokensStore = create<TokensStore>()(
+export const useTokensStoreBase = create<TokensStore>()(
   persist(
     (set) => ({
       accessToken: null,
@@ -22,3 +23,5 @@ export const useTokensStore = create<TokensStore>()(
     }
   )
 );
+
+export const useTokensStore = createSelectors(useTokensStoreBase);

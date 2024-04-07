@@ -7,7 +7,7 @@ import { NOT_LOGGED_IN } from '@/constants/statuses';
 import { useTokensStore } from '@/store';
 
 export default function useAuthorizedRedirect(isCheckForLoggedIn = true) {
-  const accessToken = useTokensStore((state) => state.accessToken);
+  const accessToken = useTokensStore.use.accessToken();
   const navigate = useNavigate();
 
   useEffect(() => {

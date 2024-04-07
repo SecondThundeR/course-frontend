@@ -5,20 +5,22 @@ import {
   type MessageUpdatesSubscription,
   type ConversationsDataQuery,
 } from '@/__generated__/graphql';
+import { createSelectors } from '@/utils/zustand/createSelectors';
 
 export type ConversationInfo = ConversationsDataQuery['userConversations'][number];
 
-type ConversationsStore = {
+export type ConversationsStore = {
   conversations: ConversationInfo[];
   setConversations: (conversations: ConversationInfo[]) => void;
   addConversation: (conversation: ConversationInfo) => void;
   removeConversation: (conversationId: string) => void;
   addMessage: (message: MessageUpdatesSubscription['messageUpdates']['message']) => void;
+  editMessage: (message: MessageUpdatesSubscription['messageUpdates']['message']) => void;
   removeMessage: (message: MessageUpdatesSubscription['messageUpdates']['message']) => void;
   resetConversations: () => void;
 };
 
-export const useConversationsStore = create<ConversationsStore>()(
+const useConversationsStoreBase = create<ConversationsStore>()(
   persist(
     (set) => ({
       conversations: [],
@@ -62,6 +64,30 @@ export const useConversationsStore = create<ConversationsStore>()(
             }),
           };
         }),
+      editMessage: (message) =>
+        set((state) => {
+          return {
+            conversations: state.conversations.map((conversation) => {
+              if (conversation.id !== message.conversation?.id) return conversation;
+              const { messages, ...restConversation } = conversation;
+              const updatedMessages = messages.map((msg) => {
+                if (msg.id !== message.id) return msg;
+
+                return {
+                  ...msg,
+                  content: message.content,
+                  contentHistory: message.contentHistory.slice(0),
+                  updatedAt: message.updatedAt,
+                };
+              });
+
+              return {
+                ...restConversation,
+                messages: updatedMessages,
+              };
+            }),
+          };
+        }),
       removeMessage: (message) =>
         set((state) => {
           return {
@@ -86,3 +112,5 @@ export const useConversationsStore = create<ConversationsStore>()(
     }
   )
 );
+
+export const useConversationsStore = createSelectors(useConversationsStoreBase);

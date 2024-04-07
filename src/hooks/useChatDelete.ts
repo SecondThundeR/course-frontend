@@ -6,8 +6,8 @@ import { DELETE_CONVERSATION } from '@/constants/graphql/mutation';
 import { useConversationsStore, useTokensStore } from '@/store';
 
 export default function useChatDelete(conversationId: string, onDeleteCallback?: () => void) {
-  const accessToken = useTokensStore((state) => state.accessToken);
-  const removeConversation = useConversationsStore((state) => state.removeConversation);
+  const accessToken = useTokensStore.use.accessToken();
+  const removeConversation = useConversationsStore.use.removeConversation();
   const [deleteChat, { error, loading }] = useMutation(DELETE_CONVERSATION, {
     variables: {
       data: {

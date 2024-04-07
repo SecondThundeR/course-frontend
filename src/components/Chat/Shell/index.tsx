@@ -22,7 +22,7 @@ const Shell = memo(function Shell() {
   const { chatId } = useParams();
   const [opened, { toggle, close }] = useDisclosure();
   const [modalOpened, { open: onOpen, close: onClose }] = useDisclosure();
-  const conversations = useConversationsStore((state) => state.conversations);
+  const conversations = useConversationsStore.use.conversations();
   const { q, inputRef, onChange } = useSearch();
   const { userData, onSignout } = useCurrentUser();
   const { id, email, firstname, lastname } = { ...userData };

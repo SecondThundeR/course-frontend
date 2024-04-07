@@ -13,16 +13,17 @@ import { CONVERSATION_UPDATES, MESSAGE_UPDATES } from '@/constants/graphql/subsc
 import { useConversationsStore, useTokensStore, useUserStore } from '@/store';
 
 export default function useConversationsWatcher() {
-  const accessToken = useTokensStore((state) => state.accessToken);
+  const accessToken = useTokensStore.use.accessToken();
   const {
     setConversations,
     addConversation,
     removeConversation,
     addMessage,
+    editMessage,
     removeMessage,
     resetConversations,
   } = useConversationsStore();
-  const userData = useUserStore((state) => state.userData);
+  const userData = useUserStore.use.userData();
   const userId = userData?.id ?? '';
   const [getConversations] = useLazyQuery(CONVERSATIONS_DATA);
   const { data: conversationUpdate } = useSubscription(CONVERSATION_UPDATES, {
@@ -80,12 +81,15 @@ export default function useConversationsWatcher() {
         case UpdateType.Added:
           addMessage(message);
           break;
+        case UpdateType.Edited:
+          editMessage(message);
+          break;
         case UpdateType.Deleted:
           removeMessage(message);
           break;
       }
     },
-    [addMessage, removeMessage]
+    [addMessage, editMessage, removeMessage]
   );
 
   useEffect(() => {

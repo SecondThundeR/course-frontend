@@ -8,7 +8,7 @@ import { useChatAffix } from '.';
 export default function useChatScroll(lastMessage?: ConversationInfo['messages'][number]) {
   const { scroll, scrollableHeight } = useChatAffix();
   const previousMessage = usePrevious(lastMessage);
-  const userData = useUserStore((state) => state.userData);
+  const userData = useUserStore.use.userData();
   const { targetRef, scrollIntoView } = useScrollIntoView<HTMLDivElement>({
     duration: 0,
     offset: 200,

@@ -10,7 +10,7 @@ import { CHAT_ROUTE } from '@/constants/routes';
 import { useTokensStore } from '@/store';
 
 export default function useLogin() {
-  const setTokens = useTokensStore((state) => state.setTokens);
+  const setTokens = useTokensStore.use.setTokens();
   const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();

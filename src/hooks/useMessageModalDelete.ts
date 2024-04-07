@@ -11,8 +11,8 @@ export default function useMessageModalDelete() {
   const [localError, setLocalError] = useState<Error>();
   const [opened, { open, close }] = useDisclosure();
   const [deleteMsg, { loading, error }] = useMutation(DELETE_MESSAGE);
-  const accessToken = useTokensStore((state) => state.accessToken);
-  const removeMessage = useConversationsStore((state) => state.removeMessage);
+  const accessToken = useTokensStore.use.accessToken();
+  const removeMessage = useConversationsStore.use.removeMessage();
 
   const onOpen = useCallback(
     (messageId: string) => {

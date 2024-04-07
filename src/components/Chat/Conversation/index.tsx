@@ -26,8 +26,8 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
     error,
     handlers: { onOpen, onClose, onDelete },
   } = useMessageModalDelete();
-  const userData = useUserStore((state) => state.userData);
-  const conversations = useConversationsStore((state) => state.conversations);
+  const userData = useUserStore.use.userData();
+  const conversations = useConversationsStore.use.conversations();
   const currentConversation = conversations.find((conversation) => conversation.id === chatId);
   const { targetRef, onScroll } = useChatScroll(currentConversation?.messages.at(-1));
 

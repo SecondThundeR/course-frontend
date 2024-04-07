@@ -7,14 +7,12 @@ import { CURRENT_USER } from '@/constants/graphql/queries';
 import { SESSION_EXPIRED } from '@/constants/statuses';
 
 import { useConversationsStore, useTokensStore, useUserStore } from '@/store';
+import { currentUserTokenSelector } from '@/store/selectors';
 
 export default function useCurrentUser() {
   const { userData, setUserData, resetUserData } = useUserStore();
-  const { accessToken, resetTokens } = useTokensStore((state) => ({
-    accessToken: state.accessToken,
-    resetTokens: state.resetTokens,
-  }));
-  const resetConversations = useConversationsStore((state) => state.resetConversations);
+  const { accessToken, resetTokens } = useTokensStore(currentUserTokenSelector);
+  const resetConversations = useConversationsStore.use.resetConversations();
   const [getUser] = useLazyQuery(CURRENT_USER, {
     errorPolicy: 'all',
   });

@@ -2,16 +2,17 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 import { type CurrentUserQuery } from '@/__generated__/graphql';
+import { createSelectors } from '@/utils/zustand/createSelectors';
 
 export type User = CurrentUserQuery['currentUser'];
 
-type UserStore = {
+export type UserStore = {
   userData: User | null;
   setUserData: (user: User) => void;
   resetUserData: () => void;
 };
 
-export const useUserStore = create<UserStore>()(
+const useUserStoreBase = create<UserStore>()(
   persist(
     (set) => ({
       userData: null,
@@ -24,3 +25,5 @@ export const useUserStore = create<UserStore>()(
     }
   )
 );
+
+export const useUserStore = createSelectors(useUserStoreBase);

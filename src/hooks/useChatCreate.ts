@@ -6,6 +6,7 @@ import { CREATE_CONVERSATION } from '@/constants/graphql/mutation';
 import { CHAT_ROUTE } from '@/constants/routes';
 
 import { useConversationsStore, useTokensStore } from '@/store';
+import { chatCreateSelector } from '@/store/selectors';
 
 type OnCreateArgs = {
   email: string;
@@ -15,8 +16,8 @@ type OnCreateArgs = {
 };
 
 export default function useChatCreate() {
-  const accessToken = useTokensStore((state) => state.accessToken);
-  const { conversations, addConversation } = useConversationsStore();
+  const accessToken = useTokensStore.use.accessToken();
+  const { conversations, addConversation } = useConversationsStore(chatCreateSelector);
   const [createChat, { loading, error }] = useMutation(CREATE_CONVERSATION);
   const [localError, setLocalError] = useState<Error>();
   const navigate = useNavigate();

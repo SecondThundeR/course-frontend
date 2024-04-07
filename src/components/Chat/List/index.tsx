@@ -15,7 +15,7 @@ export const List = memo(function List({
   currentChatId,
   closeNavbar,
 }: ListProps) {
-  const conversations = useConversationsStore((state) => state.conversations);
+  const conversations = useConversationsStore.use.conversations();
   const mapConversations = useMemo(
     () =>
       conversationsMapper({
