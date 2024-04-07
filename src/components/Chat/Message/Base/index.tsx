@@ -8,6 +8,7 @@ import { MessageType } from '@/__generated__/graphql';
 
 import { useContentCopy } from '@/hooks';
 
+import { isMessageEdited } from '@/utils/isMessageEdited';
 import { timeFormat } from '@/utils/timeFormat';
 
 import classes from './Base.module.css';
@@ -22,6 +23,7 @@ export const Base = memo(function Base({
   content,
   type,
   createdAt,
+  updatedAt,
   direction,
   onOpen,
 }: BaseProps) {
@@ -55,7 +57,7 @@ export const Base = memo(function Base({
           c={direction === 'to' ? 'dimmed' : undefined}
           className={directionFrom ? classes.message__from_time : undefined}
         >
-          {timeFormat(createdAt)}
+          {timeFormat(createdAt)} {isMessageEdited(createdAt, updatedAt) && '(ред.)'}
         </Text>
         {isLatex && (
           <CopyIcon className={classes[`copy__icon_${direction}`]} stroke={1.5} onClick={onCopy} />
