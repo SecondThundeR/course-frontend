@@ -1,9 +1,11 @@
 import { memo } from 'react';
-import { useDisclosure } from '@mantine/hooks';
-import { AppShell, Flex, Group, Burger, ScrollArea } from '@mantine/core';
-import { Outlet, useParams } from 'react-router-dom';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { AppShell, Flex, Group, Burger, ScrollArea, em } from '@mantine/core';
+import { Outlet, useMatch, useParams } from 'react-router-dom';
 
 import { SearchInput, ThemeToggle } from '@/components';
+
+import { CHAT_ROUTE } from '@/constants/routes';
 
 import { useCurrentUser, useSearch } from '@/hooks';
 
@@ -25,8 +27,11 @@ const Shell = memo(function Shell() {
   const conversations = useConversationsStore.use.conversations();
   const { q, inputRef, onChange } = useSearch();
   const { userData, onSignout } = useCurrentUser();
-  const { id, email, firstname, lastname } = { ...userData };
+  const isNoConversationOpened = useMatch(CHAT_ROUTE) !== null;
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
+  const isNavbarOpened = isNoConversationOpened || opened;
+  const { id, email, firstname, lastname } = { ...userData };
   const participantFullName = getCurrentChatParticipantFullName({
     conversations,
     chatId,
@@ -37,13 +42,20 @@ const Shell = memo(function Shell() {
     <>
       <AppShell
         header={{ height: 60 }}
-        navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+        navbar={{
+          width: 300,
+          breakpoint: 'sm',
+          collapsed: {
+            desktop: !isNavbarOpened,
+            mobile: !isNavbarOpened,
+          },
+        }}
       >
         <AppShell.Header>
           <Flex h="100%" px="md" gap="md" justify="space-between" align="center">
             <Group>
-              <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-              <HeaderTitle opened={opened} participantFullName={participantFullName} />
+              {!isNoConversationOpened && <Burger opened={opened} onClick={toggle} size="sm" />}
+              <HeaderTitle opened={isNavbarOpened} participantFullName={participantFullName} />
             </Group>
             <Group>
               <ThemeToggle />
@@ -59,7 +71,7 @@ const Shell = memo(function Shell() {
             <List
               userId={userData?.id}
               currentChatId={chatId}
-              closeNavbar={close}
+              closeNavbar={isMobile ? close : undefined}
               searchValue={q}
             />
           </AppShell.Section>

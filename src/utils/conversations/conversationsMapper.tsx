@@ -6,7 +6,7 @@ type ConversationsMapperOptions = {
   searchValue?: string | null;
   userId?: User['id'];
   currentChatId?: string;
-  closeNavbar: () => void;
+  closeNavbar?: () => void;
 };
 
 export function conversationsMapper({
