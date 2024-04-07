@@ -7,13 +7,14 @@ import { extractFullName } from '@/utils/extractFullName';
 import { type UserFooterProps } from './interfaces';
 
 export const UserFooter = memo(function UserFooter({
-  user,
+  firstname,
+  lastname,
+  email,
   onSignout,
   onChatModalOpen,
 }: UserFooterProps) {
-  if (!user) return null;
+  if (!firstname || !lastname || !email) return null;
 
-  const { firstname, lastname, email } = user;
   const avatarLetters = extractAvatarLetters(firstname, lastname);
   const fullName = extractFullName(firstname, lastname);
 

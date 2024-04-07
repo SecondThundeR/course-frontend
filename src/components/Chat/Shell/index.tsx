@@ -25,11 +25,12 @@ const Shell = memo(function Shell() {
   const conversations = useConversationsStore((state) => state.conversations);
   const { q, inputRef, onChange } = useSearch();
   const { userData, onSignout } = useCurrentUser();
+  const { id, email, firstname, lastname } = { ...userData };
 
   const participantFullName = getCurrentChatParticipantFullName({
     conversations,
     chatId,
-    userId: userData?.id,
+    userId: id,
   });
 
   return (
@@ -55,10 +56,21 @@ const Shell = memo(function Shell() {
             <SearchInput ref={inputRef} value={q} onChange={onChange} />
           </AppShell.Section>
           <AppShell.Section grow my="md" component={ScrollArea}>
-            <List user={userData} currentChatId={chatId} closeNavbar={close} searchValue={q} />
+            <List
+              userId={userData?.id}
+              currentChatId={chatId}
+              closeNavbar={close}
+              searchValue={q}
+            />
           </AppShell.Section>
           <AppShell.Section>
-            <UserFooter user={userData} onSignout={onSignout} onChatModalOpen={onOpen} />
+            <UserFooter
+              firstname={firstname}
+              lastname={lastname}
+              email={email}
+              onSignout={onSignout}
+              onChatModalOpen={onOpen}
+            />
           </AppShell.Section>
         </AppShell.Navbar>
         <AppShell.Main>

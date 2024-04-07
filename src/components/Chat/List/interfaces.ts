@@ -1,8 +1,8 @@
 import { type User } from '@/store';
 
 export type ListProps = {
-  user: User | null;
+  searchValue: string | null;
+  userId?: User['id'];
   currentChatId?: string;
   closeNavbar: () => void;
-  searchValue: string | null;
 };

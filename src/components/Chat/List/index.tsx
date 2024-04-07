@@ -10,21 +10,21 @@ import { filterUndefinedData } from '@/utils/filterUndefinedData';
 import { type ListProps } from './interfaces';
 
 export const List = memo(function List({
-  user,
+  searchValue,
+  userId,
   currentChatId,
   closeNavbar,
-  searchValue,
 }: ListProps) {
   const conversations = useConversationsStore((state) => state.conversations);
   const mapConversations = useMemo(
     () =>
       conversationsMapper({
         searchValue,
+        userId,
         closeNavbar,
         currentChatId,
-        userId: user?.id,
       }),
-    [closeNavbar, currentChatId, searchValue, user?.id]
+    [closeNavbar, currentChatId, searchValue, userId]
   );
   const sortedAndMappedConversations = useMemo(() => {
     return conversations.sort(sortConversations).map(mapConversations);

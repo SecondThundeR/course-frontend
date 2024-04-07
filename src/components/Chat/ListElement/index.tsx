@@ -16,8 +16,8 @@ export const ListElement = memo(function ListElement({
   id,
   messages,
   participants,
-  userId,
   isActive,
+  userId,
   closeNavbar,
 }: ListElementProps) {
   const lastMessage = messages.at(-1);
@@ -26,7 +26,7 @@ export const ListElement = memo(function ListElement({
   const isLatexOrEmpty = isLatex || isConversationEmpty;
   const isSentByCurrentUser = lastMessage?.from?.id === userId;
 
-  const otherParticipant = participants.find((user) => user.id !== userId)!;
+  const otherParticipant = participants.find(({ id }) => id !== userId)!;
   const avatarLetters = extractAvatarLetters(otherParticipant.firstname, otherParticipant.lastname);
   const fullName = extractFullName(otherParticipant.firstname, otherParticipant.lastname);
 

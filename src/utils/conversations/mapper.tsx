@@ -1,19 +1,19 @@
 import { ListElement } from '@/components/Chat/ListElement';
 
-import { type ConversationInfo } from '@/store';
+import { type User, type ConversationInfo } from '@/store';
 
 type ConversationsMapperOptions = {
   searchValue: string | null;
-  closeNavbar: () => void;
+  userId?: User['id'];
   currentChatId?: string;
-  userId?: string;
+  closeNavbar: () => void;
 };
 
 export function conversationsMapper({
   searchValue,
-  closeNavbar,
-  currentChatId,
   userId,
+  currentChatId,
+  closeNavbar,
 }: ConversationsMapperOptions) {
   const lowerCaseSearchValue = searchValue?.toLocaleLowerCase();
 

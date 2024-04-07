@@ -1,7 +1,7 @@
-import { type ConversationInfo } from '@/store';
+import { type User, type ConversationInfo } from '@/store';
 
 export type ListElementProps = Omit<ConversationInfo, 'createdAt' | 'updatedAt'> & {
-  userId?: string;
   isActive: boolean;
+  userId?: User['id'];
   closeNavbar: () => void;
 };
