@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
@@ -46,7 +46,7 @@ export function useLogin() {
     [loginUser, navigate, setSearchParams, setTokens]
   );
 
-  const onSubmit = useCallback(() => form.onSubmit((values) => onLogin(values)), [form, onLogin]);
+  const onSubmit = useMemo(() => form.onSubmit((values) => onLogin(values)), [form, onLogin]);
 
   return { form, onSubmit, isSessionExpired, isNotLoggedIn, loading, error };
 }
