@@ -1,4 +1,5 @@
 .trash__icon,
+.edit__icon,
 .copy__icon_from {
   width: rem(20px);
   height: rem(20px);
@@ -18,6 +19,7 @@
     opacity: 1;
   }
 
+  .edit__icon:hover,
   .copy__icon_from:hover {
     color: light-dark(var(--mantine-color-white), var(--mantine-color-blue-6));
     opacity: 1;

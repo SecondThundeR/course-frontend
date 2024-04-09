@@ -12,11 +12,16 @@ export const Base = memo(function Base({
   createdAt,
   updatedAt,
   direction,
+  onEdit,
   onOpen,
 }: BaseProps) {
   const onDeleteOpen = useCallback(() => {
     onOpen(id);
   }, [id, onOpen]);
+
+  const onMessageEdit = useCallback(() => {
+    onEdit(id);
+  }, [id, onEdit]);
 
   const messageItem = useMemo(
     () => (
@@ -26,10 +31,11 @@ export const Base = memo(function Base({
         direction={direction}
         createdAt={createdAt}
         updatedAt={updatedAt}
+        onEdit={onMessageEdit}
         onDeleteOpen={onDeleteOpen}
       />
     ),
-    [content, type, direction, createdAt, updatedAt, onDeleteOpen]
+    [content, type, direction, createdAt, updatedAt, onMessageEdit, onDeleteOpen]
   );
 
   if (direction === 'from')

@@ -2,12 +2,13 @@ import 'katex/dist/katex.min.css';
 
 import { lazy, memo, Suspense } from 'react';
 import { Flex, Text } from '@mantine/core';
-import { IconCheck, IconCopy, IconTrash } from '@tabler/icons-react';
+import { IconCheck, IconCopy, IconTrash, IconPencil } from '@tabler/icons-react';
 
 import { MessageType } from '@/__generated__/graphql';
 
 import { useContentCopy } from '@/hooks';
 
+import { isMessageCanBeEdited } from '@/utils/isMessageCanBeEdited';
 import { isMessageEdited } from '@/utils/isMessageEdited';
 import { timeFormat } from '@/utils/timeFormat';
 
@@ -24,6 +25,7 @@ export const Bubble = memo(function Bubble({
   direction,
   createdAt,
   updatedAt,
+  onEdit,
   onDeleteOpen,
 }: BubbleProps) {
   const { copied, onCopy } = useContentCopy(content);
@@ -31,6 +33,7 @@ export const Bubble = memo(function Bubble({
   const CopyIcon = copied ? IconCheck : IconCopy;
   const directionFrom = direction === 'from';
   const isLatex = type === MessageType.Latex;
+  const canBeEdited = isMessageCanBeEdited(createdAt);
 
   return (
     <Flex
@@ -58,6 +61,9 @@ export const Bubble = memo(function Bubble({
         </Text>
         {isLatex && (
           <CopyIcon className={classes[`copy__icon_${direction}`]} stroke={1.5} onClick={onCopy} />
+        )}
+        {directionFrom && canBeEdited && (
+          <IconPencil className={classes.edit__icon} stroke={1.5} onClick={onEdit} />
         )}
         {directionFrom && (
           <IconTrash className={classes.trash__icon} stroke={1.5} onClick={onDeleteOpen} />

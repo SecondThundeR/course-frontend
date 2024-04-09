@@ -55,6 +55,8 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
             updatedAt={currUpdatedAt}
             type={type}
             onOpen={onOpen}
+            // TODO: Implement edit feature
+            onEdit={(id) => id}
           />
           {isDifferent && <Message.DateSeparator date={dateSeparatorDate} />}
         </Fragment>

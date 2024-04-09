@@ -4,5 +4,6 @@ export type BaseProps = Pick<Message, 'id' | 'content' | 'type'> & {
   createdAt: string;
   updatedAt: string;
   direction: 'from' | 'to';
+  onEdit: (id: string) => void;
   onOpen: (id: string) => void;
 };
