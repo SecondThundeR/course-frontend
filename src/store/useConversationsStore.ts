@@ -9,14 +9,16 @@ import { createSelectors } from '@/utils/zustand/createSelectors';
 
 export type ConversationInfo = ConversationsDataQuery['userConversations'][number];
 
+type MessageSubscription = MessageUpdatesSubscription['messageUpdates']['message'];
+
 export type ConversationsStore = {
   conversations: ConversationInfo[];
   setConversations: (conversations: ConversationInfo[]) => void;
   addConversation: (conversation: ConversationInfo) => void;
   removeConversation: (conversationId: string) => void;
-  addMessage: (message: MessageUpdatesSubscription['messageUpdates']['message']) => void;
-  editMessage: (message: MessageUpdatesSubscription['messageUpdates']['message']) => void;
-  removeMessage: (message: MessageUpdatesSubscription['messageUpdates']['message']) => void;
+  addMessage: (message: MessageSubscription) => void;
+  editMessage: (message: MessageSubscription) => void;
+  removeMessage: (message: MessageSubscription) => void;
   resetConversations: () => void;
 };
 
