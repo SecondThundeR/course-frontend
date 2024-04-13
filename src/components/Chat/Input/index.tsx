@@ -4,7 +4,7 @@ import { IconX, IconSend, IconCheck } from '@tabler/icons-react';
 import { usePrevious } from '@mantine/hooks';
 import { MessageType } from '@/__generated__/graphql';
 
-import { useChatInput } from '@/hooks';
+import { useChatInput, useChatKeyClose } from '@/hooks';
 
 import classes from './Input.module.css';
 
@@ -31,6 +31,7 @@ export const Input = memo(function Input({
   const { ref, form, onFormSubmit } = useChatInput(isEditActive ? onEditSubmitCallback : onSubmit);
 
   const SubmitIcon = isEditActive ? IconCheck : IconSend;
+  const isLatex = messageEdit?.type === MessageType.Latex;
 
   const onEditClose = useCallback(() => {
     form.clearErrors();
@@ -40,6 +41,11 @@ export const Input = memo(function Input({
     });
     onEditMessageRemove();
   }, [form, onEditMessageRemove]);
+
+  useChatKeyClose({
+    disableDefaultAction: true,
+    customAction: onEditClose,
+  });
 
   useEffect(() => {
     if (!messageEdit || prevMessageEdit) return;
@@ -56,7 +62,7 @@ export const Input = memo(function Input({
     <form onSubmit={onFormSubmit} className={classes.input}>
       {isEditActive && (
         <Flex gap="md" align="center" justify="space-between" px="lg" pt="xs">
-          <Text fw="bold">Редактирование сообщения</Text>
+          <Text fw="bold">Редактирование {isLatex ? 'LaTeX' : ''} сообщения</Text>
           <ActionIcon size="36" variant="transparent" onClick={onEditClose} disabled={isLoading}>
             <IconX className={classes.message__send} />
           </ActionIcon>

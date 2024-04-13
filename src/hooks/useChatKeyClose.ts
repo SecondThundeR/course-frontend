@@ -5,17 +5,29 @@ import { CHAT_ROUTE } from '@/constants/routes';
 
 const ESCAPE_KEY = 'Escape';
 
-export function useChatKeyClose(keyName = ESCAPE_KEY) {
+type UseChatKeyCloseOptions = {
+  keyName?: string;
+  disableDefaultAction?: boolean;
+  customAction?: () => void;
+};
+
+export function useChatKeyClose(options?: UseChatKeyCloseOptions) {
   const navigate = useNavigate();
+
+  const { keyName = ESCAPE_KEY, disableDefaultAction = false, customAction } = { ...options };
 
   const keyDownHandler = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === keyName) {
         event.preventDefault();
-        navigate(CHAT_ROUTE);
+        if (disableDefaultAction) {
+          customAction?.();
+        } else {
+          customAction ? customAction() : navigate(CHAT_ROUTE);
+        }
       }
     },
-    [navigate, keyName]
+    [keyName, disableDefaultAction, customAction, navigate]
   );
 
   useEffect(() => {

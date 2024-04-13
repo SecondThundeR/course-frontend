@@ -4,7 +4,13 @@ import { Navigate } from 'react-router-dom';
 
 import { CHAT_ROUTE } from '@/constants/routes';
 
-import { useChatScroll, useChatSend, useMessageEdit, useMessageModalDelete } from '@/hooks';
+import {
+  useChatKeyClose,
+  useChatScroll,
+  useChatSend,
+  useMessageEdit,
+  useMessageModalDelete,
+} from '@/hooks';
 
 import { useConversationsStore, useUserStore } from '@/store';
 
@@ -36,6 +42,9 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
     onEditMessageChange,
     onEditMessageRemove,
   } = useMessageEdit(chatId);
+  useChatKeyClose({
+    disableDefaultAction: messageEdit !== undefined,
+  });
   const { targetRef, onScroll } = useChatScroll(currentConversation?.messages.at(-1));
 
   if (!currentConversation) {
