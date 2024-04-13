@@ -20,15 +20,13 @@ import { HeaderTitle } from './HeaderTitle';
 
 const Shell = memo(function Shell() {
   const { chatId } = useParams();
-  const [opened, { toggle, close }] = useDisclosure();
+  const [opened, { toggle, close }] = useDisclosure(true);
   const [modalOpened, { open: onOpen, close: onClose }] = useDisclosure();
   const { q, inputRef, onChange } = useSearch();
   const { userData, onSignout } = useCurrentUser();
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
   const conversations = useConversationsStore.use.conversations();
 
-  const isNoConversationOpened = chatId === undefined;
-  const isNavbarOpened = isNoConversationOpened || opened;
   const { id, email, firstname, lastname } = { ...userData };
   const participantFullName = getCurrentChatParticipantFullName({
     conversations,
@@ -44,16 +42,16 @@ const Shell = memo(function Shell() {
           width: 300,
           breakpoint: 'sm',
           collapsed: {
-            desktop: !isNavbarOpened,
-            mobile: !isNavbarOpened,
+            desktop: !opened,
+            mobile: !opened,
           },
         }}
       >
         <AppShell.Header>
           <Flex h="100%" px="md" gap="md" justify="space-between" align="center">
             <Group>
-              {!isNoConversationOpened && <Burger opened={opened} onClick={toggle} size="sm" />}
-              <HeaderTitle opened={isNavbarOpened} participantFullName={participantFullName} />
+              <Burger opened={opened} onClick={toggle} size="sm" />
+              <HeaderTitle opened={opened} participantFullName={participantFullName} />
             </Group>
             <Group>
               <ThemeToggle />
