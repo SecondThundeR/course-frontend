@@ -8,6 +8,7 @@ const SearchInput = memo(
     return (
       <TextInput
         ref={ref}
+        autoComplete="off"
         aria-label="Поиск чатов"
         placeholder="Поиск"
         type="search"
