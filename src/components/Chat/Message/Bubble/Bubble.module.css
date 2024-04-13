@@ -30,6 +30,10 @@
   }
 }
 
+.message__dimmed {
+  opacity: 0.3;
+}
+
 .message__from {
   border-radius: 8px;
   background: light-dark(var(--mantine-color-blue-8), var(--mantine-color-white));

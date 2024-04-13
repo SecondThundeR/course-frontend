@@ -66,6 +66,26 @@ export const CREATE_MESSAGE = gql(`
   }
 `);
 
+export const EDIT_MESSAGE = gql(`
+  mutation EditMessage($data: EditMessageInput!) {
+    editMessage(data: $data) {
+      id
+      type
+      content
+      contentHistory
+      createdAt
+      updatedAt
+      from {
+        id
+        email
+      }
+      conversation {
+        id
+      }
+    }
+  }
+`);
+
 export const DELETE_CONVERSATION = gql(`
   mutation DeleteConversation($data: DeleteConversationInput!) {
     deleteConversation(data: $data) {

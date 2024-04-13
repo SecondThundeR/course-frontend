@@ -3,6 +3,7 @@ import 'katex/dist/katex.min.css';
 import { lazy, memo, Suspense } from 'react';
 import { Flex, Text } from '@mantine/core';
 import { IconCheck, IconCopy, IconTrash, IconPencil } from '@tabler/icons-react';
+import clsx from 'clsx';
 
 import { MessageType } from '@/__generated__/graphql';
 
@@ -22,6 +23,7 @@ const LazyBlockMath = lazy(() =>
 export const Bubble = memo(function Bubble({
   content,
   type,
+  isEditActive,
   direction,
   createdAt,
   updatedAt,
@@ -33,6 +35,7 @@ export const Bubble = memo(function Bubble({
   const CopyIcon = copied ? IconCheck : IconCopy;
   const directionFrom = direction === 'from';
   const isLatex = type === MessageType.Latex;
+  const isDimmed = typeof isEditActive === 'boolean' && !isEditActive;
   const canBeEdited = isMessageCanBeEdited(createdAt);
 
   return (
@@ -41,7 +44,9 @@ export const Bubble = memo(function Bubble({
       direction="column"
       align={directionFrom ? 'flex-end' : 'flex-start'}
       p="md"
-      className={classes[`message__${direction}`]}
+      className={clsx(classes[`message__${direction}`], {
+        [classes['message__dimmed']]: isDimmed,
+      })}
     >
       {isLatex ? (
         <div className={directionFrom ? classes.message__from_text : undefined}>

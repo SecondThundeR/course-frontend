@@ -6,7 +6,6 @@ import { loginSchema } from '@/schema/login';
 import { signupSchema } from '@/schema/signup';
 
 export const SIGNUP_FORM = {
-  mode: 'uncontrolled',
   initialValues: {
     firstname: '',
     lastname: '',
@@ -17,7 +16,6 @@ export const SIGNUP_FORM = {
 };
 
 export const LOGIN_FORM = {
-  mode: 'uncontrolled',
   initialValues: {
     email: '',
     password: '',
@@ -26,7 +24,6 @@ export const LOGIN_FORM = {
 };
 
 export const CHAT_CREATE_FORM = {
-  mode: 'uncontrolled',
   initialValues: {
     email: '',
     message: '',

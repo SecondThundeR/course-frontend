@@ -9,6 +9,7 @@ export const Base = memo(function Base({
   id,
   content,
   type,
+  isEditActive,
   createdAt,
   updatedAt,
   direction,
@@ -28,6 +29,7 @@ export const Base = memo(function Base({
       <Bubble
         content={content}
         type={type}
+        isEditActive={isEditActive}
         direction={direction}
         createdAt={createdAt}
         updatedAt={updatedAt}
@@ -35,7 +37,7 @@ export const Base = memo(function Base({
         onDeleteOpen={onDeleteOpen}
       />
     ),
-    [content, type, direction, createdAt, updatedAt, onMessageEdit, onDeleteOpen]
+    [content, type, isEditActive, direction, createdAt, updatedAt, onMessageEdit, onDeleteOpen]
   );
 
   if (direction === 'from')

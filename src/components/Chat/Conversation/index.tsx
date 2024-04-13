@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 import { CHAT_ROUTE } from '@/constants/routes';
 
-import { useChatScroll, useChatSend, useMessageModalDelete } from '@/hooks';
+import { useChatScroll, useChatSend, useMessageEdit, useMessageModalDelete } from '@/hooks';
 
 import { useConversationsStore, useUserStore } from '@/store';
 
@@ -29,6 +29,13 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
   const userData = useUserStore.use.userData();
   const conversations = useConversationsStore.use.conversations();
   const currentConversation = conversations.find((conversation) => conversation.id === chatId);
+  const {
+    messageEdit,
+    loading: isEditing,
+    onEditSend,
+    onEditMessageChange,
+    onEditMessageRemove,
+  } = useMessageEdit(chatId);
   const { targetRef, onScroll } = useChatScroll(currentConversation?.messages.at(-1));
 
   if (!currentConversation) {
@@ -41,6 +48,7 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
       const currCreatedAt = createdAt as string;
       const currUpdatedAt = updatedAt as string;
       const isDifferent = isDaysDifferent(prevCreatedAt, currCreatedAt);
+      const isMessageAnEdit = messageEdit?.id ? messageEdit.id === id : undefined;
       const dateSeparatorDate = isDifferent ? new Date(currCreatedAt) : undefined;
 
       const MessageComponent = from?.id !== userData?.id ? Message.To : Message.From;
@@ -54,9 +62,9 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
             createdAt={currCreatedAt}
             updatedAt={currUpdatedAt}
             type={type}
+            isEditActive={isMessageAnEdit}
             onOpen={onOpen}
-            // TODO: Implement edit feature
-            onEdit={(id) => id}
+            onEdit={onEditMessageChange}
           />
           {isDifferent && <Message.DateSeparator date={dateSeparatorDate} />}
         </Fragment>
@@ -84,7 +92,13 @@ const Conversation = memo(function Conversation({ chatId }: ConversationProps) {
           </>
         )}
       </Flex>
-      <Input isLoading={loading} onSubmit={onSend} />
+      <Input
+        messageEdit={messageEdit}
+        isLoading={loading || isEditing}
+        onSubmit={onSend}
+        onEditSubmit={onEditSend}
+        onEditMessageRemove={onEditMessageRemove}
+      />
       <BottomAffix onScroll={onScroll} />
       <DeleteMessageModal
         opened={opened}
