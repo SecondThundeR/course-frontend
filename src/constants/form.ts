@@ -36,7 +36,6 @@ export const CHAT_CREATE_FORM = {
 };
 
 export const CHAT_INPUT_FORM = {
-  mode: 'uncontrolled',
   initialValues: {
     message: '',
     isLatex: false,
