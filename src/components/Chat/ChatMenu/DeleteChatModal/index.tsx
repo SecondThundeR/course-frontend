@@ -13,7 +13,7 @@ export const DeleteChatModal = memo(function DeleteChatModal({
   const { onDelete, error, loading } = useChatDelete(chatId, onClose);
 
   return (
-    <Modal opened={opened} onClose={onClose} title="Создать чат" centered>
+    <Modal opened={opened} onClose={onClose} title="Удалить чат" centered>
       {error && (
         <Alert variant="filled" title="Не удалось удалить чат" color="red" mb="md">
           {error.message}
