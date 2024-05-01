@@ -3,6 +3,7 @@ export { default as Block404 } from './Block404';
 export { default as ChatConversation } from './Chat/Conversation';
 export { default as ChatPlaceholder } from './Chat/Placeholder';
 export { default as ChatShell } from './Chat/Shell';
+export { default as AnonymousChatShell } from './AnonymousChat/Shell';
 export { default as LandingFAQ } from './Landing/FAQ';
 export { default as LandingFeatures } from './Landing/Features';
 export { default as LandingHero } from './Landing/Hero';

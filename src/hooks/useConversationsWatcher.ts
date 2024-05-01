@@ -31,7 +31,7 @@ export function useConversationsWatcher() {
       userId,
     },
   });
-  const { data: messsageUpdate } = useSubscription(MESSAGE_UPDATES, {
+  const { data: messageUpdate } = useSubscription(MESSAGE_UPDATES, {
     variables: {
       userId,
     },
@@ -108,7 +108,7 @@ export function useConversationsWatcher() {
   }, [conversationUpdate, processConversationUpdate]);
 
   useEffect(() => {
-    if (messsageUpdate === undefined) return;
-    processMessageUpdate(messsageUpdate);
-  }, [messsageUpdate, processMessageUpdate]);
+    if (messageUpdate === undefined) return;
+    processMessageUpdate(messageUpdate);
+  }, [messageUpdate, processMessageUpdate]);
 }

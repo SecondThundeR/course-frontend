@@ -42,10 +42,16 @@
 }
 
 .controls {
+  display: flex;
+  flex-direction: row;
   margin-top: calc(var(--mantine-spacing-xl) * 2);
 
   @media (max-width: $mantine-breakpoint-sm) {
     margin-top: var(--mantine-spacing-xl);
+
+    width: 100%;
+    height: rem(120px);
+    flex-direction: column;
   }
 }
 
@@ -56,6 +62,7 @@
 
   @media (max-width: $mantine-breakpoint-sm) {
     height: rem(54px);
+    width: 100%;
     padding-left: rem(18px);
     padding-right: rem(18px);
     flex: 1;

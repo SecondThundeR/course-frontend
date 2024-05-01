@@ -37,3 +37,9 @@ export const CONVERSATIONS_DATA = gql(`
         }
     }
 `);
+
+export const ANONYMOUS_CHAT_USERNAME = gql(`
+    query AnonymousChatUsername {
+        assignRandomUsername
+    }
+`);

@@ -1,16 +1,14 @@
 import { useCallback, useEffect } from 'react';
 import { usePrevious, useScrollIntoView } from '@mantine/hooks';
 
-import { type ConversationInfo, useUserStore } from '@/store';
-
 import { useChatAffix } from '.';
 
-export function useChatScroll(
-  lastMessage?: Pick<ConversationInfo['messages'][number], 'id' | 'from'>
+export function useAnonymousChatScroll(
+  username?: string,
+  lastMessage?: { id: string; fromId: string }
 ) {
   const { scroll, scrollableHeight } = useChatAffix();
   const previousMessage = usePrevious(lastMessage);
-  const userData = useUserStore.use.userData();
   const { targetRef, scrollIntoView } = useScrollIntoView<HTMLDivElement>({
     duration: 0,
     offset: 200,
@@ -31,13 +29,13 @@ export function useChatScroll(
     if (isSameMessage) return;
 
     const isScrollThreshold = scroll.y >= scrollableHeight;
-    const lastMessageAuthor = lastMessage?.from?.id;
-    const isMessageFromCurrentUser = lastMessageAuthor === userData?.id;
+    const lastMessageAuthor = lastMessage?.fromId;
+    const isMessageFromCurrentUser = lastMessageAuthor === username;
 
     if (isMessageFromCurrentUser || (!isMessageFromCurrentUser && isScrollThreshold)) {
       onScroll();
     }
-  }, [lastMessage, onScroll, previousMessage?.id, scroll.y, scrollableHeight, userData?.id]);
+  }, [lastMessage, onScroll, previousMessage?.id, scroll.y, scrollableHeight, username]);
 
   return { targetRef, onScroll };
 }

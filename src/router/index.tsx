@@ -5,6 +5,7 @@ import {
   ANY_ROUTE,
   CHAT_ID_ROUTE,
   CHAT_ROUTE,
+  ANONYMOUS_CHAT_ROUTE,
   LOGIN_ROUTE,
   REGISTER_ROUTE,
   ROOT_ROUTE,
@@ -42,6 +43,11 @@ const router = createBrowserRouter([
         lazy: () => import('../pages/ChatConversation.page'),
       },
     ],
+  },
+  {
+    // This is an experimental route and shouldn't be used for real conversations
+    path: ANONYMOUS_CHAT_ROUTE,
+    lazy: () => import('../pages/AnonymousChat.page'),
   },
   {
     path: ANY_ROUTE,

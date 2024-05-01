@@ -113,3 +113,16 @@ export const DELETE_MESSAGE = gql(`
     }
   }
 `);
+
+export const CREATE_ANONYMOUS_MESSAGE = gql(`
+  mutation CreateAnonymousMessage($data: CreateAnonymousMessageInput!) {
+    createAnonymousMessage(data: $data) {
+      id
+      type
+      content
+      createdAt
+      updatedAt
+      fromId
+    }
+  }
+`);

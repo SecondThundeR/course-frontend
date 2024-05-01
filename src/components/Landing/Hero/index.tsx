@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Container, Text, Group, Button } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
-import { LOGIN_ROUTE } from '@/constants/routes';
+import { ANONYMOUS_CHAT_ROUTE, LOGIN_ROUTE } from '@/constants/routes';
 
 import classes from './Hero.module.css';
 
@@ -31,6 +31,15 @@ const LandingHero = memo(function LandingHero() {
             gradient={{ from: 'blue', to: 'cyan' }}
           >
             Начать работу
+          </Button>
+          <Button
+            component={Link}
+            to={ANONYMOUS_CHAT_ROUTE}
+            size="xl"
+            className={classes.control}
+            variant="outline"
+          >
+            Открыть анонимный чат
           </Button>
         </Group>
       </Container>

@@ -53,3 +53,19 @@ export const MESSAGE_UPDATES = gql(`
         }
     }
 `);
+
+export const ANONYMOUS_MESSAGE_UPDATES = gql(`
+    subscription AnonymousMessageUpdates {
+        anonymousMessageUpdates {
+            type
+            message {
+                id
+                type
+                content
+                createdAt
+                updatedAt
+                fromId
+            }
+        }
+    }
+`);
