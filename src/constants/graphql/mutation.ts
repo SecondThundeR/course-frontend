@@ -121,7 +121,6 @@ export const CREATE_ANONYMOUS_MESSAGE = gql(`
       type
       content
       createdAt
-      updatedAt
       fromId
     }
   }

@@ -63,7 +63,6 @@ export const ANONYMOUS_MESSAGE_UPDATES = gql(`
                 type
                 content
                 createdAt
-                updatedAt
                 fromId
             }
         }
