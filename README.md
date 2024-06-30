@@ -1,12 +1,17 @@
+> [!NOTE]
+> Work on this project is ended and repo has been archived
+>
+> Feel free to fork this and use for your own things
+
 # Project Prometheus (Frontend Part)
 
-TL;DR - This is the source code for my course work (and apparently for my diploma too).
+> TL;DR - This is the source code for my course work and diploma
 
 ## Description
 
 This project involves creating a LaTeX-enabled real-time chat room to send/receive mathematical data as visualized LaTeX code rather than plain text. Sending and monitoring of real-time messages is accomplished using GraphQL's subscriptions feature. The design of the application is done with Mantine components, which are combined in a nice and pleasant interface
 
-> Initially the project was written in NextJS (w/ Pages router), but this "coolness" of the project turned out to be redundant for the course work
+> Initially the project was written in NextJS (w/ Pages router), but this "coolness" of the project turned out to be redundant for this case
 
 ## Project Stack
 
